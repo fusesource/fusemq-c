@@ -1,0 +1,27 @@
+---
+title: FuseMQ-C
+--- name:overview
+
+A C API that wraps the popular ActiveMQ-CPP client.
+
+--- name:content pipeline:markdown
+
+Overview
+--------
+
+A clean and simple C based API that wraps the popular Apache ActiveMQ-CPP library. 
+Provides access to many of the advanced features in the C++ client library to C
+based applications.
+
+Documentation
+-------------
+
+* [Developer Guide](dev-guide.html)
+
+Reference
+---------
+
+* [JMS 1.1 Specification](http://java.sun.com/products/jms/docs.html)
+* [STOMP 1.0 Specification](http://stomp.github.com/stomp-specification-1.0.html)
+
+
