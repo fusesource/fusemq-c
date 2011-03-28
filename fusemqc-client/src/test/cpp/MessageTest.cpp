@@ -17,6 +17,8 @@
 
 #include "MessageTest.h"
 
+#include <CMS_Message.h>
+
 using namespace cms;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -30,4 +32,19 @@ MessageTest::~MessageTest() {
 ////////////////////////////////////////////////////////////////////////////////
 void MessageTest::testCreateMessage() {
 
+	CMS_Message* message = NULL;
+	int result = 0;
+
+	CPPUNIT_ASSERT(createMessage(NULL, &message) == CMS_ERROR);
+	CPPUNIT_ASSERT(createMessage(session, NULL) == CMS_ERROR);
+	CPPUNIT_ASSERT(createMessage(NULL, NULL) == CMS_ERROR);
+
+	CPPUNIT_ASSERT(createMessage(session, &message) == CMS_SUCCESS);
+
+	result = -1;
+	CPPUNIT_ASSERT(getNumMessageProperties(message, &result) == CMS_SUCCESS);
+	CPPUNIT_ASSERT_EQUAL(0, result);
+	result = -1;
+	CPPUNIT_ASSERT(messagePropertyExists(message, "some-property", &result) == CMS_SUCCESS);
+	CPPUNIT_ASSERT_EQUAL(0, result);
 }

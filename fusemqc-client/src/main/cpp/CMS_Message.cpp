@@ -35,19 +35,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 cms_status createMessage(CMS_Session* session, CMS_Message** message) {
 
+	if(session == NULL || message == NULL) {
+		return CMS_ERROR;
+	}
+
     cms_status result = CMS_SUCCESS;
     std::auto_ptr<CMS_Message> wrapper( new CMS_Message );
 
     try{
 
-        if (session == NULL) {
-            result = CMS_ERROR;
-        } else {
-
-            wrapper->message = session->session->createMessage();
-            wrapper->type = CMS_MESSAGE;
-            *message = wrapper.release();
-        }
+		wrapper->message = session->session->createMessage();
+		wrapper->type = CMS_MESSAGE;
+		*message = wrapper.release();
 
     } catch(...) {
         result = CMS_ERROR;
@@ -64,7 +63,7 @@ cms_status createTextMessage(CMS_Session* session, CMS_Message** message, const 
 
     try{
 
-        if (session == NULL) {
+        if (session == NULL || message == NULL) {
             result = CMS_ERROR;
         } else {
 
@@ -93,7 +92,7 @@ cms_status createBytesMessage(CMS_Session* session, CMS_Message** message, unsig
 
     try{
 
-        if (session == NULL) {
+        if (session == NULL || message == NULL) {
             result = CMS_ERROR;
         } else {
 
@@ -122,7 +121,7 @@ cms_status createMapMessage(CMS_Session* session, CMS_Message** message) {
 
     try{
 
-        if (session == NULL) {
+        if (session == NULL || message == NULL) {
             result = CMS_ERROR;
         } else {
 
@@ -146,7 +145,7 @@ cms_status createStreamMessage(CMS_Session* session, CMS_Message** message) {
 
     try{
 
-        if (session == NULL) {
+        if (session == NULL || message == NULL) {
             result = CMS_ERROR;
         } else {
 

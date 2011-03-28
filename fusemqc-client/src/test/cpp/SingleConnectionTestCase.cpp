@@ -42,6 +42,7 @@ void SingleConnectionTestCase::setUp() {
 
     CPPUNIT_ASSERT(createConnectionFactory(&factory, uri.c_str(), NULL, NULL) == CMS_SUCCESS);
     CPPUNIT_ASSERT(createDefaultConnection(factory, &connection) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(createDefaultSession(connection, &session) == CMS_SUCCESS);
 
     //CPPUNIT_ASSERT(startConnection(connection) == CMS_SUCCESS);
 }
@@ -49,6 +50,7 @@ void SingleConnectionTestCase::setUp() {
 ////////////////////////////////////////////////////////////////////////////////
 void SingleConnectionTestCase::tearDown() {
 
+	CPPUNIT_ASSERT(destroySession(session) == CMS_SUCCESS);
     CPPUNIT_ASSERT(stopConnection(connection) == CMS_SUCCESS);
     CPPUNIT_ASSERT(closeConnection(connection) == CMS_SUCCESS);
     CPPUNIT_ASSERT(destroyConnection(connection) == CMS_SUCCESS);
