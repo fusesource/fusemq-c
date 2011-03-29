@@ -35,19 +35,19 @@ void BytesMessageTest::testCreateBytesMessage() {
 	CMS_Message* message = NULL;
 	int result = -1;
 
-	CPPUNIT_ASSERT(createBytesMessage(session, &message, testString) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(createBytesMessage(session, &message, NULL, 0) == CMS_SUCCESS);
 	CPPUNIT_ASSERT(getMessageType(message, &result) == CMS_SUCCESS);
 	CPPUNIT_ASSERT_EQUAL((int)CMS_BYTES_MESSAGE, result);
 
-	destroyMessage(txtMessage);
+	destroyMessage(message);
 
-	CPPUNIT_ASSERT(createBytesMessage(session, &message, NULL) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(createBytesMessage(session, &message, NULL, 0) == CMS_SUCCESS);
 	CPPUNIT_ASSERT(getMessageType(message, &result) == CMS_SUCCESS);
 	CPPUNIT_ASSERT_EQUAL((int)CMS_BYTES_MESSAGE, result);
 
-	destroyMessage(txtMessage);
+	destroyMessage(message);
 
-	CPPUNIT_ASSERT(createBytesMessage(session, NULL, NULL) == CMS_ERROR);
-	CPPUNIT_ASSERT(createBytesMessage(NULL, &message, NULL) == CMS_ERROR);
-	CPPUNIT_ASSERT(createBytesMessage(NULL, NULL, NULL) == CMS_ERROR);
+	CPPUNIT_ASSERT(createBytesMessage(session, NULL, NULL, 0) == CMS_ERROR);
+	CPPUNIT_ASSERT(createBytesMessage(NULL, &message, NULL, 0) == CMS_ERROR);
+	CPPUNIT_ASSERT(createBytesMessage(NULL, NULL, NULL, 0) == CMS_ERROR);
 }
