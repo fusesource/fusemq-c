@@ -60,7 +60,6 @@ namespace cms {
 		void testMessageIntProperties();
 		void testMessageShortProperties();
 		void testMessageStringProperties();
-
 		void testCMSMessageCorrelationID();
 		void testMSMessageDeliveryMode();
 		void testCMSMessageDestination();

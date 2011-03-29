@@ -20,6 +20,8 @@
 #ifndef _CMS_TEXTMESSAGE_WRAPPER_H_
 #define _CMS_TEXTMESSAGE_WRAPPER_H_
 
+#include <CMS_Message.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -28,7 +30,7 @@ extern "C" {
  * Gets the string value contained in a TextMessage body.
  *
  * @param message
- *      The message that the text is retreived from.
+ *      The message that the text is retrieved from.
  * @param dest
  *      The address to store the value of the message text.
  * @param size

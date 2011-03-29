@@ -26,6 +26,8 @@ namespace cms {
 
         CPPUNIT_TEST_SUITE( TextMessageTest );
         CPPUNIT_TEST( testCreateTextMessage );
+        CPPUNIT_TEST( testGetMessageText );
+        CPPUNIT_TEST( testSetMessageText );
         CPPUNIT_TEST_SUITE_END();
 
 	public:
@@ -34,6 +36,8 @@ namespace cms {
 		virtual ~TextMessageTest();
 
 		void testCreateTextMessage();
+		void testGetMessageText();
+		void testSetMessageText();
 
 	};
 

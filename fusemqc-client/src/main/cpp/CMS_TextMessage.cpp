@@ -36,13 +36,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 cms_status getMessageText(CMS_Message* message, char* dest, int size) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && dest != NULL) {
-
-        if( size <= 0 ) {
-            return CMS_ERROR;
-        }
+    if(message != NULL && message->message != NULL && dest != NULL && size > 0) {
 
         if( message->type != CMS_TEXT_MESSAGE ) {
             return CMS_INVALID_MESSAGE_TYPE;
@@ -66,6 +62,8 @@ cms_status getMessageText(CMS_Message* message, char* dest, int size) {
                 dest[0] = '\0';
             }
 
+            result = CMS_SUCCESS;
+
         } catch(cms::MessageFormatException& ex) {
             dest[0] = '\0';
             result = CMS_MESSAGE_FORMAT_ERROR;
@@ -81,9 +79,9 @@ cms_status getMessageText(CMS_Message* message, char* dest, int size) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status setMessageText(CMS_Message* message, const char* value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && value != NULL) {
+    if(message != NULL && message->message != NULL && value != NULL) {
 
         if( message->type != CMS_TEXT_MESSAGE ) {
             return CMS_INVALID_MESSAGE_TYPE;
@@ -98,6 +96,8 @@ cms_status setMessageText(CMS_Message* message, const char* value) {
             } else {
                 txtMessage->setText("");
             }
+
+            result = CMS_SUCCESS;
 
         } catch(cms::MessageNotWriteableException& ex) {
             result = CMS_MESSAGE_NOT_WRITABLE;
