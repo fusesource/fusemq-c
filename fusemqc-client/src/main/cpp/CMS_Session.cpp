@@ -49,7 +49,7 @@ cms_status createDefaultSession(CMS_Connection* connection, CMS_Session** sessio
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status createSession(CMS_Connection* connection, CMS_Session** session, ACKNOWLEDGMENT_MODE ackMode) {
+cms_status createSession(CMS_Connection* connection, CMS_Session** session, CMS_ACKNOWLEDGMENT_MODE ackMode) {
 
     cms_status result = CMS_SUCCESS;
     std::auto_ptr<CMS_Session> wrapper( new CMS_Session );
@@ -63,18 +63,18 @@ cms_status createSession(CMS_Connection* connection, CMS_Session** session, ACKN
             cms::Session::AcknowledgeMode cmsAckType = cms::Session::AUTO_ACKNOWLEDGE;
 
             switch(ackMode) {
-                case AUTO_ACKNOWLEDGE:
+                case CMS_AUTO_ACKNOWLEDGE:
                     break;
-                case DUPS_OK_ACKNOWLEDGE:
+                case CMS_DUPS_OK_ACKNOWLEDGE:
                     cmsAckType = cms::Session::DUPS_OK_ACKNOWLEDGE;
                     break;
-                case CLIENT_ACKNOWLEDGE:
+                case CMS_CLIENT_ACKNOWLEDGE:
                     cmsAckType = cms::Session::CLIENT_ACKNOWLEDGE;
                     break;
-                case SESSION_TRANSACTED:
+                case CMS_SESSION_TRANSACTED:
                     cmsAckType = cms::Session::SESSION_TRANSACTED;
                     break;
-                case INDIVIDUAL_ACKNOWLEDGE:
+                case CMS_INDIVIDUAL_ACKNOWLEDGE:
                     cmsAckType = cms::Session::INDIVIDUAL_ACKNOWLEDGE;
                     break;
                 default:

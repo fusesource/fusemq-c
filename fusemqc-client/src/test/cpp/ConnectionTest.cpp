@@ -89,19 +89,19 @@ void ConnectionTest::testCreateSessionFromConnection() {
     CPPUNIT_ASSERT(createConnectionFactory(&factory, uri.c_str(), NULL, NULL) == CMS_SUCCESS);
     CPPUNIT_ASSERT(createDefaultConnection(factory, &connection) == CMS_SUCCESS);
 
-    CPPUNIT_ASSERT(createSession(connection, &session, AUTO_ACKNOWLEDGE) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(createSession(connection, &session, CMS_AUTO_ACKNOWLEDGE) == CMS_SUCCESS);
     CPPUNIT_ASSERT(destroySession(session) == CMS_SUCCESS);
 
-    CPPUNIT_ASSERT(createSession(connection, &session, DUPS_OK_ACKNOWLEDGE) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(createSession(connection, &session, CMS_DUPS_OK_ACKNOWLEDGE) == CMS_SUCCESS);
     CPPUNIT_ASSERT(destroySession(session) == CMS_SUCCESS);
 
-    CPPUNIT_ASSERT(createSession(connection, &session, CLIENT_ACKNOWLEDGE) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(createSession(connection, &session, CMS_CLIENT_ACKNOWLEDGE) == CMS_SUCCESS);
     CPPUNIT_ASSERT(destroySession(session) == CMS_SUCCESS);
 
-    CPPUNIT_ASSERT(createSession(connection, &session, SESSION_TRANSACTED) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(createSession(connection, &session, CMS_SESSION_TRANSACTED) == CMS_SUCCESS);
     CPPUNIT_ASSERT(destroySession(session) == CMS_SUCCESS);
 
-    CPPUNIT_ASSERT(createSession(connection, &session, INDIVIDUAL_ACKNOWLEDGE) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(createSession(connection, &session, CMS_INDIVIDUAL_ACKNOWLEDGE) == CMS_SUCCESS);
     CPPUNIT_ASSERT(destroySession(session) == CMS_SUCCESS);
 
     CPPUNIT_ASSERT(destroyConnection(connection) == CMS_SUCCESS);

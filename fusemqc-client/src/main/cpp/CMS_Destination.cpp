@@ -29,7 +29,7 @@
 #include <memory>
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status createDestination(CMS_Session* session, DESTINATION_TYPE type,
+cms_status createDestination(CMS_Session* session, CMS_DESTINATION_TYPE type,
                              const char* name, CMS_Destination** destination) {
 
     cms_status result = CMS_SUCCESS;
@@ -41,7 +41,7 @@ cms_status createDestination(CMS_Session* session, DESTINATION_TYPE type,
             result = CMS_ERROR;
         } else {
 
-            if (name == NULL && type != CMS_TEMPORARY_QUEUE && type != CMS_TEMPORARY_TOPIC) {
+            if (name == NULL && !(type == CMS_TEMPORARY_QUEUE || type == CMS_TEMPORARY_TOPIC)) {
                 result = CMS_ERROR;
             } else {
 
@@ -70,6 +70,17 @@ cms_status createDestination(CMS_Session* session, DESTINATION_TYPE type,
     }
 
     return result;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+cms_status createTemporaryDestination(CMS_Session* session, CMS_DESTINATION_TYPE type,
+                                      CMS_Destination** destination) {
+
+	if(type != CMS_TEMPORARY_TOPIC || type != CMS_TEMPORARY_QUEUE) {
+		return CMS_ERROR;
+	}
+
+	return createDestination(session, type, NULL, destination);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -50,7 +50,7 @@ cms_status createDefaultSession(CMS_Connection* connection, CMS_Session** sessio
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status createSession(CMS_Connection* connection, CMS_Session** session, ACKNOWLEDGMENT_MODE ackMode);
+cms_status createSession(CMS_Connection* connection, CMS_Session** session, CMS_ACKNOWLEDGMENT_MODE ackMode);
 
 /**
  * Destroys the given Connection instance, all Connection Resources should have been

@@ -743,9 +743,9 @@ cms_status setMessageStringProperty(CMS_Message* message, const char* key, const
 ////////////////////////////////////////////////////////////////////////////////
 cms_status getCMSMessageCorrelationID(CMS_Message* message, char* correlationId, int size) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && correlationId != NULL && size > 0) {
+    if(message != NULL && message->message != NULL && correlationId != NULL && size > 0) {
 
         try{
 
@@ -763,6 +763,8 @@ cms_status getCMSMessageCorrelationID(CMS_Message* message, char* correlationId,
                 correlationId[0] = '\0';
             }
 
+            result = CMS_SUCCESS;
+
         } catch(cms::MessageFormatException& ex) {
             correlationId[0] = '\0';
             result = CMS_MESSAGE_FORMAT_ERROR;
@@ -778,14 +780,15 @@ cms_status getCMSMessageCorrelationID(CMS_Message* message, char* correlationId,
 ////////////////////////////////////////////////////////////////////////////////
 cms_status setCMSMessageCorrelationID(CMS_Message* message, const char* correlationId) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && correlationId != NULL) {
+    if(message != NULL && message->message != NULL && correlationId != NULL) {
 
         try{
 
             if(strlen(correlationId) > 0) {
                 message->message->setCMSCorrelationID(correlationId);
+                result = CMS_SUCCESS;
             }
 
         } catch(cms::MessageNotWriteableException& ex) {
@@ -801,12 +804,13 @@ cms_status setCMSMessageCorrelationID(CMS_Message* message, const char* correlat
 ////////////////////////////////////////////////////////////////////////////////
 cms_status getCMSMessageDeliveryMode(CMS_Message* message, int* mode) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && mode != NULL) {
+    if(message != NULL && message->message != NULL && mode != NULL) {
 
         try{
             *mode = message->message->getCMSDeliveryMode();
+            result = CMS_SUCCESS;
         } catch(cms::MessageNotWriteableException& ex) {
             result = CMS_MESSAGE_NOT_WRITABLE;
         } catch(...) {
@@ -820,12 +824,13 @@ cms_status getCMSMessageDeliveryMode(CMS_Message* message, int* mode) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status setCMSMessageDeliveryMode(CMS_Message* message, int mode) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL) {
 
         try{
             message->message->setCMSDeliveryMode(mode);
+            result = CMS_SUCCESS;
         } catch(cms::MessageNotWriteableException& ex) {
             result = CMS_MESSAGE_NOT_WRITABLE;
         } catch(...) {
@@ -839,9 +844,9 @@ cms_status setCMSMessageDeliveryMode(CMS_Message* message, int mode) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status getCMSMessageDestination(CMS_Message* message, CMS_Destination** destination) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL && destination != NULL) {
 
         try{
 
@@ -856,6 +861,8 @@ cms_status getCMSMessageDestination(CMS_Message* message, CMS_Destination** dest
                 *destination = NULL;
             }
 
+            result = CMS_SUCCESS;
+
         } catch(...) {
             result = CMS_ERROR;
         }
@@ -867,9 +874,9 @@ cms_status getCMSMessageDestination(CMS_Message* message, CMS_Destination** dest
 ////////////////////////////////////////////////////////////////////////////////
 cms_status setCMSMessageDestination(CMS_Message* message, CMS_Destination* destination) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL) {
 
         try{
 
@@ -878,6 +885,8 @@ cms_status setCMSMessageDestination(CMS_Message* message, CMS_Destination* desti
             } else {
                 message->message->setCMSDestination(NULL);
             }
+
+            result = CMS_SUCCESS;
 
         } catch(...) {
             result = CMS_ERROR;
@@ -890,12 +899,13 @@ cms_status setCMSMessageDestination(CMS_Message* message, CMS_Destination* desti
 ////////////////////////////////////////////////////////////////////////////////
 cms_status getCMSMessageExpiration(CMS_Message* message, long long* expiration) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && expiration != NULL) {
+    if(message != NULL && message->message != NULL && expiration != NULL) {
 
         try{
             *expiration = message->message->getCMSExpiration();
+            result = CMS_SUCCESS;
         } catch(cms::MessageNotWriteableException& ex) {
             result = CMS_MESSAGE_NOT_WRITABLE;
         } catch(...) {
@@ -909,12 +919,13 @@ cms_status getCMSMessageExpiration(CMS_Message* message, long long* expiration) 
 ////////////////////////////////////////////////////////////////////////////////
 cms_status setCMSMessageExpiration(CMS_Message* message, long long expiration) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL) {
 
         try{
             message->message->setCMSExpiration(expiration);
+            result = CMS_SUCCESS;
         } catch(cms::MessageNotWriteableException& ex) {
             result = CMS_MESSAGE_NOT_WRITABLE;
         } catch(...) {
@@ -928,9 +939,9 @@ cms_status setCMSMessageExpiration(CMS_Message* message, long long expiration) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status getCMSMessageMessageID(CMS_Message* message, char* messageId, int size) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && messageId != NULL && size > 0) {
+    if(message != NULL && message->message != NULL && messageId != NULL && size > 0) {
 
         try{
 
@@ -948,6 +959,8 @@ cms_status getCMSMessageMessageID(CMS_Message* message, char* messageId, int siz
                 messageId[0] = '\0';
             }
 
+            result = CMS_SUCCESS;
+
         } catch(cms::MessageFormatException& ex) {
             messageId[0] = '\0';
             result = CMS_MESSAGE_FORMAT_ERROR;
@@ -963,14 +976,15 @@ cms_status getCMSMessageMessageID(CMS_Message* message, char* messageId, int siz
 ////////////////////////////////////////////////////////////////////////////////
 cms_status setCMSMessageMessageID(CMS_Message* message, const char* messageId) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && messageId != NULL) {
+    if(message != NULL && message->message != NULL && messageId != NULL) {
 
         try{
 
             if(strlen(messageId) > 0) {
                 message->message->setCMSMessageID(messageId);
+                result = CMS_SUCCESS;
             }
 
         } catch(cms::MessageNotWriteableException& ex) {
@@ -986,12 +1000,13 @@ cms_status setCMSMessageMessageID(CMS_Message* message, const char* messageId) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status getCMSMessagePriority(CMS_Message* message, int* priority) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && priority != NULL) {
+    if(message != NULL && message->message != NULL && priority != NULL) {
 
         try{
             *priority = message->message->getCMSPriority();
+            result = CMS_SUCCESS;
         } catch(cms::MessageNotWriteableException& ex) {
             result = CMS_MESSAGE_NOT_WRITABLE;
         } catch(...) {
@@ -1005,12 +1020,13 @@ cms_status getCMSMessagePriority(CMS_Message* message, int* priority) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status setCMSMessagePriority(CMS_Message* message, int priority) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL) {
 
         try{
             message->message->setCMSPriority(priority);
+            result = CMS_SUCCESS;
         } catch(cms::MessageNotWriteableException& ex) {
             result = CMS_MESSAGE_NOT_WRITABLE;
         } catch(...) {
@@ -1024,12 +1040,13 @@ cms_status setCMSMessagePriority(CMS_Message* message, int priority) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status getCMSMessageRedelivered(CMS_Message* message, int* redelivered) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && redelivered != NULL) {
+    if(message != NULL && message->message != NULL && redelivered != NULL) {
 
         try{
             *redelivered = (int) message->message->getCMSRedelivered();
+            result = CMS_SUCCESS;
         } catch(cms::MessageNotWriteableException& ex) {
             result = CMS_MESSAGE_NOT_WRITABLE;
         } catch(...) {
@@ -1043,12 +1060,13 @@ cms_status getCMSMessageRedelivered(CMS_Message* message, int* redelivered) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status setCMSMessageRedelivered(CMS_Message* message, int redelivered) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL) {
 
         try{
             message->message->setCMSRedelivered(redelivered == 0 ? false : true);
+            result = CMS_SUCCESS;
         } catch(cms::MessageNotWriteableException& ex) {
             result = CMS_MESSAGE_NOT_WRITABLE;
         } catch(...) {
@@ -1062,9 +1080,9 @@ cms_status setCMSMessageRedelivered(CMS_Message* message, int redelivered) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status getCMSMessageReplyTo(CMS_Message* message, CMS_Destination** destination) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL) {
 
         try{
 
@@ -1079,6 +1097,8 @@ cms_status getCMSMessageReplyTo(CMS_Message* message, CMS_Destination** destinat
                 *destination = NULL;
             }
 
+            result = CMS_SUCCESS;
+
         } catch(...) {
             result = CMS_ERROR;
         }
@@ -1090,9 +1110,9 @@ cms_status getCMSMessageReplyTo(CMS_Message* message, CMS_Destination** destinat
 ////////////////////////////////////////////////////////////////////////////////
 cms_status setCMSMessageReplyTo(CMS_Message* message, CMS_Destination* destination) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL) {
 
         try{
 
@@ -1101,6 +1121,8 @@ cms_status setCMSMessageReplyTo(CMS_Message* message, CMS_Destination* destinati
             } else {
                 message->message->setCMSReplyTo(NULL);
             }
+
+            result = CMS_SUCCESS;
 
         } catch(...) {
             result = CMS_ERROR;
@@ -1113,12 +1135,13 @@ cms_status setCMSMessageReplyTo(CMS_Message* message, CMS_Destination* destinati
 ////////////////////////////////////////////////////////////////////////////////
 cms_status getCMSMessageTimestamp(CMS_Message* message, long long* timeStamp) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && timeStamp != NULL) {
+    if(message != NULL && message->message != NULL && timeStamp != NULL) {
 
         try{
             *timeStamp = message->message->getCMSTimestamp();
+            result = CMS_SUCCESS;
         } catch(cms::MessageNotWriteableException& ex) {
             result = CMS_MESSAGE_NOT_WRITABLE;
         } catch(...) {
@@ -1132,12 +1155,13 @@ cms_status getCMSMessageTimestamp(CMS_Message* message, long long* timeStamp) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status setCMSMessageTimestamp(CMS_Message* message, long long timeStamp) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL) {
 
         try{
             message->message->setCMSTimestamp(timeStamp);
+            result = CMS_SUCCESS;
         } catch(cms::MessageNotWriteableException& ex) {
             result = CMS_MESSAGE_NOT_WRITABLE;
         } catch(...) {
@@ -1151,9 +1175,9 @@ cms_status setCMSMessageTimestamp(CMS_Message* message, long long timeStamp) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status getCMSMessageType(CMS_Message* message, char* type, int size) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && type != NULL && size > 0) {
+    if(message != NULL && message->message != NULL && type != NULL && size > 0) {
 
         try{
 
@@ -1171,6 +1195,8 @@ cms_status getCMSMessageType(CMS_Message* message, char* type, int size) {
                 type[0] = '\0';
             }
 
+            result = CMS_SUCCESS;
+
         } catch(cms::MessageFormatException& ex) {
             type[0] = '\0';
             result = CMS_MESSAGE_FORMAT_ERROR;
@@ -1186,14 +1212,15 @@ cms_status getCMSMessageType(CMS_Message* message, char* type, int size) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status setCMSMessageType(CMS_Message* message, const char* type) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && type != NULL) {
+    if(message != NULL && message->message != NULL && type != NULL) {
 
         try{
 
             if(strlen(type) > 0) {
                 message->message->setCMSType(type);
+                result = CMS_SUCCESS;
             }
 
         } catch(cms::MessageNotWriteableException& ex) {

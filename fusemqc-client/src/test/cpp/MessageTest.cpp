@@ -18,6 +18,7 @@
 #include "MessageTest.h"
 
 #include <CMS_Message.h>
+#include <CMS_Destination.h>
 
 using namespace cms;
 
@@ -390,3 +391,238 @@ void MessageTest::testMessageStringProperties() {
 	CPPUNIT_ASSERT(getMessageStringProperty(NULL, NULL, NULL, 256) == CMS_ERROR);
 }
 
+////////////////////////////////////////////////////////////////////////////////
+void MessageTest::testCMSMessageCorrelationID() {
+
+	CMS_Message* message = NULL;
+	const char* inValue1 = "Test String 1";
+	const char* inValue2 = "Test String 2";
+	char* outValue = new char[256];
+
+	CPPUNIT_ASSERT(createMessage(session, &message) == CMS_SUCCESS);
+
+	CPPUNIT_ASSERT(setCMSMessageCorrelationID(message, inValue1) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(getCMSMessageCorrelationID(message, outValue, 256) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(std::string(inValue1) == std::string(outValue));
+
+	CPPUNIT_ASSERT(setCMSMessageCorrelationID(message, inValue2) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(getCMSMessageCorrelationID(message, outValue, 256) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(std::string(inValue2) == std::string(outValue));
+
+	CPPUNIT_ASSERT(setCMSMessageCorrelationID(NULL, inValue1) == CMS_ERROR);
+	CPPUNIT_ASSERT(setCMSMessageCorrelationID(NULL, NULL) == CMS_ERROR);
+	CPPUNIT_ASSERT(setCMSMessageCorrelationID(message, NULL) == CMS_ERROR);
+
+	CPPUNIT_ASSERT(getCMSMessageCorrelationID(message, NULL, 255) == CMS_ERROR);
+	CPPUNIT_ASSERT(getCMSMessageCorrelationID(message, outValue, 0) == CMS_ERROR);
+	CPPUNIT_ASSERT(getCMSMessageCorrelationID(message, NULL, 0) == CMS_ERROR);
+	CPPUNIT_ASSERT(getCMSMessageCorrelationID(NULL, outValue, 256) == CMS_ERROR);
+	CPPUNIT_ASSERT(getCMSMessageCorrelationID(NULL, outValue, 0) == CMS_ERROR);
+	CPPUNIT_ASSERT(getCMSMessageCorrelationID(NULL, NULL, 256) == CMS_ERROR);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageTest::testMSMessageDeliveryMode() {
+
+	CMS_Message* message = NULL;
+	int result = 0;
+
+	CPPUNIT_ASSERT(createMessage(session, &message) == CMS_SUCCESS);
+
+	CPPUNIT_ASSERT(setCMSMessageDeliveryMode(message, CMS_MSG_PERSISTENT) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(getCMSMessageDeliveryMode(message, &result) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(result == CMS_MSG_PERSISTENT);
+
+	CPPUNIT_ASSERT(setCMSMessageDeliveryMode(message, CMS_MSG_NON_PERSISTENT) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(getCMSMessageDeliveryMode(message, &result) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(result == CMS_MSG_NON_PERSISTENT);
+
+	CPPUNIT_ASSERT(setCMSMessageDeliveryMode(NULL, 2) == CMS_ERROR);
+
+	CPPUNIT_ASSERT(getCMSMessageDeliveryMode(message, NULL) == CMS_ERROR);
+	CPPUNIT_ASSERT(getCMSMessageDeliveryMode(NULL, &result) == CMS_ERROR);
+	CPPUNIT_ASSERT(getCMSMessageDeliveryMode(NULL, NULL) == CMS_ERROR);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageTest::testCMSMessageDestination() {
+
+	CMS_Message* message = NULL;
+	CMS_Destination* destination = 0;
+	CMS_Destination* result = 0;
+	int equals = 0;
+
+	CPPUNIT_ASSERT(createDestination(session, CMS_TEMPORARY_TOPIC, NULL, &destination) == CMS_SUCCESS);
+
+	CPPUNIT_ASSERT(createMessage(session, &message) == CMS_SUCCESS);
+
+	CPPUNIT_ASSERT(setCMSMessageDestination(message, destination) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(getCMSMessageDestination(message, &result) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(compareDestinations(result, destination, &equals) == CMS_SUCCESS);
+	CPPUNIT_ASSERT_EQUAL(1, equals);
+
+	CPPUNIT_ASSERT(setCMSMessageDestination(NULL, destination) == CMS_ERROR);
+
+	CPPUNIT_ASSERT(getCMSMessageDestination(message, NULL) == CMS_ERROR);
+	CPPUNIT_ASSERT(getCMSMessageDestination(NULL, &result) == CMS_ERROR);
+	CPPUNIT_ASSERT(getCMSMessageDestination(NULL, NULL) == CMS_ERROR);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageTest::testCMSMessageExpiration() {
+
+	CMS_Message* message = NULL;
+	long long result = 0;
+
+	CPPUNIT_ASSERT(createMessage(session, &message) == CMS_SUCCESS);
+
+	CPPUNIT_ASSERT(setCMSMessageExpiration(message, 55) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(getCMSMessageExpiration(message, &result) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(result == 55);
+
+	CPPUNIT_ASSERT(setCMSMessageExpiration(message, 127) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(getCMSMessageExpiration(message, &result) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(result == 127);
+
+	CPPUNIT_ASSERT(setCMSMessageExpiration(NULL, 2) == CMS_ERROR);
+
+	CPPUNIT_ASSERT(getCMSMessageExpiration(message, NULL) == CMS_ERROR);
+	CPPUNIT_ASSERT(getCMSMessageExpiration(NULL, &result) == CMS_ERROR);
+	CPPUNIT_ASSERT(getCMSMessageExpiration(NULL, NULL) == CMS_ERROR);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageTest::testCMSMessageMessageID() {
+
+	// TODO - Not working in AMQ-CPP Yet
+//	CMS_Message* message = NULL;
+//	const char* inValue1 = "Test String 1";
+//	const char* inValue2 = "Test String 2";
+//	char* outValue = new char[256];
+//
+//	CPPUNIT_ASSERT(createMessage(session, &message) == CMS_SUCCESS);
+//
+//	CPPUNIT_ASSERT(setCMSMessageMessageID(message, inValue1) == CMS_SUCCESS);
+//	CPPUNIT_ASSERT(getCMSMessageMessageID(message, outValue, 256) == CMS_SUCCESS);
+//	CPPUNIT_ASSERT(std::string(inValue1) == std::string(outValue));
+//
+//	CPPUNIT_ASSERT(setCMSMessageMessageID(message, inValue2) == CMS_SUCCESS);
+//	CPPUNIT_ASSERT(getCMSMessageMessageID(message, outValue, 256) == CMS_SUCCESS);
+//	CPPUNIT_ASSERT(std::string(inValue2) == std::string(outValue));
+//
+//	CPPUNIT_ASSERT(setCMSMessageMessageID(NULL, inValue1) == CMS_ERROR);
+//	CPPUNIT_ASSERT(setCMSMessageMessageID(NULL, NULL) == CMS_ERROR);
+//	CPPUNIT_ASSERT(setCMSMessageMessageID(message, NULL) == CMS_ERROR);
+//
+//	CPPUNIT_ASSERT(getCMSMessageMessageID(message, NULL, 255) == CMS_ERROR);
+//	CPPUNIT_ASSERT(getCMSMessageMessageID(message, outValue, 0) == CMS_ERROR);
+//	CPPUNIT_ASSERT(getCMSMessageMessageID(message, NULL, 0) == CMS_ERROR);
+//	CPPUNIT_ASSERT(getCMSMessageMessageID(NULL, outValue, 256) == CMS_ERROR);
+//	CPPUNIT_ASSERT(getCMSMessageMessageID(NULL, outValue, 0) == CMS_ERROR);
+//	CPPUNIT_ASSERT(getCMSMessageMessageID(NULL, NULL, 256) == CMS_ERROR);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageTest::testCMSMessagePriority() {
+
+	CMS_Message* message = NULL;
+	int result = 0;
+
+	CPPUNIT_ASSERT(createMessage(session, &message) == CMS_SUCCESS);
+
+	CPPUNIT_ASSERT(setCMSMessagePriority(message, 1) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(getCMSMessagePriority(message, &result) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(result == 1);
+
+	CPPUNIT_ASSERT(setCMSMessagePriority(message, 4) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(getCMSMessagePriority(message, &result) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(result == 4);
+
+	CPPUNIT_ASSERT(setCMSMessagePriority(NULL, 2) == CMS_ERROR);
+
+	CPPUNIT_ASSERT(getCMSMessagePriority(message, NULL) == CMS_ERROR);
+	CPPUNIT_ASSERT(getCMSMessagePriority(NULL, &result) == CMS_ERROR);
+	CPPUNIT_ASSERT(getCMSMessagePriority(NULL, NULL) == CMS_ERROR);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageTest::testCMSMessageRedelivered() {
+
+// TODO - Not working in AMQ-CPP Yet
+//	CMS_Message* message = NULL;
+//	int result = 0;
+//
+//	CPPUNIT_ASSERT(createMessage(session, &message) == CMS_SUCCESS);
+//
+//	CPPUNIT_ASSERT(setCMSMessageRedelivered(message, 1) == CMS_SUCCESS);
+//	CPPUNIT_ASSERT(getCMSMessageRedelivered(message, &result) == CMS_SUCCESS);
+//	CPPUNIT_ASSERT(result == 1);
+//
+//	CPPUNIT_ASSERT(setCMSMessageRedelivered(message, 0) == CMS_SUCCESS);
+//	CPPUNIT_ASSERT(getCMSMessageRedelivered(message, &result) == CMS_SUCCESS);
+//	CPPUNIT_ASSERT(result == 0);
+//
+//	CPPUNIT_ASSERT(setCMSMessageRedelivered(NULL, 2) == CMS_ERROR);
+//
+//	CPPUNIT_ASSERT(getCMSMessageRedelivered(message, NULL) == CMS_ERROR);
+//	CPPUNIT_ASSERT(getCMSMessageRedelivered(NULL, &result) == CMS_ERROR);
+//	CPPUNIT_ASSERT(getCMSMessageRedelivered(NULL, NULL) == CMS_ERROR);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageTest::testCMSMessageReplyTo() {
+
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageTest::testCMSMessageTimestamp() {
+
+	CMS_Message* message = NULL;
+	long long result = 0;
+
+	CPPUNIT_ASSERT(createMessage(session, &message) == CMS_SUCCESS);
+
+	CPPUNIT_ASSERT(setCMSMessageTimestamp(message, 55) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(getCMSMessageTimestamp(message, &result) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(result == 55);
+
+	CPPUNIT_ASSERT(setCMSMessageTimestamp(message, 127) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(getCMSMessageTimestamp(message, &result) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(result == 127);
+
+	CPPUNIT_ASSERT(setCMSMessageTimestamp(NULL, 2) == CMS_ERROR);
+
+	CPPUNIT_ASSERT(getCMSMessageTimestamp(message, NULL) == CMS_ERROR);
+	CPPUNIT_ASSERT(getCMSMessageTimestamp(NULL, &result) == CMS_ERROR);
+	CPPUNIT_ASSERT(getCMSMessageTimestamp(NULL, NULL) == CMS_ERROR);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageTest::testCMSMessageType() {
+
+	CMS_Message* message = NULL;
+	const char* inValue1 = "Test String 1";
+	const char* inValue2 = "Test String 2";
+	char* outValue = new char[256];
+
+	CPPUNIT_ASSERT(createMessage(session, &message) == CMS_SUCCESS);
+
+	CPPUNIT_ASSERT(setCMSMessageType(message, inValue1) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(getCMSMessageType(message, outValue, 256) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(std::string(inValue1) == std::string(outValue));
+
+	CPPUNIT_ASSERT(setCMSMessageType(message, inValue2) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(getCMSMessageType(message, outValue, 256) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(std::string(inValue2) == std::string(outValue));
+
+	CPPUNIT_ASSERT(setCMSMessageType(NULL, inValue1) == CMS_ERROR);
+	CPPUNIT_ASSERT(setCMSMessageType(NULL, NULL) == CMS_ERROR);
+	CPPUNIT_ASSERT(setCMSMessageType(message, NULL) == CMS_ERROR);
+
+	CPPUNIT_ASSERT(getCMSMessageType(message, NULL, 255) == CMS_ERROR);
+	CPPUNIT_ASSERT(getCMSMessageType(message, outValue, 0) == CMS_ERROR);
+	CPPUNIT_ASSERT(getCMSMessageType(message, NULL, 0) == CMS_ERROR);
+	CPPUNIT_ASSERT(getCMSMessageType(NULL, outValue, 256) == CMS_ERROR);
+	CPPUNIT_ASSERT(getCMSMessageType(NULL, outValue, 0) == CMS_ERROR);
+	CPPUNIT_ASSERT(getCMSMessageType(NULL, NULL, 256) == CMS_ERROR);
+}

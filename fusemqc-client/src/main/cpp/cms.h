@@ -60,7 +60,7 @@ typedef enum {
     CMS_MAP_MESSAGE,
     CMS_STREAM_MESSAAGE,
     CMS_TEXT_MESSAGE
-} MESSAGE_TYPE;
+} CMS_MESSAGE_TYPE;
 
 /** Enum that defines the various destination types that are supported by CMS. */
 typedef enum {
@@ -68,22 +68,22 @@ typedef enum {
     CMS_QUEUE,
     CMS_TEMPORARY_TOPIC,
     CMS_TEMPORARY_QUEUE
-} DESTINATION_TYPE;
+} CMS_DESTINATION_TYPE;
 
 /** Enum that defines the various Message Acknowledgment modes that are supported by CMS. */
 typedef enum {
-    AUTO_ACKNOWLEDGE,
-    DUPS_OK_ACKNOWLEDGE,
-    CLIENT_ACKNOWLEDGE,
-    SESSION_TRANSACTED,
-    INDIVIDUAL_ACKNOWLEDGE
-} ACKNOWLEDGMENT_MODE;
+    CMS_AUTO_ACKNOWLEDGE,
+    CMS_DUPS_OK_ACKNOWLEDGE,
+    CMS_CLIENT_ACKNOWLEDGE,
+    CMS_SESSION_TRANSACTED,
+    CMS_INDIVIDUAL_ACKNOWLEDGE
+} CMS_ACKNOWLEDGMENT_MODE;
 
 /** Enum that defines the delivery modes available to a MessageProducer. */
 typedef enum {
-    PERSISTENT = 0,
-    NON_PERSISTENT = 1
-} DELIVERY_MODE;
+    CMS_MSG_PERSISTENT = 0,
+    CMS_MSG_NON_PERSISTENT = 1
+} CMS_DELIVERY_MODE;
 
 /** Result code returned from wrapper functions to indicate success or failure. */
 typedef int cms_status;

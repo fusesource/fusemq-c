@@ -40,7 +40,26 @@ extern "C" {
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status createDestination(CMS_Session* session, DESTINATION_TYPE type, const char* name, CMS_Destination** destination);
+cms_status createDestination(CMS_Session* session, CMS_DESTINATION_TYPE type, const char* name, CMS_Destination** destination);
+
+/**
+ * Creates a Temporary Destination from the Given Session instance.  The type of
+ * Destination is given by the DESTINATION_TYPE parameter and must be one of
+ * CMS_TEMPORARY_TOPIC or CMS_TEMPORARY_QUEUE otherwise CMS_ERROR is returned.
+ *
+ * This is a convenience method that is equivalent to calling createDestination
+ * and specifying a temporary destination type.
+ *
+ * @param session
+ *      The Session to use to create the new Destination.
+ * @param type
+ *      The Type of Destination that is to be created.
+ * @param destination
+ *      The address of the location to store the new Destination instance.
+ *
+ * @return result code indicating the success or failure of the operation.
+ */
+cms_status createTemporaryDestination(CMS_Session* session, CMS_DESTINATION_TYPE type, CMS_Destination** destination);
 
 /**
  * Destroy the given Destination instance.

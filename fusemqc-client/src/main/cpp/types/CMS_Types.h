@@ -68,7 +68,7 @@ struct CMS_MessageProducer {
  */
 struct CMS_Message {
     cms::Message* message;
-    MESSAGE_TYPE type;
+    CMS_MESSAGE_TYPE type;
 };
 
 /**
@@ -76,7 +76,7 @@ struct CMS_Message {
  */
 struct CMS_Destination {
     cms::Destination* destination;
-    DESTINATION_TYPE type;
+    CMS_DESTINATION_TYPE type;
 };
 
 #endif /* _CMS_TYPES_H_ */
