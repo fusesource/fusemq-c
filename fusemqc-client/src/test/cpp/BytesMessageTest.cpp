@@ -17,6 +17,8 @@
 
 #include "BytesMessageTest.h"
 
+#include <CMS_BytesMessage.h>
+
 using namespace cms;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -30,4 +32,22 @@ BytesMessageTest::~BytesMessageTest() {
 ////////////////////////////////////////////////////////////////////////////////
 void BytesMessageTest::testCreateBytesMessage() {
 
+	CMS_Message* message = NULL;
+	int result = -1;
+
+	CPPUNIT_ASSERT(createBytesMessage(session, &message, testString) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(getMessageType(message, &result) == CMS_SUCCESS);
+	CPPUNIT_ASSERT_EQUAL((int)CMS_BYTES_MESSAGE, result);
+
+	destroyMessage(txtMessage);
+
+	CPPUNIT_ASSERT(createBytesMessage(session, &message, NULL) == CMS_SUCCESS);
+	CPPUNIT_ASSERT(getMessageType(message, &result) == CMS_SUCCESS);
+	CPPUNIT_ASSERT_EQUAL((int)CMS_BYTES_MESSAGE, result);
+
+	destroyMessage(txtMessage);
+
+	CPPUNIT_ASSERT(createBytesMessage(session, NULL, NULL) == CMS_ERROR);
+	CPPUNIT_ASSERT(createBytesMessage(NULL, &message, NULL) == CMS_ERROR);
+	CPPUNIT_ASSERT(createBytesMessage(NULL, NULL, NULL) == CMS_ERROR);
 }

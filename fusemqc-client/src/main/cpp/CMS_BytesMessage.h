@@ -20,6 +20,8 @@
 #ifndef CMSBYTESMESSAGE_H_
 #define CMSBYTESMESSAGE_H_
 
+#include <CMS_Message.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
