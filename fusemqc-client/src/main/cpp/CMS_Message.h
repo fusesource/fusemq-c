@@ -118,6 +118,19 @@ cms_status destroyMessage(CMS_Message* message);
 cms_status cloneMessage(CMS_Message* original, CMS_Message** clone);
 
 /**
+ * Gets the Message Type of the Wrapped CMS Message object.  If the CMS_Message
+ * is not initialized then this method returns CMS_ERROR.
+ *
+ * @param message
+ * 		The CMS_Message instance whose type is to be returned.
+ * @param type
+ * 		The address where the wrapped message type is to be written.
+ *
+ * @return result code indicating the success or failure of the operation.
+ */
+cms_status getMessageType(CMS_Message* message, int* type);
+
+/**
  * Acknowledge the given Message.
  *
  * @param message
@@ -396,7 +409,7 @@ cms_status setMessageLongProperty(CMS_Message* message, const char* key, long lo
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setShortProperty(CMS_Message* message, const char* key, short value);
+cms_status setMessageShortProperty(CMS_Message* message, const char* key, short value);
 
 /**
  * Sets a string property.
@@ -410,7 +423,7 @@ cms_status setShortProperty(CMS_Message* message, const char* key, short value);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setStringProperty(CMS_Message* message, const char* key, const char* value);
+cms_status setMessageStringProperty(CMS_Message* message, const char* key, const char* value);
 
 /**
  * Gets the Correlation Id that is assigned to this Message.

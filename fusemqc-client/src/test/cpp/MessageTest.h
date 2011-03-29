@@ -26,6 +26,14 @@ namespace cms {
 
         CPPUNIT_TEST_SUITE( MessageTest );
         CPPUNIT_TEST( testCreateMessage );
+        CPPUNIT_TEST( testMessageBooleanProperties );
+        CPPUNIT_TEST( testMessageByteProperties );
+        CPPUNIT_TEST( testMessageDoubleProperties );
+        CPPUNIT_TEST( testMessageFloatProperties );
+        CPPUNIT_TEST( testMessageLongProperties );
+        CPPUNIT_TEST( testMessageIntProperties );
+        CPPUNIT_TEST( testMessageShortProperties );
+        CPPUNIT_TEST( testMessageStringProperties );
         CPPUNIT_TEST_SUITE_END();
 
 	public:
@@ -34,6 +42,14 @@ namespace cms {
 		virtual ~MessageTest();
 
 		void testCreateMessage();
+		void testMessageBooleanProperties();
+		void testMessageByteProperties();
+		void testMessageDoubleProperties();
+		void testMessageFloatProperties();
+		void testMessageLongProperties();
+		void testMessageIntProperties();
+		void testMessageShortProperties();
+		void testMessageStringProperties();
 
 	};
 

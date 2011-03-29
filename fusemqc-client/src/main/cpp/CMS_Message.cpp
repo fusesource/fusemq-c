@@ -201,6 +201,24 @@ cms_status cloneMessage(CMS_Message* original, CMS_Message** clone) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+cms_status getMessageType(CMS_Message* message, int* type) {
+
+    cms_status result = CMS_ERROR;
+
+    if(message != NULL && type != NULL && message->message) {
+
+        try{
+            *type = message->type;
+            result = CMS_SUCCESS;
+        } catch(...) {
+            result = CMS_ERROR;
+        }
+    }
+
+    return result;
+}
+
+////////////////////////////////////////////////////////////////////////////////
 cms_status acknowledgeMessage(CMS_Message* message) {
 
     cms_status result = CMS_SUCCESS;
@@ -295,14 +313,15 @@ cms_status messagePropertyExists(CMS_Message* message, const char* key, int* exi
 ////////////////////////////////////////////////////////////////////////////////
 cms_status getMessageBooleanProperty(CMS_Message* message, const char* key, int* value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && key != NULL && value != NULL) {
+    if(message != NULL && message->message != NULL && key != NULL && value != NULL) {
 
         try{
 
             if(strlen(key) > 0) {
                 *value = (int) message->message->getBooleanProperty(key);
+				result = CMS_SUCCESS;
             } else {
                 *value = 0;
             }
@@ -322,14 +341,15 @@ cms_status getMessageBooleanProperty(CMS_Message* message, const char* key, int*
 ////////////////////////////////////////////////////////////////////////////////
 cms_status getMessageByteProperty(CMS_Message* message, const char* key, unsigned char* value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && key != NULL && value != NULL) {
+    if(message != NULL && message->message != NULL && key != NULL && value != NULL) {
 
         try{
 
             if(strlen(key) > 0) {
                 *value = message->message->getByteProperty(key);
+				result = CMS_SUCCESS;
             } else {
                 *value = 0;
             }
@@ -349,14 +369,15 @@ cms_status getMessageByteProperty(CMS_Message* message, const char* key, unsigne
 ////////////////////////////////////////////////////////////////////////////////
 cms_status getMessageDoubleProperty(CMS_Message* message, const char* key, double* value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && key != NULL && value != NULL) {
+    if(message != NULL && message->message != NULL && key != NULL && value != NULL) {
 
         try{
 
             if(strlen(key) > 0) {
                 *value = message->message->getDoubleProperty(key);
+				result = CMS_SUCCESS;
             } else {
                 *value = 0;
             }
@@ -376,14 +397,15 @@ cms_status getMessageDoubleProperty(CMS_Message* message, const char* key, doubl
 ////////////////////////////////////////////////////////////////////////////////
 cms_status getMessageFloatProperty(CMS_Message* message, const char* key, float* value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && key != NULL && value != NULL) {
+    if(message != NULL && message->message != NULL && key != NULL && value != NULL) {
 
         try{
 
             if(strlen(key) > 0) {
                 *value = message->message->getFloatProperty(key);
+				result = CMS_SUCCESS;
             } else {
                 *value = 0;
             }
@@ -403,14 +425,15 @@ cms_status getMessageFloatProperty(CMS_Message* message, const char* key, float*
 ////////////////////////////////////////////////////////////////////////////////
 cms_status getMessageIntProperty(CMS_Message* message, const char* key, int* value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && key != NULL && value != NULL) {
+    if(message != NULL && message->message != NULL && key != NULL && value != NULL) {
 
         try{
 
             if(strlen(key) > 0) {
                 *value = message->message->getIntProperty(key);
+				result = CMS_SUCCESS;
             } else {
                 *value = 0;
             }
@@ -430,14 +453,15 @@ cms_status getMessageIntProperty(CMS_Message* message, const char* key, int* val
 ////////////////////////////////////////////////////////////////////////////////
 cms_status getMessageLongProperty(CMS_Message* message, const char* key, long long* value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && key != NULL && value != NULL) {
+    if(message != NULL && message->message != NULL && key != NULL && value != NULL) {
 
         try{
 
             if(strlen(key) > 0) {
                 *value = message->message->getLongProperty(key);
+				result = CMS_SUCCESS;
             } else {
                 *value = 0;
             }
@@ -457,14 +481,15 @@ cms_status getMessageLongProperty(CMS_Message* message, const char* key, long lo
 ////////////////////////////////////////////////////////////////////////////////
 cms_status getMessageShortProperty(CMS_Message* message, const char* key, short* value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && key != NULL && value != NULL) {
+    if(message != NULL && message->message != NULL && key != NULL && value != NULL) {
 
         try{
 
             if(strlen(key) > 0) {
                 *value = message->message->getShortProperty(key);
+				result = CMS_SUCCESS;
             } else {
                 *value = 0;
             }
@@ -484,25 +509,32 @@ cms_status getMessageShortProperty(CMS_Message* message, const char* key, short*
 ////////////////////////////////////////////////////////////////////////////////
 cms_status getMessageStringProperty(CMS_Message* message, const char* key, char* value, int size) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && key != NULL && value != NULL) {
+    if(message != NULL && message->message != NULL && key != NULL && value != NULL) {
 
         try{
 
-            std::string property = message->message->getStringProperty(key);
+        	if(strlen(key) > 0) {
+				std::string property = message->message->getStringProperty(key);
 
-            if(!property.empty()) {
+				if(!property.empty()) {
 
-                std::size_t pos = 0;
-                for(; pos < property.size() && pos < (std::size_t)size - 1; ++pos) {
-                    value[pos] = property.at(pos);
-                }
+					std::size_t pos = 0;
+					for(; pos < property.size() && pos < (std::size_t)size - 1; ++pos) {
+						value[pos] = property.at(pos);
+					}
 
-                value[pos] = '\0';
-            } else {
-                value[0] = '\0';
-            }
+					value[pos] = '\0';
+				} else {
+					value[0] = '\0';
+				}
+
+				result = CMS_SUCCESS;
+
+        	} else {
+                *value = 0;
+        	}
 
         } catch(cms::MessageFormatException& ex) {
             value[0] = '\0';
@@ -519,14 +551,15 @@ cms_status getMessageStringProperty(CMS_Message* message, const char* key, char*
 ////////////////////////////////////////////////////////////////////////////////
 cms_status setMessageBooleanProperty(CMS_Message* message, const char* key, int value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && key != NULL) {
+    if(message != NULL && message->message != NULL && key != NULL) {
 
         try{
 
             if(strlen(key) > 0) {
                 message->message->setBooleanProperty(key, value > 0 ? true : false);
+                result = CMS_SUCCESS;
             }
 
         } catch(cms::MessageNotWriteableException& ex) {
@@ -542,14 +575,15 @@ cms_status setMessageBooleanProperty(CMS_Message* message, const char* key, int 
 ////////////////////////////////////////////////////////////////////////////////
 cms_status setMessageByteProperty(CMS_Message* message, const char* key, unsigned char value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && key != NULL) {
+    if(message != NULL && message->message != NULL && key != NULL) {
 
         try{
 
             if(strlen(key) > 0) {
                 message->message->setByteProperty(key, value);
+                result = CMS_SUCCESS;
             }
 
         } catch(cms::MessageNotWriteableException& ex) {
@@ -565,14 +599,15 @@ cms_status setMessageByteProperty(CMS_Message* message, const char* key, unsigne
 ////////////////////////////////////////////////////////////////////////////////
 cms_status setMessageDoubleProperty(CMS_Message* message, const char* key, double value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && key != NULL) {
+    if(message != NULL && message->message != NULL && key != NULL) {
 
         try{
 
             if(strlen(key) > 0) {
                 message->message->setDoubleProperty(key, value);
+                result = CMS_SUCCESS;
             }
 
         } catch(cms::MessageNotWriteableException& ex) {
@@ -588,14 +623,15 @@ cms_status setMessageDoubleProperty(CMS_Message* message, const char* key, doubl
 ////////////////////////////////////////////////////////////////////////////////
 cms_status setMessageFloatProperty(CMS_Message* message, const char* key, float value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && key != NULL) {
+    if(message != NULL && message->message != NULL && key != NULL) {
 
         try{
 
             if(strlen(key) > 0) {
                 message->message->setFloatProperty(key, value);
+                result = CMS_SUCCESS;
             }
 
         } catch(cms::MessageNotWriteableException& ex) {
@@ -611,14 +647,15 @@ cms_status setMessageFloatProperty(CMS_Message* message, const char* key, float 
 ////////////////////////////////////////////////////////////////////////////////
 cms_status setMessageIntProperty(CMS_Message* message, const char* key, int value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && key != NULL) {
+    if(message != NULL && message->message != NULL && key != NULL) {
 
         try{
 
             if(strlen(key) > 0) {
                 message->message->setIntProperty(key, value);
+                result = CMS_SUCCESS;
             }
 
         } catch(cms::MessageNotWriteableException& ex) {
@@ -634,14 +671,15 @@ cms_status setMessageIntProperty(CMS_Message* message, const char* key, int valu
 ////////////////////////////////////////////////////////////////////////////////
 cms_status setMessageLongProperty(CMS_Message* message, const char* key, long long value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && key != NULL) {
+    if(message != NULL && message->message != NULL && key != NULL) {
 
         try{
 
             if(strlen(key) > 0) {
                 message->message->setLongProperty(key, value);
+                result = CMS_SUCCESS;
             }
 
         } catch(cms::MessageNotWriteableException& ex) {
@@ -655,16 +693,17 @@ cms_status setMessageLongProperty(CMS_Message* message, const char* key, long lo
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setShortProperty(CMS_Message* message, const char* key, short value) {
+cms_status setMessageShortProperty(CMS_Message* message, const char* key, short value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && key != NULL) {
+    if(message != NULL && message->message != NULL && key != NULL) {
 
         try{
 
             if(strlen(key) > 0) {
                 message->message->setShortProperty(key, value);
+                result = CMS_SUCCESS;
             }
 
         } catch(cms::MessageNotWriteableException& ex) {
@@ -678,16 +717,17 @@ cms_status setShortProperty(CMS_Message* message, const char* key, short value) 
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setStringProperty(CMS_Message* message, const char* key, const char* value) {
+cms_status setMessageStringProperty(CMS_Message* message, const char* key, const char* value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && key != NULL) {
+    if(message != NULL && message->message != NULL && key != NULL) {
 
         try{
 
             if(strlen(key) > 0) {
                 message->message->setStringProperty(key, value);
+                result = CMS_SUCCESS;
             }
 
         } catch(cms::MessageNotWriteableException& ex) {
