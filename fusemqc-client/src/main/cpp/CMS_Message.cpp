@@ -35,18 +35,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 cms_status createMessage(CMS_Session* session, CMS_Message** message) {
 
-	if(session == NULL || message == NULL) {
-		return CMS_ERROR;
-	}
+    if(session == NULL || message == NULL) {
+        return CMS_ERROR;
+    }
 
     cms_status result = CMS_SUCCESS;
     std::auto_ptr<CMS_Message> wrapper( new CMS_Message );
 
     try{
 
-		wrapper->message = session->session->createMessage();
-		wrapper->type = CMS_MESSAGE;
-		*message = wrapper.release();
+        wrapper->message = session->session->createMessage();
+        wrapper->type = CMS_MESSAGE;
+        *message = wrapper.release();
 
     } catch(...) {
         result = CMS_ERROR;
@@ -321,7 +321,7 @@ cms_status getMessageBooleanProperty(CMS_Message* message, const char* key, int*
 
             if(strlen(key) > 0) {
                 *value = (int) message->message->getBooleanProperty(key);
-				result = CMS_SUCCESS;
+                result = CMS_SUCCESS;
             } else {
                 *value = 0;
             }
@@ -349,7 +349,7 @@ cms_status getMessageByteProperty(CMS_Message* message, const char* key, unsigne
 
             if(strlen(key) > 0) {
                 *value = message->message->getByteProperty(key);
-				result = CMS_SUCCESS;
+                result = CMS_SUCCESS;
             } else {
                 *value = 0;
             }
@@ -377,7 +377,7 @@ cms_status getMessageDoubleProperty(CMS_Message* message, const char* key, doubl
 
             if(strlen(key) > 0) {
                 *value = message->message->getDoubleProperty(key);
-				result = CMS_SUCCESS;
+                result = CMS_SUCCESS;
             } else {
                 *value = 0;
             }
@@ -405,7 +405,7 @@ cms_status getMessageFloatProperty(CMS_Message* message, const char* key, float*
 
             if(strlen(key) > 0) {
                 *value = message->message->getFloatProperty(key);
-				result = CMS_SUCCESS;
+                result = CMS_SUCCESS;
             } else {
                 *value = 0;
             }
@@ -433,7 +433,7 @@ cms_status getMessageIntProperty(CMS_Message* message, const char* key, int* val
 
             if(strlen(key) > 0) {
                 *value = message->message->getIntProperty(key);
-				result = CMS_SUCCESS;
+                result = CMS_SUCCESS;
             } else {
                 *value = 0;
             }
@@ -461,7 +461,7 @@ cms_status getMessageLongProperty(CMS_Message* message, const char* key, long lo
 
             if(strlen(key) > 0) {
                 *value = message->message->getLongProperty(key);
-				result = CMS_SUCCESS;
+                result = CMS_SUCCESS;
             } else {
                 *value = 0;
             }
@@ -489,7 +489,7 @@ cms_status getMessageShortProperty(CMS_Message* message, const char* key, short*
 
             if(strlen(key) > 0) {
                 *value = message->message->getShortProperty(key);
-				result = CMS_SUCCESS;
+                result = CMS_SUCCESS;
             } else {
                 *value = 0;
             }
@@ -515,26 +515,26 @@ cms_status getMessageStringProperty(CMS_Message* message, const char* key, char*
 
         try{
 
-        	if(strlen(key) > 0) {
-				std::string property = message->message->getStringProperty(key);
+            if(strlen(key) > 0) {
+                std::string property = message->message->getStringProperty(key);
 
-				if(!property.empty()) {
+                if(!property.empty()) {
 
-					std::size_t pos = 0;
-					for(; pos < property.size() && pos < (std::size_t)size - 1; ++pos) {
-						value[pos] = property.at(pos);
-					}
+                    std::size_t pos = 0;
+                    for(; pos < property.size() && pos < (std::size_t)size - 1; ++pos) {
+                        value[pos] = property.at(pos);
+                    }
 
-					value[pos] = '\0';
-				} else {
-					value[0] = '\0';
-				}
+                    value[pos] = '\0';
+                } else {
+                    value[0] = '\0';
+                }
 
-				result = CMS_SUCCESS;
+                result = CMS_SUCCESS;
 
-        	} else {
+            } else {
                 *value = 0;
-        	}
+            }
 
         } catch(cms::MessageFormatException& ex) {
             value[0] = '\0';
@@ -881,7 +881,7 @@ cms_status setCMSMessageDestination(CMS_Message* message, CMS_Destination* desti
         try{
 
             if (destination != NULL) {
-                message->message->setCMSDestination(destination->destination->clone());
+                message->message->setCMSDestination(destination->destination);
             } else {
                 message->message->setCMSDestination(NULL);
             }
@@ -1117,7 +1117,7 @@ cms_status setCMSMessageReplyTo(CMS_Message* message, CMS_Destination* destinati
         try{
 
             if (destination != NULL) {
-                message->message->setCMSReplyTo(destination->destination->clone());
+                message->message->setCMSReplyTo(destination->destination);
             } else {
                 message->message->setCMSReplyTo(NULL);
             }

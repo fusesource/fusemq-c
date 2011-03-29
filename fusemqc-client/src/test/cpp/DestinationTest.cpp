@@ -33,7 +33,9 @@ DestinationTest::~DestinationTest() {
 ////////////////////////////////////////////////////////////////////////////////
 void DestinationTest::testCreateDestinationNullString() {
 
-	CMS_Destination* destination = NULL;
+    CMS_Destination* destination = NULL;
 
-	CPPUNIT_ASSERT(createDestination(session, CMS_TOPIC, NULL, &destination) == CMS_ERROR);
+    CPPUNIT_ASSERT(createDestination(session, CMS_TOPIC, NULL, &destination) == CMS_ERROR);
+
+    destroyDestination(destination);
 }
