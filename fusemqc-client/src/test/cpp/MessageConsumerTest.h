@@ -27,6 +27,8 @@ namespace cms {
         CPPUNIT_TEST_SUITE( MessageConsumerTest );
         CPPUNIT_TEST( testCreateConsumer );
         CPPUNIT_TEST( testAutoAckConsumerReceive );
+        CPPUNIT_TEST( testClientAckConsumerReceive );
+        CPPUNIT_TEST( testIndividualAckConsumerReceive );
         CPPUNIT_TEST_SUITE_END();
 
     public:
@@ -36,6 +38,8 @@ namespace cms {
 
         void testCreateConsumer();
         void testAutoAckConsumerReceive();
+        void testClientAckConsumerReceive();
+        void testIndividualAckConsumerReceive();
 
     };
 

@@ -19,6 +19,7 @@
 
 #include <cms.h>
 #include <CMS_Connection.h>
+#include <CMS_Session.h>
 #include <CMS_Destination.h>
 #include <CMS_TextMessage.h>
 #include <CMS_MessageProducer.h>
@@ -81,4 +82,78 @@ void MessageConsumerTest::testAutoAckConsumerReceive() {
     destroyConsumer(consumer);
     destroyProducer(producer);
     destroyDestination(destination);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageConsumerTest::testClientAckConsumerReceive() {
+
+    CMS_Destination* destination = NULL;
+    CMS_Message* message = NULL;
+    CMS_MessageConsumer* consumer = NULL;
+    CMS_MessageProducer* producer = NULL;
+    CMS_Session* session = NULL;
+
+    createSession(connection, &session, CMS_CLIENT_ACKNOWLEDGE);
+
+    createTemporaryDestination(session, CMS_TEMPORARY_TOPIC, &destination);
+    createDefaultConsumer(session, destination, &consumer);
+    createProducer(session, destination, &producer);
+    setProducerDeliveryMode(producer, CMS_MSG_NON_PERSISTENT);
+
+    startConnection(connection);
+
+    createTextMessage(session, &message, NULL);
+
+    for( unsigned int i = 0; i < 256; ++i ) {
+        producerSendWithDefaults(producer, message);
+    }
+
+    for( unsigned int i = 0; i < 256; ++i ) {
+        CMS_Message* received = NULL;
+        CPPUNIT_ASSERT(consumerReceiveWithTimeout(consumer, &received, 2000) == CMS_SUCCESS);
+        CPPUNIT_ASSERT(acknowledgeMessage(received) == CMS_SUCCESS);
+        destroyMessage(received);
+    }
+
+    destroyConsumer(consumer);
+    destroyProducer(producer);
+    destroyDestination(destination);
+    destroySession(session);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageConsumerTest::testIndividualAckConsumerReceive() {
+
+    CMS_Destination* destination = NULL;
+    CMS_Message* message = NULL;
+    CMS_MessageConsumer* consumer = NULL;
+    CMS_MessageProducer* producer = NULL;
+    CMS_Session* session = NULL;
+
+    createSession(connection, &session, CMS_INDIVIDUAL_ACKNOWLEDGE);
+
+    createTemporaryDestination(session, CMS_TEMPORARY_TOPIC, &destination);
+    createDefaultConsumer(session, destination, &consumer);
+    createProducer(session, destination, &producer);
+    setProducerDeliveryMode(producer, CMS_MSG_NON_PERSISTENT);
+
+    startConnection(connection);
+
+    createTextMessage(session, &message, NULL);
+
+    for( unsigned int i = 0; i < 256; ++i ) {
+        producerSendWithDefaults(producer, message);
+    }
+
+    for( unsigned int i = 0; i < 256; ++i ) {
+        CMS_Message* received = NULL;
+        CPPUNIT_ASSERT(consumerReceiveWithTimeout(consumer, &received, 2000) == CMS_SUCCESS);
+        CPPUNIT_ASSERT(acknowledgeMessage(received) == CMS_SUCCESS);
+        destroyMessage(received);
+    }
+
+    destroyConsumer(consumer);
+    destroyProducer(producer);
+    destroyDestination(destination);
+    destroySession(session);
 }
