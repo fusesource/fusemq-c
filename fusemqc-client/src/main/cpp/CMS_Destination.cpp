@@ -76,11 +76,11 @@ cms_status createDestination(CMS_Session* session, CMS_DESTINATION_TYPE type,
 cms_status createTemporaryDestination(CMS_Session* session, CMS_DESTINATION_TYPE type,
                                       CMS_Destination** destination) {
 
-	if(type != CMS_TEMPORARY_TOPIC || type != CMS_TEMPORARY_QUEUE) {
-		return CMS_ERROR;
-	}
+    if(type != CMS_TEMPORARY_TOPIC && type != CMS_TEMPORARY_QUEUE) {
+        return CMS_ERROR;
+    }
 
-	return createDestination(session, type, NULL, destination);
+    return createDestination(session, type, NULL, destination);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

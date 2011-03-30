@@ -22,20 +22,22 @@
 
 namespace cms {
 
-	class MessageConsumerTest : public SingleConnectionTestCase {
+    class MessageConsumerTest : public SingleConnectionTestCase {
 
         CPPUNIT_TEST_SUITE( MessageConsumerTest );
         CPPUNIT_TEST( testCreateConsumer );
+        CPPUNIT_TEST( testAutoAckConsumerReceive );
         CPPUNIT_TEST_SUITE_END();
 
-	public:
+    public:
 
-		MessageConsumerTest();
-		virtual ~MessageConsumerTest();
+        MessageConsumerTest();
+        virtual ~MessageConsumerTest();
 
-		void testCreateConsumer();
+        void testCreateConsumer();
+        void testAutoAckConsumerReceive();
 
-	};
+    };
 
 }
 
