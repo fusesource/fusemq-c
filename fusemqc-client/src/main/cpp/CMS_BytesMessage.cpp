@@ -34,29 +34,37 @@
 #include <memory>
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getMessageBodyLength(CMS_Message* message, int* length) {
+cms_status getBytesMessageBodyLength(CMS_Message* message, int* length) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && length != NULL) {
+    if(message != NULL && message->message != NULL && length != NULL) {
 
         if( message->type != CMS_BYTES_MESSAGE ) {
             return CMS_INVALID_MESSAGE_TYPE;
         }
 
         cms::BytesMessage* bytesMessage = dynamic_cast<cms::BytesMessage*>( message->message );
-        *length = bytesMessage->getBodyLength();
+
+        try {
+            *length = bytesMessage->getBodyLength();
+            result = CMS_SUCCESS;
+        } catch(cms::MessageNotReadableException& ex) {
+            result = CMS_MESSAGE_NOT_READABLE;
+        } catch(...) {
+            result = CMS_ERROR;
+        }
     }
 
     return result;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status bytesMessageReset(CMS_Message* message) {
+cms_status resetBytesMessage(CMS_Message* message) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL) {
 
         if( message->type != CMS_BYTES_MESSAGE ) {
             return CMS_INVALID_MESSAGE_TYPE;
@@ -66,6 +74,7 @@ cms_status bytesMessageReset(CMS_Message* message) {
 
         try{
             bytesMessage->reset();
+            result = CMS_SUCCESS;
         } catch(cms::MessageFormatException& ex) {
             result = CMS_MESSAGE_FORMAT_ERROR;
         } catch(...) {
@@ -79,9 +88,9 @@ cms_status bytesMessageReset(CMS_Message* message) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status readBooleanFromBytesMessage(CMS_Message* message, int* value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL && value != NULL) {
 
         if( message->type != CMS_BYTES_MESSAGE ) {
             return CMS_INVALID_MESSAGE_TYPE;
@@ -91,6 +100,7 @@ cms_status readBooleanFromBytesMessage(CMS_Message* message, int* value) {
 
         try{
             *value = bytesMessage->readBoolean();
+            result = CMS_SUCCESS;
         } catch(cms::MessageFormatException& ex) {
             result = CMS_MESSAGE_FORMAT_ERROR;
         } catch(cms::MessageNotReadableException& ex) {
@@ -106,9 +116,9 @@ cms_status readBooleanFromBytesMessage(CMS_Message* message, int* value) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status writeBooleanToBytesMessage(CMS_Message* message, int value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL) {
 
         if( message->type != CMS_BYTES_MESSAGE ) {
             return CMS_INVALID_MESSAGE_TYPE;
@@ -118,6 +128,7 @@ cms_status writeBooleanToBytesMessage(CMS_Message* message, int value) {
 
         try{
             bytesMessage->writeBoolean((bool)value);
+            result = CMS_SUCCESS;
         } catch(cms::MessageFormatException& ex) {
             result = CMS_MESSAGE_FORMAT_ERROR;
         } catch(cms::MessageNotWriteableException& ex) {
@@ -133,9 +144,9 @@ cms_status writeBooleanToBytesMessage(CMS_Message* message, int value) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status readByteFromBytesMessage(CMS_Message* message, unsigned char* value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL && value != NULL) {
 
         if( message->type != CMS_BYTES_MESSAGE ) {
             return CMS_INVALID_MESSAGE_TYPE;
@@ -145,6 +156,7 @@ cms_status readByteFromBytesMessage(CMS_Message* message, unsigned char* value) 
 
         try{
             *value = bytesMessage->readByte();
+            result = CMS_SUCCESS;
         } catch(cms::MessageFormatException& ex) {
             result = CMS_MESSAGE_FORMAT_ERROR;
         } catch(cms::MessageNotReadableException& ex) {
@@ -160,9 +172,9 @@ cms_status readByteFromBytesMessage(CMS_Message* message, unsigned char* value) 
 ////////////////////////////////////////////////////////////////////////////////
 cms_status writeByteToBytesMessage(CMS_Message* message, unsigned char value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL) {
 
         if( message->type != CMS_BYTES_MESSAGE ) {
             return CMS_INVALID_MESSAGE_TYPE;
@@ -172,6 +184,7 @@ cms_status writeByteToBytesMessage(CMS_Message* message, unsigned char value) {
 
         try{
             bytesMessage->writeByte(value);
+            result = CMS_SUCCESS;
         } catch(cms::MessageFormatException& ex) {
             result = CMS_MESSAGE_FORMAT_ERROR;
         } catch(cms::MessageNotWriteableException& ex) {
@@ -199,6 +212,7 @@ cms_status readCharFromBytesMessage(CMS_Message* message, char* value) {
 
         try{
             *value = bytesMessage->readChar();
+            result = CMS_SUCCESS;
         } catch(cms::MessageFormatException& ex) {
             result = CMS_MESSAGE_FORMAT_ERROR;
         } catch(cms::MessageNotReadableException& ex) {
@@ -226,6 +240,7 @@ cms_status writeCharToBytesMessage(CMS_Message* message, char value) {
 
         try{
             bytesMessage->writeChar(value);
+            result = CMS_SUCCESS;
         } catch(cms::MessageFormatException& ex) {
             result = CMS_MESSAGE_FORMAT_ERROR;
         } catch(cms::MessageNotWriteableException& ex) {
@@ -253,6 +268,7 @@ cms_status readFloatFromBytesMessage(CMS_Message* message, float* value) {
 
         try{
             *value = bytesMessage->readFloat();
+            result = CMS_SUCCESS;
         } catch(cms::MessageFormatException& ex) {
             result = CMS_MESSAGE_FORMAT_ERROR;
         } catch(cms::MessageNotReadableException& ex) {
@@ -280,6 +296,7 @@ cms_status writeFloatToBytesMessage(CMS_Message* message, float value) {
 
         try{
             bytesMessage->writeFloat(value);
+            result = CMS_SUCCESS;
         } catch(cms::MessageFormatException& ex) {
             result = CMS_MESSAGE_FORMAT_ERROR;
         } catch(cms::MessageNotWriteableException& ex) {
@@ -307,6 +324,7 @@ cms_status readDoubleFromBytesMessage(CMS_Message* message, double* value) {
 
         try{
             *value = bytesMessage->readDouble();
+            result = CMS_SUCCESS;
         } catch(cms::MessageFormatException& ex) {
             result = CMS_MESSAGE_FORMAT_ERROR;
         } catch(cms::MessageNotReadableException& ex) {
@@ -334,6 +352,7 @@ cms_status writeDoubleToBytesMessage(CMS_Message* message, double value) {
 
         try{
             bytesMessage->writeDouble(value);
+            result = CMS_SUCCESS;
         } catch(cms::MessageFormatException& ex) {
             result = CMS_MESSAGE_FORMAT_ERROR;
         } catch(cms::MessageNotWriteableException& ex) {
@@ -361,6 +380,7 @@ cms_status readShortFromBytesMessage(CMS_Message* message, short* value) {
 
         try{
             *value = bytesMessage->readShort();
+            result = CMS_SUCCESS;
         } catch(cms::MessageFormatException& ex) {
             result = CMS_MESSAGE_FORMAT_ERROR;
         } catch(cms::MessageNotReadableException& ex) {
@@ -388,6 +408,7 @@ cms_status writeShortToBytesMessage(CMS_Message* message, short value) {
 
         try{
             bytesMessage->writeShort(value);
+            result = CMS_SUCCESS;
         } catch(cms::MessageFormatException& ex) {
             result = CMS_MESSAGE_FORMAT_ERROR;
         } catch(cms::MessageNotWriteableException& ex) {
@@ -415,6 +436,7 @@ cms_status readIntFromBytesMessage(CMS_Message* message, int* value) {
 
         try{
             *value = bytesMessage->readInt();
+            result = CMS_SUCCESS;
         } catch(cms::MessageFormatException& ex) {
             result = CMS_MESSAGE_FORMAT_ERROR;
         } catch(cms::MessageNotReadableException& ex) {
@@ -442,6 +464,7 @@ cms_status writeIntToBytesMessage(CMS_Message* message, int value) {
 
         try{
             bytesMessage->writeInt(value);
+            result = CMS_SUCCESS;
         } catch(cms::MessageFormatException& ex) {
             result = CMS_MESSAGE_FORMAT_ERROR;
         } catch(cms::MessageNotWriteableException& ex) {
@@ -469,6 +492,7 @@ cms_status readLongFromBytesMessage(CMS_Message* message, long long* value) {
 
         try{
             *value = bytesMessage->readLong();
+            result = CMS_SUCCESS;
         } catch(cms::MessageFormatException& ex) {
             result = CMS_MESSAGE_FORMAT_ERROR;
         } catch(cms::MessageNotReadableException& ex) {
@@ -496,6 +520,7 @@ cms_status writeLongToBytesMessage(CMS_Message* message, long long value) {
 
         try{
             bytesMessage->writeLong(value);
+            result = CMS_SUCCESS;
         } catch(cms::MessageFormatException& ex) {
             result = CMS_MESSAGE_FORMAT_ERROR;
         } catch(cms::MessageNotWriteableException& ex) {
@@ -527,6 +552,8 @@ cms_status readBytesFromBytesMessage(CMS_Message* message, unsigned char* value,
 
             if( readCount == -1 ) {
                 result = CMS_INCOMPLETE_READ;
+            } else {
+                result = CMS_SUCCESS;
             }
 
         } catch(cms::MessageFormatException& ex) {
@@ -557,6 +584,7 @@ cms_status writeBytesToBytesMessage(CMS_Message* message, const unsigned char* v
             cms::BytesMessage* bytesMessage = dynamic_cast<cms::BytesMessage*>( message->message );
 
             bytesMessage->writeBytes(value, offset, length);
+            result = CMS_SUCCESS;
 
         } catch(cms::MessageFormatException& ex) {
             result = CMS_MESSAGE_FORMAT_ERROR;
@@ -599,6 +627,8 @@ cms_status readStringFromBytesMessage(CMS_Message* message, char* value, int siz
                 value[0] = '\0';
             }
 
+            result = CMS_SUCCESS;
+
         } catch(cms::MessageFormatException& ex) {
             value[0] = '\0';
             result = CMS_MESSAGE_FORMAT_ERROR;
@@ -632,6 +662,8 @@ cms_status writeStringToBytesMessage(CMS_Message* message, const char* value) {
             if(strlen(value) > 0) {
                 bytesMessage->writeString(value);
             }
+
+            result = CMS_SUCCESS;
 
         } catch(cms::MessageFormatException& ex) {
             result = CMS_MESSAGE_FORMAT_ERROR;
@@ -674,6 +706,8 @@ cms_status readUTFFromBytesMessage(CMS_Message* message, char* value, int size) 
                 value[0] = '\0';
             }
 
+            result = CMS_SUCCESS;
+
         } catch(cms::MessageFormatException& ex) {
             value[0] = '\0';
             result = CMS_MESSAGE_FORMAT_ERROR;
@@ -707,6 +741,8 @@ cms_status writeUTFToBytesMessage(CMS_Message* message, const char* value) {
             if(strlen(value) > 0) {
                 bytesMessage->writeUTF(value);
             }
+
+            result = CMS_SUCCESS;
 
         } catch(cms::MessageFormatException& ex) {
             result = CMS_MESSAGE_FORMAT_ERROR;

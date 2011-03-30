@@ -17,8 +17,8 @@
 
 #include <cms.h>
 
-#ifndef CMSBYTESMESSAGE_H_
-#define CMSBYTESMESSAGE_H_
+#ifndef _CMS_BYTESMESSAGE_WRAPPER_H_
+#define _CMS_BYTESMESSAGE_WRAPPER_H_
 
 #include <CMS_Message.h>
 
@@ -36,7 +36,7 @@ extern "C" {
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getMessageBodyLength(CMS_Message* message, int* length);
+cms_status getBytesMessageBodyLength(CMS_Message* message, int* length);
 
 /**
  * Puts the message body in read-only mode and repositions the stream
@@ -327,4 +327,4 @@ cms_status writeUTFToBytesMessage(CMS_Message* message, const char* value);
 }
 #endif
 
-#endif /* CMSBYTESMESSAGE_H_ */
+#endif /* _CMS_BYTESMESSAGE_WRAPPER_H_ */

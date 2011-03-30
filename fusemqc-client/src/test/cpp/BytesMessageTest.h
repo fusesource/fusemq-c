@@ -22,20 +22,26 @@
 
 namespace cms {
 
-	class BytesMessageTest : public SingleConnectionTestCase {
+    class BytesMessageTest : public SingleConnectionTestCase {
 
         CPPUNIT_TEST_SUITE( BytesMessageTest );
         CPPUNIT_TEST( testCreateBytesMessage );
+        CPPUNIT_TEST( testGetByteMessageBodyLength );
+        CPPUNIT_TEST( testReadBoolean );
+        CPPUNIT_TEST( testReadByte );
         CPPUNIT_TEST_SUITE_END();
 
-	public:
+    public:
 
         BytesMessageTest();
-		virtual ~BytesMessageTest();
+        virtual ~BytesMessageTest();
 
-		void testCreateBytesMessage();
+        void testCreateBytesMessage();
+        void testGetByteMessageBodyLength();
+        void testReadBoolean();
+        void testReadByte();
 
-	};
+    };
 
 }
 
