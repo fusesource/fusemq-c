@@ -39,6 +39,28 @@ extern "C" {
 cms_status createProducer(CMS_Session* session, CMS_Destination* destination, CMS_MessageProducer** producer);
 
 /**
+ * Given a Message Producer, send the given Message using that Producer applying the
+ * values given to the send operation.
+ *
+ * @param producer
+ *      The Message Producer to use for this send operation.
+ * @param message
+ *      The Message to send via the given Message Producer.
+ * @param destination
+ * 		The destination where the Message is to be sent.
+ * @param deliveryMode
+ * 		The deliveryMode to use when sending this Message.
+ * @param priority
+ * 		The priority value to use for this Message.
+ * @param timeToLive
+ *      The time in milliseconds that this Message is allowed to remain active.
+ *
+ * @return result code indicating the success or failure of the operation.
+ */
+cms_status producerSend(CMS_MessageProducer* producer, CMS_Message* message, CMS_Destination* destination,
+                        int deliveryMode, int priority, int timeToLive);
+
+/**
  * Given a Message Producer, send the given Message using that Producer.
  *
  * @param producer
@@ -57,12 +79,12 @@ cms_status producerSendWithDefaults(CMS_MessageProducer* producer, CMS_Message* 
  *      The Message Producer to use for this send operation.
  * @param message
  *      The Message to send via the given Message Producer.
- * @param timeOut
- *      The timeout for the message.
+ * @param timeToLive
+ *      The time in milliseconds to live for the message.
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status producerSendWithTimeOut(CMS_MessageProducer* producer, CMS_Message* message, long long timeOut);
+cms_status producerSendWithTimeOut(CMS_MessageProducer* producer, CMS_Message* message, long long timeToLive);
 
 /**
  * Sets the delivery mode used by the given producer.
