@@ -29,6 +29,15 @@ namespace cms {
         CPPUNIT_TEST( testGetByteMessageBodyLength );
         CPPUNIT_TEST( testReadBoolean );
         CPPUNIT_TEST( testReadByte );
+        CPPUNIT_TEST( testReadChar );
+        CPPUNIT_TEST( testReadDouble );
+        CPPUNIT_TEST( testReadFloat );
+        CPPUNIT_TEST( testReadLong );
+        CPPUNIT_TEST( testReadInt );
+        CPPUNIT_TEST( testReadShort );
+        CPPUNIT_TEST( testReadBytes );
+        CPPUNIT_TEST( testReadString );
+        CPPUNIT_TEST( testReadUTF );
         CPPUNIT_TEST_SUITE_END();
 
     public:
@@ -40,6 +49,15 @@ namespace cms {
         void testGetByteMessageBodyLength();
         void testReadBoolean();
         void testReadByte();
+        void testReadChar();
+        void testReadDouble();
+        void testReadFloat();
+        void testReadLong();
+        void testReadInt();
+        void testReadShort();
+        void testReadBytes();
+        void testReadString();
+        void testReadUTF();
 
     };
 

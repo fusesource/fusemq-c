@@ -200,9 +200,9 @@ cms_status writeByteToBytesMessage(CMS_Message* message, unsigned char value) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status readCharFromBytesMessage(CMS_Message* message, char* value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL && value != NULL) {
 
         if( message->type != CMS_BYTES_MESSAGE ) {
             return CMS_INVALID_MESSAGE_TYPE;
@@ -228,9 +228,9 @@ cms_status readCharFromBytesMessage(CMS_Message* message, char* value) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status writeCharToBytesMessage(CMS_Message* message, char value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL) {
 
         if( message->type != CMS_BYTES_MESSAGE ) {
             return CMS_INVALID_MESSAGE_TYPE;
@@ -256,9 +256,9 @@ cms_status writeCharToBytesMessage(CMS_Message* message, char value) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status readFloatFromBytesMessage(CMS_Message* message, float* value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL && value != NULL) {
 
         if( message->type != CMS_BYTES_MESSAGE ) {
             return CMS_INVALID_MESSAGE_TYPE;
@@ -284,9 +284,9 @@ cms_status readFloatFromBytesMessage(CMS_Message* message, float* value) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status writeFloatToBytesMessage(CMS_Message* message, float value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL) {
 
         if( message->type != CMS_BYTES_MESSAGE ) {
             return CMS_INVALID_MESSAGE_TYPE;
@@ -312,9 +312,9 @@ cms_status writeFloatToBytesMessage(CMS_Message* message, float value) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status readDoubleFromBytesMessage(CMS_Message* message, double* value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL && value != NULL) {
 
         if( message->type != CMS_BYTES_MESSAGE ) {
             return CMS_INVALID_MESSAGE_TYPE;
@@ -340,9 +340,9 @@ cms_status readDoubleFromBytesMessage(CMS_Message* message, double* value) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status writeDoubleToBytesMessage(CMS_Message* message, double value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL) {
 
         if( message->type != CMS_BYTES_MESSAGE ) {
             return CMS_INVALID_MESSAGE_TYPE;
@@ -368,9 +368,9 @@ cms_status writeDoubleToBytesMessage(CMS_Message* message, double value) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status readShortFromBytesMessage(CMS_Message* message, short* value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL && value != NULL) {
 
         if( message->type != CMS_BYTES_MESSAGE ) {
             return CMS_INVALID_MESSAGE_TYPE;
@@ -396,9 +396,9 @@ cms_status readShortFromBytesMessage(CMS_Message* message, short* value) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status writeShortToBytesMessage(CMS_Message* message, short value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL) {
 
         if( message->type != CMS_BYTES_MESSAGE ) {
             return CMS_INVALID_MESSAGE_TYPE;
@@ -424,9 +424,9 @@ cms_status writeShortToBytesMessage(CMS_Message* message, short value) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status readIntFromBytesMessage(CMS_Message* message, int* value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL && value != NULL) {
 
         if( message->type != CMS_BYTES_MESSAGE ) {
             return CMS_INVALID_MESSAGE_TYPE;
@@ -452,9 +452,9 @@ cms_status readIntFromBytesMessage(CMS_Message* message, int* value) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status writeIntToBytesMessage(CMS_Message* message, int value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL) {
 
         if( message->type != CMS_BYTES_MESSAGE ) {
             return CMS_INVALID_MESSAGE_TYPE;
@@ -480,9 +480,9 @@ cms_status writeIntToBytesMessage(CMS_Message* message, int value) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status readLongFromBytesMessage(CMS_Message* message, long long* value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL && value != NULL) {
 
         if( message->type != CMS_BYTES_MESSAGE ) {
             return CMS_INVALID_MESSAGE_TYPE;
@@ -508,9 +508,9 @@ cms_status readLongFromBytesMessage(CMS_Message* message, long long* value) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status writeLongToBytesMessage(CMS_Message* message, long long value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL) {
 
         if( message->type != CMS_BYTES_MESSAGE ) {
             return CMS_INVALID_MESSAGE_TYPE;
@@ -536,9 +536,9 @@ cms_status writeLongToBytesMessage(CMS_Message* message, long long value) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status readBytesFromBytesMessage(CMS_Message* message, unsigned char* value, int size) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && value != NULL) {
+    if(message != NULL && message->message != NULL && value != NULL) {
 
         try{
 
@@ -571,9 +571,9 @@ cms_status readBytesFromBytesMessage(CMS_Message* message, unsigned char* value,
 ////////////////////////////////////////////////////////////////////////////////
 cms_status writeBytesToBytesMessage(CMS_Message* message, const unsigned char* value, int offset, int length) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && value != NULL) {
+    if(message != NULL && message->message != NULL && value != NULL) {
 
         try{
 
@@ -601,9 +601,9 @@ cms_status writeBytesToBytesMessage(CMS_Message* message, const unsigned char* v
 ////////////////////////////////////////////////////////////////////////////////
 cms_status readStringFromBytesMessage(CMS_Message* message, char* value, int size) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && value != NULL) {
+    if(message != NULL && message->message != NULL && value != NULL) {
 
         try{
 
@@ -647,9 +647,9 @@ cms_status readStringFromBytesMessage(CMS_Message* message, char* value, int siz
 ////////////////////////////////////////////////////////////////////////////////
 cms_status writeStringToBytesMessage(CMS_Message* message, const char* value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && value != NULL) {
+    if(message != NULL && message->message != NULL && value != NULL) {
 
         try{
 
@@ -680,9 +680,9 @@ cms_status writeStringToBytesMessage(CMS_Message* message, const char* value) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status readUTFFromBytesMessage(CMS_Message* message, char* value, int size) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && value != NULL) {
+    if(message != NULL && message->message != NULL && value != NULL) {
 
         try{
 
@@ -726,9 +726,9 @@ cms_status readUTFFromBytesMessage(CMS_Message* message, char* value, int size) 
 ////////////////////////////////////////////////////////////////////////////////
 cms_status writeUTFToBytesMessage(CMS_Message* message, const char* value) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && value != NULL) {
+    if(message != NULL && message->message != NULL && value != NULL) {
 
         try{
 
