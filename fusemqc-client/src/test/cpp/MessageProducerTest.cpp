@@ -17,6 +17,14 @@
 
 #include "MessageProducerTest.h"
 
+#include <cms.h>
+#include <CMS_Connection.h>
+#include <CMS_Session.h>
+#include <CMS_Destination.h>
+#include <CMS_TextMessage.h>
+#include <CMS_MessageProducer.h>
+#include <CMS_MessageConsumer.h>
+
 using namespace cms;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -30,4 +38,116 @@ MessageProducerTest::~MessageProducerTest() {
 ////////////////////////////////////////////////////////////////////////////////
 void MessageProducerTest::testCreateProducer() {
 
+    CMS_Destination* destination = NULL;
+    CMS_MessageProducer* producer = NULL;
+
+    CPPUNIT_ASSERT(createTemporaryDestination(session, CMS_TEMPORARY_TOPIC, &destination) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(createProducer(session, destination, &producer) == CMS_SUCCESS);
+
+    CPPUNIT_ASSERT(destroyProducer(producer) == CMS_SUCCESS);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageProducerTest::testGetDeliveryMode() {
+
+    CMS_Destination* destination = NULL;
+    CMS_MessageProducer* producer = NULL;
+    int mode = -1;
+
+    CPPUNIT_ASSERT(createTemporaryDestination(session, CMS_TEMPORARY_TOPIC, &destination) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(createProducer(session, destination, &producer) == CMS_SUCCESS);
+
+    CPPUNIT_ASSERT(getProducerDeliveryMode(producer, &mode) == CMS_SUCCESS);
+    CPPUNIT_ASSERT_EQUAL((int)CMS_MSG_PERSISTENT, mode);
+
+    CPPUNIT_ASSERT(setProducerDeliveryMode(producer, CMS_MSG_NON_PERSISTENT) == CMS_SUCCESS);
+
+    CPPUNIT_ASSERT(getProducerDeliveryMode(producer, &mode) == CMS_SUCCESS);
+    CPPUNIT_ASSERT_EQUAL((int)CMS_MSG_NON_PERSISTENT, mode);
+
+    CPPUNIT_ASSERT(destroyProducer(producer) == CMS_SUCCESS);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageProducerTest::testGetDisableTimestamps() {
+
+    CMS_Destination* destination = NULL;
+    CMS_MessageProducer* producer = NULL;
+    int disable = -1;
+
+    CPPUNIT_ASSERT(createTemporaryDestination(session, CMS_TEMPORARY_TOPIC, &destination) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(createProducer(session, destination, &producer) == CMS_SUCCESS);
+
+    CPPUNIT_ASSERT(getProducerDisableMessageTimeStamp(producer, &disable) == CMS_SUCCESS);
+    CPPUNIT_ASSERT_EQUAL(0, disable);
+
+    CPPUNIT_ASSERT(setProducerDisableMessageTimeStamp(producer, 1) == CMS_SUCCESS);
+
+    CPPUNIT_ASSERT(getProducerDisableMessageTimeStamp(producer, &disable) == CMS_SUCCESS);
+    CPPUNIT_ASSERT_EQUAL(1, disable);
+
+    CPPUNIT_ASSERT(destroyProducer(producer) == CMS_SUCCESS);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageProducerTest::testGetDisableMessageId() {
+
+    CMS_Destination* destination = NULL;
+    CMS_MessageProducer* producer = NULL;
+    int disable = -1;
+
+    CPPUNIT_ASSERT(createTemporaryDestination(session, CMS_TEMPORARY_TOPIC, &destination) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(createProducer(session, destination, &producer) == CMS_SUCCESS);
+
+    CPPUNIT_ASSERT(getProducerDisableMessageID(producer, &disable) == CMS_SUCCESS);
+    CPPUNIT_ASSERT_EQUAL(0, disable);
+
+    CPPUNIT_ASSERT(setProducerDisableMessageID(producer, 1) == CMS_SUCCESS);
+
+    CPPUNIT_ASSERT(getProducerDisableMessageID(producer, &disable) == CMS_SUCCESS);
+    CPPUNIT_ASSERT_EQUAL(1, disable);
+
+    CPPUNIT_ASSERT(destroyProducer(producer) == CMS_SUCCESS);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageProducerTest::testGetPriority() {
+
+    CMS_Destination* destination = NULL;
+    CMS_MessageProducer* producer = NULL;
+    int priority = -1;
+
+    CPPUNIT_ASSERT(createTemporaryDestination(session, CMS_TEMPORARY_TOPIC, &destination) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(createProducer(session, destination, &producer) == CMS_SUCCESS);
+
+    CPPUNIT_ASSERT(getProducerPriority(producer, &priority) == CMS_SUCCESS);
+    CPPUNIT_ASSERT_EQUAL(4, priority);
+
+    CPPUNIT_ASSERT(setProducerPriority(producer, 1) == CMS_SUCCESS);
+
+    CPPUNIT_ASSERT(getProducerPriority(producer, &priority) == CMS_SUCCESS);
+    CPPUNIT_ASSERT_EQUAL(1, priority);
+
+    CPPUNIT_ASSERT(destroyProducer(producer) == CMS_SUCCESS);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageProducerTest::testGetTimeToLive() {
+
+    CMS_Destination* destination = NULL;
+    CMS_MessageProducer* producer = NULL;
+    int ttl = -1;
+
+    CPPUNIT_ASSERT(createTemporaryDestination(session, CMS_TEMPORARY_TOPIC, &destination) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(createProducer(session, destination, &producer) == CMS_SUCCESS);
+
+    CPPUNIT_ASSERT(getProducerTimeToLive(producer, &ttl) == CMS_SUCCESS);
+    CPPUNIT_ASSERT_EQUAL(0, ttl);
+
+    CPPUNIT_ASSERT(setProducerTimeToLive(producer, 1000) == CMS_SUCCESS);
+
+    CPPUNIT_ASSERT(getProducerTimeToLive(producer, &ttl) == CMS_SUCCESS);
+    CPPUNIT_ASSERT_EQUAL(1000, ttl);
+
+    CPPUNIT_ASSERT(destroyProducer(producer) == CMS_SUCCESS);
 }

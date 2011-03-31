@@ -22,20 +22,30 @@
 
 namespace cms {
 
-	class MessageProducerTest : public SingleConnectionTestCase {
+    class MessageProducerTest : public SingleConnectionTestCase {
 
         CPPUNIT_TEST_SUITE( MessageProducerTest );
         CPPUNIT_TEST( testCreateProducer );
+        CPPUNIT_TEST( testGetDeliveryMode );
+        CPPUNIT_TEST( testGetDisableTimestamps );
+        CPPUNIT_TEST( testGetDisableMessageId );
+        CPPUNIT_TEST( testGetPriority );
+        CPPUNIT_TEST( testGetTimeToLive );
         CPPUNIT_TEST_SUITE_END();
 
-	public:
+    public:
 
-		MessageProducerTest();
-		virtual ~MessageProducerTest();
+        MessageProducerTest();
+        virtual ~MessageProducerTest();
 
-		void testCreateProducer();
+        void testCreateProducer();
+        void testGetDeliveryMode();
+        void testGetDisableTimestamps();
+        void testGetDisableMessageId();
+        void testGetPriority();
+        void testGetTimeToLive();
 
-	};
+    };
 
 }
 

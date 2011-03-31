@@ -18,13 +18,13 @@ Visual Studio product.
 
 Tool        Recommended Version
 -------------------------------
-autoconf    >= 2.61
+autoconf    >= 2.63
 automake    >= 1.10
 libtool     >= 1.5.24
 APR         >= 1.3*
-APR-Util    >= 1.3* or higher
-CPPUnit     >= 1.10.2* ( 1.12.1 is recommended )
-OpenSSL     >= 0.9.8m* ( 1.0.0 or higher is recommended, this is an optional dependency)
+APR-Util    >= 1.3*
+CPPUnit     >=  1.12.1
+OpenSSL     >= 0.9.8m* (1.0.0 or higher is recommended, this is an optional dependency)
 
 * Requires that the Development package also be installed.
 
@@ -81,7 +81,7 @@ the following software installed:
 
 Tool        Recommended Version
 -------------------------------
-autoconf    >= 2.60
+autoconf    >= 2.63
 automake    >= 1.10
 libtool     >= 1.5.24
 
@@ -179,7 +179,7 @@ The integration tests are built via "make check".  To run them, first
 start a broker and then
 
   cd src/test-integration
-  ./activemq-test-integration
+  ./activemqc-test-integration
 
 This will take quite some time to complete, so be patient.  It is recommended
 that you restart the broker between successive runs of the integration tests.
@@ -192,39 +192,7 @@ command on Unix systems.  Only one sample is included in the Visual Studio
 projects supplied, the others can be easily added by examining the settings
 of the one supplied.
 
-6 Notes for Windows users
+6 Notes for Windows users trying to build this library.
 --------------------------------------------------------------------------
-We do not support using the GNU compiler on Windows, using the Cygwin package
-or the MinGW platform, several issues with sockets and threading were found to
-exist when trying to use these solutions.
 
-However we do support using the MSVC compiler on Windows.
-
-There are a couple or things that you will need to setup to ensure that
-the MSVC compile succeeds.
-
-* When linking your application to the DLL version of the ActiveMQ-C library
-  you must link your app the the same runtime version that the DLL is linked to,
-  otherwise your application will cause heap corruption when you delete objects
-  that are created in the ActiveMQ-C DLL's heap.
-
-* You need to download and install the Platform SDK if you don't have it
-  installed already.  On machines where you intend to use the built libraries
-  and executable you will also need to install the MS Redistributable for the
-  version of Visual Studio which you used to build the library.
-
-* Ensure that the path to you MSVC install is set in the PATH env variable.
-  You can test this by typing cl.exe at the command line, if you get an
-  error complaining that its not found, then you'll need to fix your PATH.
-
-* The Project files reference the CPPUnit libraries for the Integration and
-  Unit tests builds. In order for these to build correctly you must
-  either configure the global settings in Visual Studio for include and library
-  folders or add new settings to each of the projects in the solution to point
-  to these locations.
-
-* The Project files reference the APR libraries for the Integration and
-  Unit tests builds. In order for these to build correctly you must
-  either configure the global settings in Visual Studio for include and library
-  folders or add new settings to each of the projects in the solution to point
-  to these locations.
+Don't
