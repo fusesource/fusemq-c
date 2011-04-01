@@ -50,6 +50,8 @@ void MessageConsumerTest::testCreateConsumer() {
     delete [] selector;
 
     CPPUNIT_ASSERT(destroyConsumer(consumer) == CMS_SUCCESS);
+
+    destroyDestination(destination);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -72,6 +74,8 @@ void MessageConsumerTest::testAutoAckConsumerReceive() {
     for( unsigned int i = 0; i < 256; ++i ) {
         producerSendWithDefaults(producer, message);
     }
+
+    destroyMessage(message);
 
     for( unsigned int i = 0; i < 256; ++i ) {
         CMS_Message* received = NULL;
@@ -107,6 +111,8 @@ void MessageConsumerTest::testClientAckConsumerReceive() {
     for( unsigned int i = 0; i < 256; ++i ) {
         producerSendWithDefaults(producer, message);
     }
+
+    destroyMessage(message);
 
     for( unsigned int i = 0; i < 256; ++i ) {
         CMS_Message* received = NULL;
@@ -144,6 +150,8 @@ void MessageConsumerTest::testIndividualAckConsumerReceive() {
     for( unsigned int i = 0; i < 256; ++i ) {
         producerSendWithDefaults(producer, message);
     }
+
+    destroyMessage(message);
 
     for( unsigned int i = 0; i < 256; ++i ) {
         CMS_Message* received = NULL;

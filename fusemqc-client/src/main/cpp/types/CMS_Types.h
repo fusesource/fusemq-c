@@ -27,6 +27,7 @@
 #include <cms/MessageProducer.h>
 #include <cms/Message.h>
 #include <cms/Destination.h>
+#include <cms/CMSException.h>
 
 /**
  * Structure used to Wrap the CMS ConnectionFactory type.
@@ -40,6 +41,7 @@ struct CMS_ConnectionFactory {
  */
 struct CMS_Connection {
     cms::Connection* connection;
+    cms::CMSException* lastException;
 };
 
 /**

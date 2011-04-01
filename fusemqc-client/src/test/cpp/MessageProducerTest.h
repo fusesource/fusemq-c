@@ -31,6 +31,8 @@ namespace cms {
         CPPUNIT_TEST( testGetDisableMessageId );
         CPPUNIT_TEST( testGetPriority );
         CPPUNIT_TEST( testGetTimeToLive );
+        CPPUNIT_TEST( testSendWithDefaults );
+
         CPPUNIT_TEST_SUITE_END();
 
     public:
@@ -44,6 +46,7 @@ namespace cms {
         void testGetDisableMessageId();
         void testGetPriority();
         void testGetTimeToLive();
+        void testSendWithDefaults();
 
     };
 
