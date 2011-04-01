@@ -46,6 +46,30 @@ cms_status createProducer(CMS_Session* session, CMS_Destination* destination, CM
  *      The Message Producer to use for this send operation.
  * @param message
  *      The Message to send via the given Message Producer.
+ * @param deliveryMode
+ * 		The deliveryMode to use when sending this Message.
+ * @param priority
+ * 		The priority value to use for this Message.
+ * @param timeToLive
+ *      The time in milliseconds that this Message is allowed to remain active.
+ *
+ * @return result code indicating the success or failure of the operation.
+ */
+cms_status producerSend(CMS_MessageProducer* producer, CMS_Message* message,
+                        int deliveryMode, int priority, int timeToLive);
+
+/**
+ * Given a Message Producer, send the given Message using that Producer applying the
+ * values given to the send operation.  Typically you create a Producer with a specific
+ * destination to send to however you can create one with a NULL Destination.  When the
+ * producer is created with a NULL Destination this send method must be used to specify
+ * the Destination that the Message is to be sent to.  If the Destination is NULL this
+ * method returns CMS_ERROR.
+ *
+ * @param producer
+ *      The Message Producer to use for this send operation.
+ * @param message
+ *      The Message to send via the given Message Producer.
  * @param destination
  * 		The destination where the Message is to be sent.
  * @param deliveryMode
@@ -57,8 +81,8 @@ cms_status createProducer(CMS_Session* session, CMS_Destination* destination, CM
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status producerSend(CMS_MessageProducer* producer, CMS_Message* message, CMS_Destination* destination,
-                        int deliveryMode, int priority, int timeToLive);
+cms_status producerSendToDestination(CMS_MessageProducer* producer, CMS_Message* message, CMS_Destination* destination,
+                                     int deliveryMode, int priority, int timeToLive);
 
 /**
  * Given a Message Producer, send the given Message using that Producer.

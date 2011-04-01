@@ -204,3 +204,87 @@ void MessageProducerTest::testSendWithDefaults() {
     destroyProducer(producer);
     destroyDestination(destination);
 }
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageProducerTest::testSendToDestination() {
+
+    CMS_Destination* destination = NULL;
+    CMS_Message* message = NULL;
+    CMS_MessageConsumer* consumer = NULL;
+    CMS_MessageProducer* producer = NULL;
+
+    createTemporaryDestination(session, CMS_TEMPORARY_TOPIC, &destination);
+    createDefaultConsumer(session, destination, &consumer);
+
+    CPPUNIT_ASSERT(createProducer(session, NULL, &producer) == CMS_SUCCESS);
+
+    startConnection(connection);
+
+    createTextMessage(session, &message, NULL);
+
+    CPPUNIT_ASSERT(producerSendToDestination(producer, message, NULL, CMS_MSG_NON_PERSISTENT, 5, 5000) == CMS_ERROR);
+    CPPUNIT_ASSERT(producerSendToDestination(producer, message, destination, CMS_MSG_NON_PERSISTENT, 5, 5000) == CMS_SUCCESS);
+
+    CMS_Message* received = NULL;
+    CPPUNIT_ASSERT(consumerReceiveWithTimeout(consumer, &received, 2000) == CMS_SUCCESS);
+
+    int priority = -1;
+    int deliveryMode = -1;
+    long long expiration = -1;
+
+    CPPUNIT_ASSERT(getCMSMessagePriority(received, &priority) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(getCMSMessageDeliveryMode(received, &deliveryMode) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(getCMSMessageExpiration(received, &expiration) == CMS_SUCCESS);
+
+    CPPUNIT_ASSERT_EQUAL(5, priority);
+    CPPUNIT_ASSERT_EQUAL((int)CMS_MSG_NON_PERSISTENT, deliveryMode);
+    CPPUNIT_ASSERT(expiration > 0);
+
+    destroyMessage(received);
+    destroyMessage(message);
+    destroyConsumer(consumer);
+    destroyProducer(producer);
+    destroyDestination(destination);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageProducerTest::testSend() {
+
+    CMS_Destination* destination = NULL;
+    CMS_Message* message = NULL;
+    CMS_MessageConsumer* consumer = NULL;
+    CMS_MessageProducer* producer = NULL;
+
+    createTemporaryDestination(session, CMS_TEMPORARY_TOPIC, &destination);
+    createDefaultConsumer(session, destination, &consumer);
+
+    CPPUNIT_ASSERT(createProducer(session, destination, &producer) == CMS_SUCCESS);
+
+    startConnection(connection);
+
+    createTextMessage(session, &message, NULL);
+
+    CPPUNIT_ASSERT(producerSend(producer, NULL, CMS_MSG_NON_PERSISTENT, 5, 5000) == CMS_ERROR);
+    CPPUNIT_ASSERT(producerSend(producer, message, CMS_MSG_NON_PERSISTENT, 5, 5000) == CMS_SUCCESS);
+
+    CMS_Message* received = NULL;
+    CPPUNIT_ASSERT(consumerReceiveWithTimeout(consumer, &received, 2000) == CMS_SUCCESS);
+
+    int priority = -1;
+    int deliveryMode = -1;
+    long long expiration = -1;
+
+    CPPUNIT_ASSERT(getCMSMessagePriority(received, &priority) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(getCMSMessageDeliveryMode(received, &deliveryMode) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(getCMSMessageExpiration(received, &expiration) == CMS_SUCCESS);
+
+    CPPUNIT_ASSERT_EQUAL(5, priority);
+    CPPUNIT_ASSERT_EQUAL((int)CMS_MSG_NON_PERSISTENT, deliveryMode);
+    CPPUNIT_ASSERT(expiration > 0);
+
+    destroyMessage(received);
+    destroyMessage(message);
+    destroyConsumer(consumer);
+    destroyProducer(producer);
+    destroyDestination(destination);
+}

@@ -56,17 +56,40 @@ cms_status createProducer(CMS_Session* session, CMS_Destination* destination, CM
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status producerSend(CMS_MessageProducer* producer, CMS_Message* message, CMS_Destination* destination,
+cms_status producerSend(CMS_MessageProducer* producer, CMS_Message* message,
                         int deliveryMode, int priority, int timeToLive) {
 
     cms_status result = CMS_SUCCESS;
 
     try{
 
-        if (producer == NULL || producer->producer || message == NULL) {
+        if (producer == NULL || producer->producer == NULL || message == NULL) {
             result = CMS_ERROR;
         } else {
-            cms::Destination* dest = destination == NULL ? NULL : destination->destination;
+            producer->producer->send(message->message, deliveryMode, priority, timeToLive);
+        }
+
+    } catch(cms::CMSException& es) {
+        result = CMS_ERROR;
+    } catch(...) {
+        result = CMS_ERROR;
+    }
+
+    return result;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+cms_status producerSendToDestination(CMS_MessageProducer* producer, CMS_Message* message, CMS_Destination* destination,
+                                     int deliveryMode, int priority, int timeToLive) {
+
+    cms_status result = CMS_SUCCESS;
+
+    try{
+
+        if (producer == NULL || producer->producer == NULL || message == NULL || destination == NULL) {
+            result = CMS_ERROR;
+        } else {
+            cms::Destination* dest = destination->destination == NULL ? NULL : destination->destination;
             producer->producer->send(dest, message->message, deliveryMode, priority, timeToLive);
         }
 
