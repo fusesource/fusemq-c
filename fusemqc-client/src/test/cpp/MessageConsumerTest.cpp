@@ -25,7 +25,11 @@
 #include <CMS_MessageProducer.h>
 #include <CMS_MessageConsumer.h>
 
+#include <decaf/lang/Thread.h>
+
 using namespace cms;
+using namespace decaf;
+using namespace decaf::lang;
 
 ////////////////////////////////////////////////////////////////////////////////
 MessageConsumerTest::MessageConsumerTest() {
@@ -164,4 +168,76 @@ void MessageConsumerTest::testIndividualAckConsumerReceive() {
     destroyProducer(producer);
     destroyDestination(destination);
     destroySession(session);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageConsumerTest::testTransactionRollback() {
+
+    CMS_Destination* destination = NULL;
+    CMS_Message* message = NULL;
+    CMS_MessageConsumer* consumer = NULL;
+    CMS_MessageProducer* producer = NULL;
+    CMS_Session* session = NULL;
+
+    createSession(connection, &session, CMS_SESSION_TRANSACTED);
+
+    createTemporaryDestination(session, CMS_TEMPORARY_TOPIC, &destination);
+    createDefaultConsumer(session, destination, &consumer);
+    createProducer(session, destination, &producer);
+    setProducerDeliveryMode(producer, CMS_MSG_NON_PERSISTENT);
+
+    startConnection(connection);
+
+    createTextMessage(session, &message, NULL);
+
+    for( unsigned int i = 0; i < 50; ++i ) {
+        producerSendWithDefaults(producer, message);
+    }
+
+    destroyMessage(message);
+
+    CPPUNIT_ASSERT(commitSession(session) == CMS_SUCCESS);
+    Thread::sleep( 50 );
+
+    for( unsigned int i = 0; i < 50; ++i ) {
+        CMS_Message* received = NULL;
+        CPPUNIT_ASSERT(consumerReceiveWithTimeout(consumer, &received, 2000) == CMS_SUCCESS);
+        destroyMessage(received);
+    }
+
+    CPPUNIT_ASSERT(commitSession(session) == CMS_SUCCESS);
+    Thread::sleep( 50 );
+
+    createTextMessage(session, &message, NULL);
+
+    for( unsigned int i = 0; i < 50; ++i ) {
+        producerSendWithDefaults(producer, message);
+    }
+
+    destroyMessage(message);
+
+    CPPUNIT_ASSERT(rollbackSession(session) == CMS_SUCCESS);
+    Thread::sleep( 50 );
+
+    createTextMessage(session, &message, NULL);
+    producerSendWithDefaults(producer, message);
+    destroyMessage(message);
+
+    CPPUNIT_ASSERT(commitSession(session) == CMS_SUCCESS);
+
+    // Wait for the messages to get here
+    CMS_Message* received = NULL;
+    CPPUNIT_ASSERT(consumerReceiveWithTimeout(consumer, &received, 2000) == CMS_SUCCESS);
+    destroyMessage(received);
+
+    createTextMessage(session, &message, NULL);
+    producerSendWithDefaults(producer, message);
+    destroyMessage(message);
+
+    CPPUNIT_ASSERT(commitSession(session) == CMS_SUCCESS);
+
+    // Wait for the messages to get here
+    CPPUNIT_ASSERT(consumerReceiveWithTimeout(consumer, &received, 2000) == CMS_SUCCESS);
+    destroyMessage(received);
+    CPPUNIT_ASSERT(commitSession(session) == CMS_SUCCESS);
 }

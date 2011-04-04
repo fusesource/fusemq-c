@@ -40,7 +40,7 @@ cms_status createDefaultConsumer(CMS_Session* session, CMS_Destination* destinat
 
     try{
 
-        if (session == NULL || destination == NULL) {
+        if (session == NULL || session->session == NULL || destination == NULL || consumer == NULL) {
             result = CMS_ERROR;
         } else {
             wrapper->consumer = session->session->createConsumer(destination->destination);
@@ -62,7 +62,7 @@ cms_status createConsumer(CMS_Session* session, CMS_Destination* destination, CM
 
     try{
 
-        if (session == NULL || destination == NULL) {
+        if (session == NULL || session->session == NULL || destination == NULL || consumer == NULL) {
             result = CMS_ERROR;
         } else {
 
@@ -93,7 +93,7 @@ cms_status createDurableConsumer(CMS_Session* session,
 
     try{
 
-        if (session == NULL || destination == NULL) {
+        if (session == NULL || session->session == NULL || destination == NULL || consumer == NULL) {
             result = CMS_ERROR;
         } else {
 
@@ -123,9 +123,9 @@ cms_status createDurableConsumer(CMS_Session* session,
 ////////////////////////////////////////////////////////////////////////////////
 cms_status consumerReceive(CMS_MessageConsumer* consumer, CMS_Message** message) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(consumer != NULL) {
+    if(consumer != NULL && consumer->consumer != NULL && message != NULL) {
 
         try{
 
@@ -149,6 +149,9 @@ cms_status consumerReceive(CMS_MessageConsumer* consumer, CMS_Message** message)
                 }
 
                 *message = wrapper.release();
+
+                result = CMS_SUCCESS;
+
             } else {
                 *message = NULL;
             }
@@ -164,9 +167,9 @@ cms_status consumerReceive(CMS_MessageConsumer* consumer, CMS_Message** message)
 ////////////////////////////////////////////////////////////////////////////////
 cms_status consumerReceiveWithTimeout(CMS_MessageConsumer* consumer, CMS_Message** message, int timeout) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(consumer != NULL) {
+    if(consumer != NULL && consumer->consumer != NULL && message != NULL) {
 
         try{
 
@@ -190,8 +193,12 @@ cms_status consumerReceiveWithTimeout(CMS_MessageConsumer* consumer, CMS_Message
                 }
 
                 *message = wrapper.release();
+
+                result = CMS_SUCCESS;
+
             } else {
                 *message = NULL;
+                result = CMS_RECEIVE_TIMEDOUT;
             }
 
         } catch(...) {
@@ -205,9 +212,9 @@ cms_status consumerReceiveWithTimeout(CMS_MessageConsumer* consumer, CMS_Message
 ////////////////////////////////////////////////////////////////////////////////
 cms_status consumerReceiveNoWait(CMS_MessageConsumer* consumer, CMS_Message** message) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(consumer != NULL) {
+    if(consumer != NULL && consumer->consumer != NULL && message != NULL) {
 
         try{
 
@@ -235,6 +242,8 @@ cms_status consumerReceiveNoWait(CMS_MessageConsumer* consumer, CMS_Message** me
                 *message = NULL;
             }
 
+            result = CMS_SUCCESS;
+
         } catch(...) {
             result = CMS_ERROR;
         }
@@ -246,12 +255,13 @@ cms_status consumerReceiveNoWait(CMS_MessageConsumer* consumer, CMS_Message** me
 ////////////////////////////////////////////////////////////////////////////////
 cms_status closeConsumer(CMS_MessageConsumer* consumer) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(consumer != NULL) {
+    if(consumer != NULL && consumer->consumer != NULL) {
 
         try{
             consumer->consumer->close();
+            result = CMS_SUCCESS;
         } catch(...) {
             result = CMS_ERROR;
         }
@@ -263,9 +273,9 @@ cms_status closeConsumer(CMS_MessageConsumer* consumer) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status getConsumerMessageSelector(CMS_MessageConsumer* consumer, char* dest, int size) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(consumer != NULL && dest != NULL && size > 0) {
+    if(consumer != NULL && consumer->consumer != NULL && dest != NULL && size > 0) {
 
         try{
 
@@ -282,6 +292,8 @@ cms_status getConsumerMessageSelector(CMS_MessageConsumer* consumer, char* dest,
             } else {
                 dest[0] = '\0';
             }
+
+            result = CMS_SUCCESS;
 
         } catch(...) {
             result = CMS_ERROR;

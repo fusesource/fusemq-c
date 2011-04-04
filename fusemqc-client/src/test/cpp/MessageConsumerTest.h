@@ -40,6 +40,7 @@ namespace cms {
         void testAutoAckConsumerReceive();
         void testClientAckConsumerReceive();
         void testIndividualAckConsumerReceive();
+        void testTransactionRollback();
 
     };
 

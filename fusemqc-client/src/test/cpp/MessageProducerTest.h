@@ -34,6 +34,8 @@ namespace cms {
         CPPUNIT_TEST( testSend );
         CPPUNIT_TEST( testSendWithDefaults );
         CPPUNIT_TEST( testSendToDestination );
+        CPPUNIT_TEST( testSendWithTimeoutMessageExpires );
+        CPPUNIT_TEST( testSendWithTimeoutMessageArrives );
         CPPUNIT_TEST_SUITE_END();
 
     public:
@@ -50,6 +52,8 @@ namespace cms {
         void testSend();
         void testSendWithDefaults();
         void testSendToDestination();
+        void testSendWithTimeoutMessageExpires();
+        void testSendWithTimeoutMessageArrives();
 
     };
 

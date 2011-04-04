@@ -85,7 +85,8 @@ cms_status producerSendToDestination(CMS_MessageProducer* producer, CMS_Message*
                                      int deliveryMode, int priority, int timeToLive);
 
 /**
- * Given a Message Producer, send the given Message using that Producer.
+ * Given a Message Producer, send the given Message using that Producer.  This method
+ * uses the currently set values for priority, persistence, and message time to live.
  *
  * @param producer
  *      The Message Producer to use for this send operation.
@@ -97,7 +98,9 @@ cms_status producerSendToDestination(CMS_MessageProducer* producer, CMS_Message*
 cms_status producerSendWithDefaults(CMS_MessageProducer* producer, CMS_Message* message);
 
 /**
- * Given a Message Producer, send the given Message using that Producer.
+ * Given a Message Producer, send the given Message using that Producer.  Assign the sent
+ * message the time to live value specified and uses the currently set values for priority,
+ * and message persistence.
  *
  * @param producer
  *      The Message Producer to use for this send operation.

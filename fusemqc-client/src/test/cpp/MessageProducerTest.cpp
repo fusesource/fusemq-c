@@ -25,7 +25,11 @@
 #include <CMS_MessageProducer.h>
 #include <CMS_MessageConsumer.h>
 
+#include <decaf/lang/Thread.h>
+
 using namespace cms;
+using namespace decaf;
+using namespace decaf::lang;
 
 ////////////////////////////////////////////////////////////////////////////////
 MessageProducerTest::MessageProducerTest() {
@@ -281,6 +285,72 @@ void MessageProducerTest::testSend() {
     CPPUNIT_ASSERT_EQUAL(5, priority);
     CPPUNIT_ASSERT_EQUAL((int)CMS_MSG_NON_PERSISTENT, deliveryMode);
     CPPUNIT_ASSERT(expiration > 0);
+
+    destroyMessage(received);
+    destroyMessage(message);
+    destroyConsumer(consumer);
+    destroyProducer(producer);
+    destroyDestination(destination);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageProducerTest::testSendWithTimeoutMessageExpires() {
+
+    CMS_Destination* destination = NULL;
+    CMS_Message* message = NULL;
+    CMS_MessageConsumer* consumer = NULL;
+    CMS_MessageProducer* producer = NULL;
+
+    createTemporaryDestination(session, CMS_TEMPORARY_TOPIC, &destination);
+    createDefaultConsumer(session, destination, &consumer);
+    createProducer(session, destination, &producer);
+    setProducerDeliveryMode(producer, CMS_MSG_NON_PERSISTENT);
+
+    startConnection(connection);
+
+    createTextMessage(session, &message, NULL);
+
+    // Send with 1 Second TTL
+    producerSendWithTimeOut(producer, message, 500);
+
+    Thread::sleep(750);
+
+    CMS_Message* received = NULL;
+    CPPUNIT_ASSERT(consumerReceiveWithTimeout(consumer, &received, 1000) == CMS_RECEIVE_TIMEDOUT);
+    CPPUNIT_ASSERT(NULL == received);
+
+    destroyMessage(received);
+    destroyMessage(message);
+    destroyConsumer(consumer);
+    destroyProducer(producer);
+    destroyDestination(destination);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageProducerTest::testSendWithTimeoutMessageArrives() {
+
+    CMS_Destination* destination = NULL;
+    CMS_Message* message = NULL;
+    CMS_MessageConsumer* consumer = NULL;
+    CMS_MessageProducer* producer = NULL;
+
+    createTemporaryDestination(session, CMS_TEMPORARY_TOPIC, &destination);
+    createDefaultConsumer(session, destination, &consumer);
+    createProducer(session, destination, &producer);
+    setProducerDeliveryMode(producer, CMS_MSG_NON_PERSISTENT);
+
+    startConnection(connection);
+
+    createTextMessage(session, &message, NULL);
+
+    // Send with 1 Second TTL
+    producerSendWithTimeOut(producer, message, 5000);
+
+    Thread::sleep(500);
+
+    CMS_Message* received = NULL;
+    CPPUNIT_ASSERT(consumerReceiveWithTimeout(consumer, &received, 2000) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(NULL != received);
 
     destroyMessage(received);
     destroyMessage(message);
