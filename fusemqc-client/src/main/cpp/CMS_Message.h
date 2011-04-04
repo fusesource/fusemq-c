@@ -25,7 +25,8 @@ extern "C" {
 #endif
 
 /**
- * Creates a New Message from the given Session instance.
+ * Creates a New Message from the given Session instance.  This type of Message
+ * has no body and consists of Message Properties only.
  *
  * @param session
  *      The Session to use to create the new Message
@@ -149,7 +150,7 @@ cms_status acknowledgeMessage(CMS_Message* message);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status clearBody(CMS_Message* message);
+cms_status clearMessageBody(CMS_Message* message);
 
 /**
  * Clears out the message body. Clearing a message's body does not clear
@@ -178,10 +179,23 @@ cms_status clearMessageProperties(CMS_Message* message);
  */
 cms_status getNumMessageProperties(CMS_Message* message, int* numProperties);
 
-/*********************************/
-/* TODO                          */
-/*cms_status getMessagePropertyNames(CMS_Message* message, char** properties, int* size);*/
-/*********************************/
+/**
+ * Given a Message object this method allocates and returns an array of strings that
+ * contains a copy of each of the Property names in the Message.  The size of the
+ * array of strings that is created is assigned to the integer that is pointed to by
+ * the size argument.  If the message contains no properties then no new array is
+ * allocated and size is set to zero.
+ *
+ * @param message
+ * 		The Message whose property names are to be returned.
+ * @param names
+ * 		Pointer to an array of string that will be allocated and populated by this method.
+ * @param size
+ * 		The number of elements allocated for the string array.
+ *
+ * @return result code indicating the success or failure of the operation.
+ */
+cms_status getMessagePropertyNames(CMS_Message* message, char*** names, int* size);
 
 /**
  * Indicates whether or not a given property exists in the supplied Message instance.

@@ -85,6 +85,7 @@ cms_status startConnection(CMS_Connection* connection);
 /**
  * Stops the Connection instance.  Until a Connection is started any Message Consumers
  * created by Sessions linked to the Connection will not be able to receive Messages.
+ * By stopping the connection you stop message delivery to all currently active consumers.
  *
  * @param connection
  *      The Connection that is to be stopped.
@@ -106,7 +107,9 @@ cms_status stopConnection(CMS_Connection* connection);
 cms_status closeConnection(CMS_Connection* connection);
 
 /**
- * Sets the Client Id for the given Connection instance.
+ * Sets the Client Id for the given Connection instance.  The client Id must be
+ * set before a call to start the Connection or creation of any Sessions by the
+ * specified connection otherwise an error status is returned.
  *
  * @param connection
  *      The Connection whose client id is to be set.

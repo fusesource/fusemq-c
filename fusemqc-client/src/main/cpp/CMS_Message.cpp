@@ -184,7 +184,7 @@ cms_status cloneMessage(CMS_Message* original, CMS_Message** clone) {
 
     cms_status result = CMS_SUCCESS;
 
-    if(original != NULL) {
+    if(original != NULL && original->message != NULL) {
 
         std::auto_ptr<CMS_Message> wrapper( new CMS_Message );
 
@@ -223,7 +223,7 @@ cms_status acknowledgeMessage(CMS_Message* message) {
 
     cms_status result = CMS_SUCCESS;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL) {
 
         try{
             message->message->acknowledge();
@@ -236,14 +236,15 @@ cms_status acknowledgeMessage(CMS_Message* message) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status clearBody(CMS_Message* message) {
+cms_status clearMessageBody(CMS_Message* message) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL) {
 
         try{
             message->message->clearBody();
+            result = CMS_SUCCESS;
         } catch(...) {
             result = CMS_ERROR;
         }
@@ -255,12 +256,13 @@ cms_status clearBody(CMS_Message* message) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status clearMessageProperties(CMS_Message* message) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL) {
+    if(message != NULL && message->message != NULL) {
 
         try{
             message->message->clearProperties();
+            result = CMS_SUCCESS;
         } catch(...) {
             result = CMS_ERROR;
         }
@@ -272,13 +274,48 @@ cms_status clearMessageProperties(CMS_Message* message) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status getNumMessageProperties(CMS_Message* message, int* numProperties) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(message != NULL && numProperties != NULL) {
+    if(message != NULL && message->message != NULL && numProperties != NULL) {
 
         try{
             *numProperties = (int) message->message->getPropertyNames().size();
+            result = CMS_SUCCESS;
         } catch(...) {
+            result = CMS_ERROR;
+        }
+    }
+
+    return result;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+cms_status getMessagePropertyNames(CMS_Message* message, char*** names, int* size) {
+
+    cms_status result = CMS_ERROR;
+
+    if(message != NULL && message->message != NULL && names != NULL && size != NULL) {
+
+        try{
+
+            std::vector<std::string> keys = message->message->getPropertyNames();
+
+            if (!keys.empty()) {
+
+                *names = new char*[keys.size()];
+
+                std::vector<std::string>::const_iterator iter = keys.begin();
+
+                for (int index = 0; iter != keys.end(); ++index, ++iter) {
+                    (*names)[index] = ::strdup(iter->c_str());
+                }
+            }
+
+            *size = (int)keys.size();
+            result = CMS_SUCCESS;
+
+        } catch(...) {
+            *size = 0;
             result = CMS_ERROR;
         }
     }
@@ -289,7 +326,7 @@ cms_status getNumMessageProperties(CMS_Message* message, int* numProperties) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status messagePropertyExists(CMS_Message* message, const char* key, int* exists ) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
     if(message != NULL && key != NULL && exists != NULL) {
 
@@ -300,6 +337,8 @@ cms_status messagePropertyExists(CMS_Message* message, const char* key, int* exi
             } else {
                 *exists = 0;
             }
+
+            result = CMS_SUCCESS;
 
         } catch(...) {
             *exists = 0;

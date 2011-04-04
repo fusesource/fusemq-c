@@ -48,7 +48,7 @@ cms_status createDestination(CMS_Session* session, CMS_DESTINATION_TYPE type, co
  * CMS_TEMPORARY_TOPIC or CMS_TEMPORARY_QUEUE otherwise CMS_ERROR is returned.
  *
  * This is a convenience method that is equivalent to calling createDestination
- * and specifying a temporary destination type.
+ * and specifying a temporary destination type and leaving the name value as NULL.
  *
  * @param session
  *      The Session to use to create the new Destination.

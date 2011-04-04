@@ -25,7 +25,10 @@ extern "C" {
 #endif
 
 /**
- * Creates a Connection Factory using the Default URI and Connection options.
+ * Creates a Connection Factory using the Default URI and Connection options.  This
+ * method will leave the Connection Factory username and password values unset and the
+ * broker URI will default to that of the CMS provider defaults (ActiveMQ uses a default
+ * of failover://tcp://localhost:61616).
  *
  * @param factory
  *      The memory address where the newly created ConnectionFactory will be stored.

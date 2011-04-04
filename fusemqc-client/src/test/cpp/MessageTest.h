@@ -22,10 +22,15 @@
 
 namespace cms {
 
-	class MessageTest : public SingleConnectionTestCase {
+    class MessageTest : public SingleConnectionTestCase {
 
         CPPUNIT_TEST_SUITE( MessageTest );
         CPPUNIT_TEST( testCreateMessage );
+        CPPUNIT_TEST( testGetNumMessageProperties );
+        CPPUNIT_TEST( testGetMessagePropertyNames );
+        CPPUNIT_TEST( testMessagePropertyExists );
+        CPPUNIT_TEST( testClearMessageProperties );
+        CPPUNIT_TEST( testClearMessageBody );
         CPPUNIT_TEST( testMessageBooleanProperties );
         CPPUNIT_TEST( testMessageByteProperties );
         CPPUNIT_TEST( testMessageDoubleProperties );
@@ -35,43 +40,48 @@ namespace cms {
         CPPUNIT_TEST( testMessageShortProperties );
         CPPUNIT_TEST( testMessageStringProperties );
         CPPUNIT_TEST( testCMSMessageCorrelationID );
-        CPPUNIT_TEST( testMSMessageDeliveryMode );
+        CPPUNIT_TEST( testCMSMessageDeliveryMode );
         CPPUNIT_TEST( testCMSMessageDestination );
         CPPUNIT_TEST( testCMSMessageExpiration );
         CPPUNIT_TEST( testCMSMessageMessageID );
         CPPUNIT_TEST( testCMSMessagePriority );
         CPPUNIT_TEST( testCMSMessageRedelivered );
         CPPUNIT_TEST( testCMSMessageReplyTo );
-		CPPUNIT_TEST( testCMSMessageTimestamp );
-		CPPUNIT_TEST( testCMSMessageType );
+        CPPUNIT_TEST( testCMSMessageTimestamp );
+        CPPUNIT_TEST( testCMSMessageType );
         CPPUNIT_TEST_SUITE_END();
 
-	public:
+    public:
 
-		MessageTest();
-		virtual ~MessageTest();
+        MessageTest();
+        virtual ~MessageTest();
 
-		void testCreateMessage();
-		void testMessageBooleanProperties();
-		void testMessageByteProperties();
-		void testMessageDoubleProperties();
-		void testMessageFloatProperties();
-		void testMessageLongProperties();
-		void testMessageIntProperties();
-		void testMessageShortProperties();
-		void testMessageStringProperties();
-		void testCMSMessageCorrelationID();
-		void testMSMessageDeliveryMode();
-		void testCMSMessageDestination();
-		void testCMSMessageExpiration();
-		void testCMSMessageMessageID();
-		void testCMSMessagePriority();
-		void testCMSMessageRedelivered();
-		void testCMSMessageReplyTo();
-		void testCMSMessageTimestamp();
-		void testCMSMessageType();
+        void testCreateMessage();
+        void testGetNumMessageProperties();
+        void testGetMessagePropertyNames();
+        void testMessagePropertyExists();
+        void testClearMessageProperties();
+        void testClearMessageBody();
+        void testMessageBooleanProperties();
+        void testMessageByteProperties();
+        void testMessageDoubleProperties();
+        void testMessageFloatProperties();
+        void testMessageLongProperties();
+        void testMessageIntProperties();
+        void testMessageShortProperties();
+        void testMessageStringProperties();
+        void testCMSMessageCorrelationID();
+        void testCMSMessageDeliveryMode();
+        void testCMSMessageDestination();
+        void testCMSMessageExpiration();
+        void testCMSMessageMessageID();
+        void testCMSMessagePriority();
+        void testCMSMessageRedelivered();
+        void testCMSMessageReplyTo();
+        void testCMSMessageTimestamp();
+        void testCMSMessageType();
 
-	};
+    };
 
 }
 

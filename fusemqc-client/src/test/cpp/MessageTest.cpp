@@ -19,8 +19,13 @@
 
 #include <CMS_Message.h>
 #include <CMS_Destination.h>
+#include <CMS_BytesMessage.h>
+
+#include <decaf/lang/Integer.h>
 
 using namespace cms;
+using namespace decaf;
+using namespace decaf::lang;
 
 ////////////////////////////////////////////////////////////////////////////////
 MessageTest::MessageTest() {
@@ -52,6 +57,175 @@ void MessageTest::testCreateMessage() {
     result = -1;
     CPPUNIT_ASSERT(messagePropertyExists(message, "some-property", &result) == CMS_SUCCESS);
     CPPUNIT_ASSERT_EQUAL(0, result);
+
+    destroyMessage(message);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageTest::testGetNumMessageProperties() {
+
+    CMS_Message* message = NULL;
+    int result = 0;
+
+    CPPUNIT_ASSERT(createMessage(session, &message) == CMS_SUCCESS);
+
+    result = -1;
+    CPPUNIT_ASSERT(getNumMessageProperties(message, &result) == CMS_SUCCESS);
+    CPPUNIT_ASSERT_EQUAL(0, result);
+
+    CPPUNIT_ASSERT(setMessageBooleanProperty(message, "1", 0) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(setMessageBooleanProperty(message, "2", 1) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(setMessageBooleanProperty(message, "3", 0) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(setMessageBooleanProperty(message, "4", 1) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(setMessageBooleanProperty(message, "5", 0) == CMS_SUCCESS);
+
+    CPPUNIT_ASSERT(getNumMessageProperties(message, &result) == CMS_SUCCESS);
+    CPPUNIT_ASSERT_EQUAL(5, result);
+
+    CPPUNIT_ASSERT(getNumMessageProperties(message, NULL) == CMS_ERROR);
+    CPPUNIT_ASSERT(getNumMessageProperties(NULL, &result) == CMS_ERROR);
+    CPPUNIT_ASSERT(getNumMessageProperties(NULL, NULL) == CMS_ERROR);
+
+    destroyMessage(message);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageTest::testGetMessagePropertyNames() {
+
+    CMS_Message* message = NULL;
+    int result = 0;
+
+    CPPUNIT_ASSERT(createMessage(session, &message) == CMS_SUCCESS);
+
+    result = -1;
+    CPPUNIT_ASSERT(getNumMessageProperties(message, &result) == CMS_SUCCESS);
+    CPPUNIT_ASSERT_EQUAL(0, result);
+
+    CPPUNIT_ASSERT(setMessageBooleanProperty(message, "1", 0) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(setMessageBooleanProperty(message, "2", 1) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(setMessageBooleanProperty(message, "3", 0) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(setMessageBooleanProperty(message, "4", 1) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(setMessageBooleanProperty(message, "5", 0) == CMS_SUCCESS);
+
+    char** names = NULL;
+    int size = 0;
+
+    CPPUNIT_ASSERT(getMessagePropertyNames(message, &names, &size) == CMS_SUCCESS);
+    CPPUNIT_ASSERT_EQUAL(5, size);
+
+    for(int i = 0; i < size; ++i) {
+        CPPUNIT_ASSERT(std::string(Integer::toString(i+1)) == std::string(names[i]) );
+        delete names[i];
+    }
+
+    delete names;
+
+    CPPUNIT_ASSERT(getMessagePropertyNames(NULL, &names, &size) == CMS_ERROR);
+    CPPUNIT_ASSERT(getMessagePropertyNames(message, NULL, &size) == CMS_ERROR);
+    CPPUNIT_ASSERT(getMessagePropertyNames(message, &names, NULL) == CMS_ERROR);
+    CPPUNIT_ASSERT(getMessagePropertyNames(NULL, &names, NULL) == CMS_ERROR);
+    CPPUNIT_ASSERT(getMessagePropertyNames(message, NULL, NULL) == CMS_ERROR);
+    CPPUNIT_ASSERT(getMessagePropertyNames(NULL, NULL, NULL) == CMS_ERROR);
+
+    destroyMessage(message);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageTest::testMessagePropertyExists() {
+
+    CMS_Message* message = NULL;
+    int result = 0;
+
+    CPPUNIT_ASSERT(createMessage(session, &message) == CMS_SUCCESS);
+
+    result = -1;
+    CPPUNIT_ASSERT(getNumMessageProperties(message, &result) == CMS_SUCCESS);
+    CPPUNIT_ASSERT_EQUAL(0, result);
+
+    CPPUNIT_ASSERT(setMessageBooleanProperty(message, "1", 0) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(setMessageBooleanProperty(message, "2", 1) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(setMessageBooleanProperty(message, "3", 0) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(setMessageBooleanProperty(message, "4", 1) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(setMessageBooleanProperty(message, "5", 0) == CMS_SUCCESS);
+
+    result = -1;
+    CPPUNIT_ASSERT(messagePropertyExists(message, "2", &result) == CMS_SUCCESS);
+    CPPUNIT_ASSERT_EQUAL(1, result);
+
+    result = -1;
+    CPPUNIT_ASSERT(messagePropertyExists(message, "8", &result) == CMS_SUCCESS);
+    CPPUNIT_ASSERT_EQUAL(0, result);
+
+    CPPUNIT_ASSERT(messagePropertyExists(NULL, "2", &result) == CMS_ERROR);
+    CPPUNIT_ASSERT(messagePropertyExists(message, NULL, &result) == CMS_ERROR);
+    CPPUNIT_ASSERT(messagePropertyExists(message, "2", NULL) == CMS_ERROR);
+    CPPUNIT_ASSERT(messagePropertyExists(message, NULL, NULL) == CMS_ERROR);
+    CPPUNIT_ASSERT(messagePropertyExists(NULL, "2", NULL) == CMS_ERROR);
+    CPPUNIT_ASSERT(messagePropertyExists(NULL, NULL, NULL) == CMS_ERROR);
+
+    destroyMessage(message);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageTest::testClearMessageProperties() {
+
+    CMS_Message* message = NULL;
+    int result = 0;
+
+    CPPUNIT_ASSERT(createMessage(session, &message) == CMS_SUCCESS);
+
+    result = -1;
+    CPPUNIT_ASSERT(getNumMessageProperties(message, &result) == CMS_SUCCESS);
+    CPPUNIT_ASSERT_EQUAL(0, result);
+
+    CPPUNIT_ASSERT(setMessageBooleanProperty(message, "1", 0) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(setMessageBooleanProperty(message, "2", 1) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(setMessageBooleanProperty(message, "3", 0) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(setMessageBooleanProperty(message, "4", 1) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(setMessageBooleanProperty(message, "5", 0) == CMS_SUCCESS);
+
+    result = -1;
+    CPPUNIT_ASSERT(getNumMessageProperties(message, &result) == CMS_SUCCESS);
+    CPPUNIT_ASSERT_EQUAL(5, result);
+
+    CPPUNIT_ASSERT(clearMessageProperties(message) == CMS_SUCCESS);
+
+    result = -1;
+    CPPUNIT_ASSERT(getNumMessageProperties(message, &result) == CMS_SUCCESS);
+    CPPUNIT_ASSERT_EQUAL(0, result);
+
+    CPPUNIT_ASSERT(clearMessageProperties(NULL) == CMS_ERROR);
+
+    destroyMessage(message);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void MessageTest::testClearMessageBody() {
+
+    CMS_Message* message = NULL;
+
+    CPPUNIT_ASSERT(createMessage(session, &message) == CMS_SUCCESS);
+
+    int length = -1;
+
+    const int count = 10;
+
+    CPPUNIT_ASSERT(createBytesMessage(session, &message, NULL, 0) == CMS_SUCCESS);
+
+    for( int i = 0; i < count; i++ ) {
+        CPPUNIT_ASSERT(writeLongToBytesMessage(message, 5LL) == CMS_SUCCESS);
+    }
+
+    CPPUNIT_ASSERT(resetBytesMessage(message) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(getBytesMessageBodyLength(message, &length) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(length == (count * 8));
+
+    CPPUNIT_ASSERT(clearMessageBody(message) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(resetBytesMessage(message) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(getBytesMessageBodyLength(message, &length) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(length == 0);
+
+    CPPUNIT_ASSERT(clearMessageBody(NULL) == CMS_ERROR);
 
     destroyMessage(message);
 }
@@ -444,7 +618,7 @@ void MessageTest::testCMSMessageCorrelationID() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-void MessageTest::testMSMessageDeliveryMode() {
+void MessageTest::testCMSMessageDeliveryMode() {
 
     CMS_Message* message = NULL;
     int result = 0;
