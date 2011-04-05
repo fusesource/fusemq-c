@@ -38,7 +38,7 @@ extern "C" {
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getMessageText(CMS_Message* message, char* dest, int size);
+cms_status cms_getMessageText(CMS_Message* message, char* dest, int size);
 
 /**
  * Sets a value of the String body of the given Text Message.  If the given message is
@@ -51,7 +51,7 @@ cms_status getMessageText(CMS_Message* message, char* dest, int size);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setMessageText(CMS_Message* message, const char* value);
+cms_status cms_setMessageText(CMS_Message* message, const char* value);
 
 #ifdef __cplusplus
 }

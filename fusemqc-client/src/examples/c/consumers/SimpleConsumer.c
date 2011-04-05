@@ -45,34 +45,34 @@ int main(int argc, char* argv[]) {
     CMS_MessageConsumer* consumer = NULL;
     CMS_Message* txtMessage = NULL;
 
-    if (createConnectionFactory(&factory, brokerUri, NULL, NULL) != CMS_SUCCESS) {
+    if (cms_createConnectionFactory(&factory, brokerUri, NULL, NULL) != CMS_SUCCESS) {
         printf("Failed to create a Connection Factory\n");
         exit(1);
     }
 
-    if (createDefaultConnection(factory, &connection) != CMS_SUCCESS) {
+    if (cms_createDefaultConnection(factory, &connection) != CMS_SUCCESS) {
         printf("Failed to create a Connection\n");
         exit(1);
     }
 
-    destroyConnectionFactory(factory);
+    cms_destroyConnectionFactory(factory);
 
-    if (createDefaultSession(connection, &session) != CMS_SUCCESS) {
+    if (cms_createDefaultSession(connection, &session) != CMS_SUCCESS) {
         printf("Failed to create a Session\n");
         exit(1);
     }
 
-    if (createDestination(session, CMS_QUEUE, queueName, &destination) != CMS_SUCCESS) {
+    if (cms_createDestination(session, CMS_QUEUE, queueName, &destination) != CMS_SUCCESS) {
         printf("Failed to create a Destination\n");
         exit(1);
     }
 
-    if (createDefaultConsumer(session, destination, &consumer) != CMS_SUCCESS) {
+    if (cms_createDefaultConsumer(session, destination, &consumer) != CMS_SUCCESS) {
         printf("Failed to create a MessageConsumer\n");
         exit(1);
     }
 
-    if (startConnection(connection) != CMS_SUCCESS) {
+    if (cms_startConnection(connection) != CMS_SUCCESS) {
         printf("Failed to start the Connection\n");
         exit(1);
     }
@@ -80,19 +80,19 @@ int main(int argc, char* argv[]) {
     int i;
     for(i = 0; i < 10; ++i) {
         CMS_Message* message = NULL;
-        if (consumerReceiveWithTimeout(consumer, &message, 5000) != CMS_SUCCESS) {
+        if (cms_consumerReceiveWithTimeout(consumer, &message, 5000) != CMS_SUCCESS) {
             printf("Timed Receive call terminated abnormally\n");
             exit(1);
         }
 
         printf("Received Message #%d\n", i);
-        destroyMessage(message);
+        cms_destroyMessage(message);
     }
 
-    destroyConsumer(consumer);
-    destroyDestination(destination);
-    destroySession(session);
-    destroyConnection(connection);
+    cms_destroyConsumer(consumer);
+    cms_destroyDestination(destination);
+    cms_destroySession(session);
+    cms_destroyConnection(connection);
 
     printf("-----------------------------------------------------\n");
     printf("Finished with the SimpleConsumer.\n");

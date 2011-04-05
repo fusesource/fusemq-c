@@ -35,7 +35,7 @@ extern "C" {
  *
  * @returns result code indicating if the operation was successful.
  */
-cms_status createDefaultConnectionFactory(CMS_ConnectionFactory** factory);
+cms_status cms_createDefaultConnectionFactory(CMS_ConnectionFactory** factory);
 
 /**
  * Creates a Connection Factory using the options provided.  The URI option if null will
@@ -54,10 +54,10 @@ cms_status createDefaultConnectionFactory(CMS_ConnectionFactory** factory);
  *
  * @returns result code indicating if the operation was successful.
  */
-cms_status createConnectionFactory(CMS_ConnectionFactory** factory,
-                                   const char* brokerUri,
-                                   const char* username,
-                                   const char* password);
+cms_status cms_createConnectionFactory(CMS_ConnectionFactory** factory,
+                                          const char* brokerUri,
+                                          const char* username,
+                                          const char* password);
 
 /**
  * Any ConnectionFactory created from the C Wrapper library must be destroyed using this
@@ -68,7 +68,7 @@ cms_status createConnectionFactory(CMS_ConnectionFactory** factory,
  *
  * @returns result code indicating if the operation was successful.
  */
-cms_status destroyConnectionFactory(CMS_ConnectionFactory* factory);
+cms_status cms_destroyConnectionFactory(CMS_ConnectionFactory* factory);
 
 #ifdef __cplusplus
 }

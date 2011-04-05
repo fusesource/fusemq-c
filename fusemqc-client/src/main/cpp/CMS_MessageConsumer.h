@@ -36,7 +36,7 @@ extern "C" {
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status createDefaultConsumer(CMS_Session* session, CMS_Destination* destination, CMS_MessageConsumer** consumer);
+cms_status cms_createDefaultConsumer(CMS_Session* session, CMS_Destination* destination, CMS_MessageConsumer** consumer);
 
 /**
  * Given a Session instance, create a new Consumer with the specified Consumer
@@ -55,11 +55,11 @@ cms_status createDefaultConsumer(CMS_Session* session, CMS_Destination* destinat
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status createConsumer(CMS_Session* session,
-                          CMS_Destination* destination,
-                          CMS_MessageConsumer** consumer,
-                          const char* selector,
-                          int noLocal);
+cms_status cms_createConsumer(CMS_Session* session,
+                                CMS_Destination* destination,
+                                CMS_MessageConsumer** consumer,
+                                const char* selector,
+                                int noLocal);
 
 /**
  * Given a Session instance, create a new Consumer with the specified Consumer
@@ -80,12 +80,12 @@ cms_status createConsumer(CMS_Session* session,
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status createDurableConsumer(CMS_Session* session,
-                                 CMS_Destination* destination,
-                                 CMS_MessageConsumer** consumer,
-                                 const char* subscriptionName,
-                                 const char* selector,
-                                 int noLocal);
+cms_status cms_createDurableConsumer(CMS_Session* session,
+                                      CMS_Destination* destination,
+                                      CMS_MessageConsumer** consumer,
+                                      const char* subscriptionName,
+                                      const char* selector,
+                                      int noLocal);
 
 /**
  * Waits for a Message to become available and stores it in the Location passed to this
@@ -99,7 +99,7 @@ cms_status createDurableConsumer(CMS_Session* session,
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status consumerReceive(CMS_MessageConsumer* consumer, CMS_Message** message);
+cms_status cms_consumerReceive(CMS_MessageConsumer* consumer, CMS_Message** message);
 
 /**
  * Waits for a Message to become available and stores it in the Location passed to this
@@ -115,7 +115,7 @@ cms_status consumerReceive(CMS_MessageConsumer* consumer, CMS_Message** message)
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status consumerReceiveWithTimeout(CMS_MessageConsumer* consumer, CMS_Message** message, int timeout);
+cms_status cms_consumerReceiveWithTimeout(CMS_MessageConsumer* consumer, CMS_Message** message, int timeout);
 
 /**
  * Checks for a Message that's available and stores it in the Location passed to this
@@ -129,7 +129,7 @@ cms_status consumerReceiveWithTimeout(CMS_MessageConsumer* consumer, CMS_Message
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status consumerReceiveNoWait(CMS_MessageConsumer* consumer, CMS_Message** message);
+cms_status cms_consumerReceiveNoWait(CMS_MessageConsumer* consumer, CMS_Message** message);
 
 /**
  * Closes the MessageConsumer, interrupting any currently blocked receive calls.
@@ -139,7 +139,7 @@ cms_status consumerReceiveNoWait(CMS_MessageConsumer* consumer, CMS_Message** me
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status closeConsumer(CMS_MessageConsumer* consumer);
+cms_status cms_closeConsumer(CMS_MessageConsumer* consumer);
 
 /**
  * Gets the Message Selector that is assigned to the given MessageConsumer if there is one.
@@ -156,7 +156,7 @@ cms_status closeConsumer(CMS_MessageConsumer* consumer);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getConsumerMessageSelector(CMS_MessageConsumer* consumer, char* dest, int size);
+cms_status cms_getConsumerMessageSelector(CMS_MessageConsumer* consumer, char* dest, int size);
 
 /**
  * Destroys the given Consumer instance.
@@ -166,7 +166,7 @@ cms_status getConsumerMessageSelector(CMS_MessageConsumer* consumer, char* dest,
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status destroyConsumer(CMS_MessageConsumer* consumer);
+cms_status cms_destroyConsumer(CMS_MessageConsumer* consumer);
 
 #ifdef __cplusplus
 }

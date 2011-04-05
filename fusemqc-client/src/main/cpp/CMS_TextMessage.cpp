@@ -34,7 +34,7 @@
 #include <memory>
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getMessageText(CMS_Message* message, char* dest, int size) {
+cms_status cms_getMessageText(CMS_Message* message, char* dest, int size) {
 
     cms_status result = CMS_ERROR;
 
@@ -77,7 +77,7 @@ cms_status getMessageText(CMS_Message* message, char* dest, int size) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setMessageText(CMS_Message* message, const char* value) {
+cms_status cms_setMessageText(CMS_Message* message, const char* value) {
 
     cms_status result = CMS_ERROR;
 

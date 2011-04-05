@@ -44,29 +44,29 @@ int main(int argc, char* argv[]) {
     CMS_MessageProducer* producer = NULL;
     CMS_Message* txtMessage = NULL;
 
-    if (createConnectionFactory(&factory, brokerUri, NULL, NULL) != CMS_SUCCESS) {
+    if (cms_createConnectionFactory(&factory, brokerUri, NULL, NULL) != CMS_SUCCESS) {
         printf("Failed to create a Connection Factory\n");
         exit(1);
     }
 
-    if (createDefaultConnection(factory, &connection) != CMS_SUCCESS) {
+    if (cms_createDefaultConnection(factory, &connection) != CMS_SUCCESS) {
         printf("Failed to create a Connection\n");
         exit(1);
     }
 
-    destroyConnectionFactory(factory);
+    cms_destroyConnectionFactory(factory);
 
-    if (createDefaultSession(connection, &session) != CMS_SUCCESS) {
+    if (cms_createDefaultSession(connection, &session) != CMS_SUCCESS) {
         printf("Failed to create a Session\n");
         exit(1);
     }
 
-    if (createDestination(session, CMS_QUEUE, queueName, &destination) != CMS_SUCCESS) {
+    if (cms_createDestination(session, CMS_QUEUE, queueName, &destination) != CMS_SUCCESS) {
         printf("Failed to create a Destination\n");
         exit(1);
     }
 
-    if (createProducer(session, destination, &producer) != CMS_SUCCESS) {
+    if (cms_createProducer(session, destination, &producer) != CMS_SUCCESS) {
         printf("Failed to create a MessageProducer\n");
         exit(1);
     }
@@ -74,26 +74,26 @@ int main(int argc, char* argv[]) {
     int i = 0;
     for(; i < 10; ++i) {
         CMS_Message* message = NULL;
-        createTextMessage(session, &message, "Test Message");
+        cms_createTextMessage(session, &message, "Test Message");
 
-        if (producerSendWithDefaults(producer, message) != CMS_SUCCESS) {
+        if (cms_producerSendWithDefaults(producer, message) != CMS_SUCCESS) {
             printf("Failed to send the Message\n");
-            destroyMessage(message);
+            cms_destroyMessage(message);
             exit(1);
         }
 
-        destroyMessage(message);
+        cms_destroyMessage(message);
     }
 
-    if (startConnection(connection) != CMS_SUCCESS) {
+    if (cms_startConnection(connection) != CMS_SUCCESS) {
         printf("Failed to start the Connection\n");
         exit(1);
     }
 
-    destroyProducer(producer);
-    destroyDestination(destination);
-    destroySession(session);
-    destroyConnection(connection);
+    cms_destroyProducer(producer);
+    cms_destroyDestination(destination);
+    cms_destroySession(session);
+    cms_destroyConnection(connection);
 
     printf("-----------------------------------------------------\n");
     printf("Finished with the SimpleProducer.\n");

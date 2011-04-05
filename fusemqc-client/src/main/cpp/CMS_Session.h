@@ -35,7 +35,7 @@ extern "C" {
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status createDefaultSession(CMS_Connection* connection, CMS_Session** session);
+cms_status cms_createDefaultSession(CMS_Connection* connection, CMS_Session** session);
 
 /**
  * Given a Connection instance, create a new Session with the specified Session
@@ -50,7 +50,7 @@ cms_status createDefaultSession(CMS_Connection* connection, CMS_Session** sessio
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status createSession(CMS_Connection* connection, CMS_Session** session, CMS_ACKNOWLEDGMENT_MODE ackMode);
+cms_status cms_createSession(CMS_Connection* connection, CMS_Session** session, CMS_ACKNOWLEDGMENT_MODE ackMode);
 
 /**
  * Destroys the given Connection instance, all Connection Resources should have been
@@ -61,7 +61,7 @@ cms_status createSession(CMS_Connection* connection, CMS_Session** session, CMS_
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status destroySession(CMS_Session* session);
+cms_status cms_destroySession(CMS_Session* session);
 
 /**
  * Closes the Session instance, all Session resources are also closed when the parent
@@ -73,7 +73,7 @@ cms_status destroySession(CMS_Session* session);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status closeSession(CMS_Session* session);
+cms_status cms_closeSession(CMS_Session* session);
 
 /**
  * Commit the current transaction in progress for the Session.
@@ -83,7 +83,7 @@ cms_status closeSession(CMS_Session* session);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status commitSession(CMS_Session* session);
+cms_status cms_commitSession(CMS_Session* session);
 
 /**
  * Roll back the current transaction in progress for the Session.
@@ -93,7 +93,7 @@ cms_status commitSession(CMS_Session* session);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status rollbackSession(CMS_Session* session);
+cms_status cms_rollbackSession(CMS_Session* session);
 
 /**
  * Stop Message delivery in the given session and restart from the oldest unacknowledged
@@ -104,7 +104,7 @@ cms_status rollbackSession(CMS_Session* session);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status recoverSession(CMS_Session* session);
+cms_status cms_recoverSession(CMS_Session* session);
 
 /**
  * Get the Acknowledge Mode that was used to create the given Session.
@@ -114,7 +114,7 @@ cms_status recoverSession(CMS_Session* session);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getSessionAcknowledgeMode(CMS_Session* session, int* mode);
+cms_status cms_getSessionAcknowledgeMode(CMS_Session* session, int* mode);
 
 /**
  * Query the given Session to determine if it is a Transacted Session, if the Session is
@@ -128,7 +128,7 @@ cms_status getSessionAcknowledgeMode(CMS_Session* session, int* mode);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status isSessionTransacted(CMS_Session* session, int* transacted);
+cms_status cms_isSessionTransacted(CMS_Session* session, int* transacted);
 
 /**
  *
@@ -137,7 +137,7 @@ cms_status isSessionTransacted(CMS_Session* session, int* transacted);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status unsubscribeSessionDurableConsumer(CMS_Session* session, const char* subscription);
+cms_status cms_unsubscribeSessionDurableConsumer(CMS_Session* session, const char* subscription);
 
 #ifdef __cplusplus
 }

@@ -33,7 +33,8 @@
 #include <memory>
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status createDefaultConsumer(CMS_Session* session, CMS_Destination* destination, CMS_MessageConsumer** consumer) {
+cms_status cms_createDefaultConsumer(CMS_Session* session, CMS_Destination* destination,
+                                     CMS_MessageConsumer** consumer) {
 
     cms_status result = CMS_SUCCESS;
     std::auto_ptr<CMS_MessageConsumer> wrapper( new CMS_MessageConsumer );
@@ -55,7 +56,8 @@ cms_status createDefaultConsumer(CMS_Session* session, CMS_Destination* destinat
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status createConsumer(CMS_Session* session, CMS_Destination* destination, CMS_MessageConsumer** consumer, const char* selector, int noLocal) {
+cms_status cms_createConsumer(CMS_Session* session, CMS_Destination* destination,
+                              CMS_MessageConsumer** consumer, const char* selector, int noLocal) {
 
     cms_status result = CMS_SUCCESS;
     std::auto_ptr<CMS_MessageConsumer> wrapper( new CMS_MessageConsumer );
@@ -81,12 +83,12 @@ cms_status createConsumer(CMS_Session* session, CMS_Destination* destination, CM
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status createDurableConsumer(CMS_Session* session,
-                                 CMS_Destination* destination,
-                                 CMS_MessageConsumer** consumer,
-                                 const char* subscriptionName,
-                                 const char* selector,
-                                 int noLocal) {
+cms_status cms_createDurableConsumer(CMS_Session* session,
+                                      CMS_Destination* destination,
+                                      CMS_MessageConsumer** consumer,
+                                      const char* subscriptionName,
+                                      const char* selector,
+                                      int noLocal) {
 
     cms_status result = CMS_SUCCESS;
     std::auto_ptr<CMS_MessageConsumer> wrapper( new CMS_MessageConsumer );
@@ -121,7 +123,7 @@ cms_status createDurableConsumer(CMS_Session* session,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status consumerReceive(CMS_MessageConsumer* consumer, CMS_Message** message) {
+cms_status cms_consumerReceive(CMS_MessageConsumer* consumer, CMS_Message** message) {
 
     cms_status result = CMS_ERROR;
 
@@ -165,7 +167,7 @@ cms_status consumerReceive(CMS_MessageConsumer* consumer, CMS_Message** message)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status consumerReceiveWithTimeout(CMS_MessageConsumer* consumer, CMS_Message** message, int timeout) {
+cms_status cms_consumerReceiveWithTimeout(CMS_MessageConsumer* consumer, CMS_Message** message, int timeout) {
 
     cms_status result = CMS_ERROR;
 
@@ -210,7 +212,7 @@ cms_status consumerReceiveWithTimeout(CMS_MessageConsumer* consumer, CMS_Message
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status consumerReceiveNoWait(CMS_MessageConsumer* consumer, CMS_Message** message) {
+cms_status cms_consumerReceiveNoWait(CMS_MessageConsumer* consumer, CMS_Message** message) {
 
     cms_status result = CMS_ERROR;
 
@@ -253,7 +255,7 @@ cms_status consumerReceiveNoWait(CMS_MessageConsumer* consumer, CMS_Message** me
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status closeConsumer(CMS_MessageConsumer* consumer) {
+cms_status cms_closeConsumer(CMS_MessageConsumer* consumer) {
 
     cms_status result = CMS_ERROR;
 
@@ -271,7 +273,7 @@ cms_status closeConsumer(CMS_MessageConsumer* consumer) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getConsumerMessageSelector(CMS_MessageConsumer* consumer, char* dest, int size) {
+cms_status cms_getConsumerMessageSelector(CMS_MessageConsumer* consumer, char* dest, int size) {
 
     cms_status result = CMS_ERROR;
 
@@ -304,7 +306,7 @@ cms_status getConsumerMessageSelector(CMS_MessageConsumer* consumer, char* dest,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status destroyConsumer(CMS_MessageConsumer* consumer) {
+cms_status cms_destroyConsumer(CMS_MessageConsumer* consumer) {
 
     cms_status result = CMS_SUCCESS;
 

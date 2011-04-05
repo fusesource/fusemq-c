@@ -29,8 +29,8 @@
 #include <memory>
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status createDestination(CMS_Session* session, CMS_DESTINATION_TYPE type,
-                             const char* name, CMS_Destination** destination) {
+cms_status cms_createDestination(CMS_Session* session, CMS_DESTINATION_TYPE type,
+                                  const char* name, CMS_Destination** destination) {
 
     cms_status result = CMS_SUCCESS;
     std::auto_ptr<CMS_Destination> wrapper( new CMS_Destination );
@@ -73,18 +73,18 @@ cms_status createDestination(CMS_Session* session, CMS_DESTINATION_TYPE type,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status createTemporaryDestination(CMS_Session* session, CMS_DESTINATION_TYPE type,
-                                      CMS_Destination** destination) {
+cms_status cms_createTemporaryDestination(CMS_Session* session, CMS_DESTINATION_TYPE type,
+                                            CMS_Destination** destination) {
 
     if(type != CMS_TEMPORARY_TOPIC && type != CMS_TEMPORARY_QUEUE) {
         return CMS_ERROR;
     }
 
-    return createDestination(session, type, NULL, destination);
+    return cms_createDestination(session, type, NULL, destination);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status destroyDestination(CMS_Destination* destination) {
+cms_status cms_destroyDestination(CMS_Destination* destination) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -102,7 +102,7 @@ cms_status destroyDestination(CMS_Destination* destination) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status compareDestinations(CMS_Destination* lhs, CMS_Destination* rhs, int* areEqual) {
+cms_status cms_compareDestinations(CMS_Destination* lhs, CMS_Destination* rhs, int* areEqual) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -127,7 +127,7 @@ cms_status compareDestinations(CMS_Destination* lhs, CMS_Destination* rhs, int* 
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status isDestinationTopic(CMS_Destination* destination, int* isTopic) {
+cms_status cms_isDestinationTopic(CMS_Destination* destination, int* isTopic) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -151,7 +151,7 @@ cms_status isDestinationTopic(CMS_Destination* destination, int* isTopic) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status isDestinationQueue(CMS_Destination* destination, int* isQueue) {
+cms_status cms_isDestinationQueue(CMS_Destination* destination, int* isQueue) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -175,7 +175,7 @@ cms_status isDestinationQueue(CMS_Destination* destination, int* isQueue) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status isDestinationTemporary(CMS_Destination* destination, int* isTemporary) {
+cms_status cms_isDestinationTemporary(CMS_Destination* destination, int* isTemporary) {
 
     cms_status result = CMS_SUCCESS;
 

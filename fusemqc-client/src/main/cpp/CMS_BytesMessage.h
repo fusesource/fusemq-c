@@ -36,7 +36,7 @@ extern "C" {
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getBytesMessageBodyLength(CMS_Message* message, int* length);
+cms_status cms_getBytesMessageBodyLength(CMS_Message* message, int* length);
 
 /**
  * Puts the message body in read-only mode and repositions the stream
@@ -47,7 +47,7 @@ cms_status getBytesMessageBodyLength(CMS_Message* message, int* length);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status resetBytesMessage(CMS_Message* message);
+cms_status cms_resetBytesMessage(CMS_Message* message);
 
 /**
  * Reads a boolean value from the Bytes Message Body (reads one byte).
@@ -59,7 +59,7 @@ cms_status resetBytesMessage(CMS_Message* message);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status readBooleanFromBytesMessage(CMS_Message* message, int* value);
+cms_status cms_readBooleanFromBytesMessage(CMS_Message* message, int* value);
 
 /**
  * Write a boolean value to the Bytes Message body as one byte (either zero or one).
@@ -71,7 +71,7 @@ cms_status readBooleanFromBytesMessage(CMS_Message* message, int* value);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status writeBooleanToBytesMessage(CMS_Message* message, int value);
+cms_status cms_writeBooleanToBytesMessage(CMS_Message* message, int value);
 
 /**
  * Reads a byte from the Bytes message stream.
@@ -83,7 +83,7 @@ cms_status writeBooleanToBytesMessage(CMS_Message* message, int value);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status readByteFromBytesMessage(CMS_Message* message, unsigned char* value);
+cms_status cms_readByteFromBytesMessage(CMS_Message* message, unsigned char* value);
 
 /**
  * Writes a byte to the bytes message stream.
@@ -95,7 +95,7 @@ cms_status readByteFromBytesMessage(CMS_Message* message, unsigned char* value);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status writeByteToBytesMessage(CMS_Message* message, unsigned char value);
+cms_status cms_writeByteToBytesMessage(CMS_Message* message, unsigned char value);
 
 /**
  * Reads a char from the Bytes message stream.
@@ -107,7 +107,7 @@ cms_status writeByteToBytesMessage(CMS_Message* message, unsigned char value);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status readCharFromBytesMessage(CMS_Message* message, char* value);
+cms_status cms_readCharFromBytesMessage(CMS_Message* message, char* value);
 
 /**
  * Writes a char to the bytes message stream.
@@ -119,7 +119,7 @@ cms_status readCharFromBytesMessage(CMS_Message* message, char* value);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status writeCharToBytesMessage(CMS_Message* message, char value);
+cms_status cms_writeCharToBytesMessage(CMS_Message* message, char value);
 
 /**
  * Reads a float from the Bytes message stream.
@@ -131,7 +131,7 @@ cms_status writeCharToBytesMessage(CMS_Message* message, char value);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status readFloatFromBytesMessage(CMS_Message* message, float* value);
+cms_status cms_readFloatFromBytesMessage(CMS_Message* message, float* value);
 
 /**
  * Writes a float to the bytes message stream.
@@ -143,7 +143,7 @@ cms_status readFloatFromBytesMessage(CMS_Message* message, float* value);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status writeFloatToBytesMessage(CMS_Message* message, float value);
+cms_status cms_writeFloatToBytesMessage(CMS_Message* message, float value);
 
 /**
  * Reads a double from the Bytes message stream.
@@ -155,7 +155,7 @@ cms_status writeFloatToBytesMessage(CMS_Message* message, float value);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status readDoubleFromBytesMessage(CMS_Message* message, double* value);
+cms_status cms_readDoubleFromBytesMessage(CMS_Message* message, double* value);
 
 /**
  * Writes a double to the bytes message stream.
@@ -167,7 +167,7 @@ cms_status readDoubleFromBytesMessage(CMS_Message* message, double* value);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status writeDoubleToBytesMessage(CMS_Message* message, double value);
+cms_status cms_writeDoubleToBytesMessage(CMS_Message* message, double value);
 
 /**
  * Reads a short from the Bytes message stream.
@@ -179,7 +179,7 @@ cms_status writeDoubleToBytesMessage(CMS_Message* message, double value);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status readShortFromBytesMessage(CMS_Message* message, short* value);
+cms_status cms_readShortFromBytesMessage(CMS_Message* message, short* value);
 
 /**
  * Writes a short to the bytes message stream.
@@ -191,7 +191,7 @@ cms_status readShortFromBytesMessage(CMS_Message* message, short* value);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status writeShortToBytesMessage(CMS_Message* message, short value);
+cms_status cms_writeShortToBytesMessage(CMS_Message* message, short value);
 
 /**
  * Reads a int from the Bytes message stream.
@@ -203,7 +203,7 @@ cms_status writeShortToBytesMessage(CMS_Message* message, short value);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status readIntFromBytesMessage(CMS_Message* message, int* value);
+cms_status cms_readIntFromBytesMessage(CMS_Message* message, int* value);
 
 /**
  * Writes a int to the bytes message stream.
@@ -215,7 +215,7 @@ cms_status readIntFromBytesMessage(CMS_Message* message, int* value);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status writeIntToBytesMessage(CMS_Message* message, int value);
+cms_status cms_writeIntToBytesMessage(CMS_Message* message, int value);
 
 /**
  * Reads a long long from the Bytes message stream.
@@ -227,7 +227,7 @@ cms_status writeIntToBytesMessage(CMS_Message* message, int value);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status readLongFromBytesMessage(CMS_Message* message, long long* value);
+cms_status cms_readLongFromBytesMessage(CMS_Message* message, long long* value);
 
 /**
  * Writes a long long to the bytes message stream.
@@ -239,7 +239,7 @@ cms_status readLongFromBytesMessage(CMS_Message* message, long long* value);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status writeLongToBytesMessage(CMS_Message* message, long long value);
+cms_status cms_writeLongToBytesMessage(CMS_Message* message, long long value);
 
 /**
  * Reads raw bytes from the Bytes message stream.
@@ -253,7 +253,7 @@ cms_status writeLongToBytesMessage(CMS_Message* message, long long value);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status readBytesFromBytesMessage(CMS_Message* message, unsigned char* value, int size);
+cms_status cms_readBytesFromBytesMessage(CMS_Message* message, unsigned char* value, int size);
 
 /**
  * Writes raw bytes string to the bytes message stream.
@@ -269,7 +269,7 @@ cms_status readBytesFromBytesMessage(CMS_Message* message, unsigned char* value,
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status writeBytesToBytesMessage(CMS_Message* message, const unsigned char* value, int offset, int length);
+cms_status cms_writeBytesToBytesMessage(CMS_Message* message, const unsigned char* value, int offset, int length);
 
 /**
  * Reads a null terminated ASCII string from the Bytes message stream.
@@ -283,7 +283,7 @@ cms_status writeBytesToBytesMessage(CMS_Message* message, const unsigned char* v
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status readStringFromBytesMessage(CMS_Message* message, char* value, int size);
+cms_status cms_readStringFromBytesMessage(CMS_Message* message, char* value, int size);
 
 /**
  * Writes a null terminated ASCII string to the bytes message stream.
@@ -295,7 +295,7 @@ cms_status readStringFromBytesMessage(CMS_Message* message, char* value, int siz
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status writeStringToBytesMessage(CMS_Message* message, const char* value);
+cms_status cms_writeStringToBytesMessage(CMS_Message* message, const char* value);
 
 /**
  * Reads a null terminated UTF-8 string from the Bytes message stream and decodes it.
@@ -309,7 +309,7 @@ cms_status writeStringToBytesMessage(CMS_Message* message, const char* value);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status readUTFFromBytesMessage(CMS_Message* message, char* value, int size);
+cms_status cms_readUTFFromBytesMessage(CMS_Message* message, char* value, int size);
 
 /**
  * Writes a null terminated UTF-8 string to the bytes message stream encoding it first.
@@ -321,7 +321,7 @@ cms_status readUTFFromBytesMessage(CMS_Message* message, char* value, int size);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status writeUTFToBytesMessage(CMS_Message* message, const char* value);
+cms_status cms_writeUTFToBytesMessage(CMS_Message* message, const char* value);
 
 #ifdef __cplusplus
 }

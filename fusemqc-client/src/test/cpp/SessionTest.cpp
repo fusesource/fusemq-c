@@ -38,51 +38,51 @@ SessionTest::~SessionTest() {
 ////////////////////////////////////////////////////////////////////////////////
 void SessionTest::testCreateDestination() {
 
-	const std::string uri = std::string("tcp://") + CMSTestCase::DEFAULT_BROKER_HOST;
+    const std::string uri = std::string("tcp://") + CMSTestCase::DEFAULT_BROKER_HOST;
 
     CMS_ConnectionFactory* factory = NULL;
     CMS_Connection* connection = NULL;
     CMS_Session* session = NULL;
     CMS_Destination* destination = NULL;
 
-    CPPUNIT_ASSERT(createConnectionFactory(&factory, uri.c_str(), NULL, NULL) == CMS_SUCCESS);
-    CPPUNIT_ASSERT(createDefaultConnection(factory, &connection) == CMS_SUCCESS);
-    CPPUNIT_ASSERT(createDefaultSession(connection, &session) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_createConnectionFactory(&factory, uri.c_str(), NULL, NULL) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_createDefaultConnection(factory, &connection) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_createDefaultSession(connection, &session) == CMS_SUCCESS);
 
-    CPPUNIT_ASSERT(createDestination(session, CMS_TOPIC, "cms.test.Destination", &destination) == CMS_SUCCESS);
-    CPPUNIT_ASSERT(destroyDestination(destination) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_createDestination(session, CMS_TOPIC, "cms.test.Destination", &destination) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_destroyDestination(destination) == CMS_SUCCESS);
 
-    CPPUNIT_ASSERT(destroySession(session) == CMS_SUCCESS);
-    CPPUNIT_ASSERT(destroyConnection(connection) == CMS_SUCCESS);
-    CPPUNIT_ASSERT(destroyConnectionFactory(factory) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_destroySession(session) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_destroyConnection(connection) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_destroyConnectionFactory(factory) == CMS_SUCCESS);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void SessionTest::testCreateProducer() {
 
-	const std::string uri = std::string("tcp://") + CMSTestCase::DEFAULT_BROKER_HOST;
+    const std::string uri = std::string("tcp://") + CMSTestCase::DEFAULT_BROKER_HOST;
 
     CMS_ConnectionFactory* factory = NULL;
     CMS_Connection* connection = NULL;
     CMS_Session* session = NULL;
     CMS_MessageProducer* producer = NULL;
 
-    CPPUNIT_ASSERT(createConnectionFactory(&factory, uri.c_str(), NULL, NULL) == CMS_SUCCESS);
-    CPPUNIT_ASSERT(createDefaultConnection(factory, &connection) == CMS_SUCCESS);
-    CPPUNIT_ASSERT(createDefaultSession(connection, &session) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_createConnectionFactory(&factory, uri.c_str(), NULL, NULL) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_createDefaultConnection(factory, &connection) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_createDefaultSession(connection, &session) == CMS_SUCCESS);
 
-    CPPUNIT_ASSERT(createProducer(session, NULL, &producer) == CMS_SUCCESS);
-    CPPUNIT_ASSERT(destroyProducer(producer) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_createProducer(session, NULL, &producer) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_destroyProducer(producer) == CMS_SUCCESS);
 
-    CPPUNIT_ASSERT(destroySession(session) == CMS_SUCCESS);
-    CPPUNIT_ASSERT(destroyConnection(connection) == CMS_SUCCESS);
-    CPPUNIT_ASSERT(destroyConnectionFactory(factory) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_destroySession(session) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_destroyConnection(connection) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_destroyConnectionFactory(factory) == CMS_SUCCESS);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void SessionTest::testCreateConsumer() {
 
-	const std::string uri = std::string("tcp://") + CMSTestCase::DEFAULT_BROKER_HOST;
+    const std::string uri = std::string("tcp://") + CMSTestCase::DEFAULT_BROKER_HOST;
 
     CMS_ConnectionFactory* factory = NULL;
     CMS_Connection* connection = NULL;
@@ -90,16 +90,16 @@ void SessionTest::testCreateConsumer() {
     CMS_Destination* destination = NULL;
     CMS_MessageConsumer* consumer = NULL;
 
-    CPPUNIT_ASSERT(createConnectionFactory(&factory, uri.c_str(), NULL, NULL) == CMS_SUCCESS);
-    CPPUNIT_ASSERT(createDefaultConnection(factory, &connection) == CMS_SUCCESS);
-    CPPUNIT_ASSERT(createDefaultSession(connection, &session) == CMS_SUCCESS);
-    CPPUNIT_ASSERT(createDestination(session, CMS_TOPIC, "cms.test.Destination", &destination) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_createConnectionFactory(&factory, uri.c_str(), NULL, NULL) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_createDefaultConnection(factory, &connection) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_createDefaultSession(connection, &session) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_createDestination(session, CMS_TOPIC, "cms.test.Destination", &destination) == CMS_SUCCESS);
 
-    CPPUNIT_ASSERT(createConsumer(session, destination, &consumer, NULL, false) == CMS_SUCCESS);
-    CPPUNIT_ASSERT(destroyConsumer(consumer) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_createConsumer(session, destination, &consumer, NULL, false) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_destroyConsumer(consumer) == CMS_SUCCESS);
 
-    CPPUNIT_ASSERT(destroyDestination(destination) == CMS_SUCCESS);
-    CPPUNIT_ASSERT(destroySession(session) == CMS_SUCCESS);
-    CPPUNIT_ASSERT(destroyConnection(connection) == CMS_SUCCESS);
-    CPPUNIT_ASSERT(destroyConnectionFactory(factory) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_destroyDestination(destination) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_destroySession(session) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_destroyConnection(connection) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_destroyConnectionFactory(factory) == CMS_SUCCESS);
 }

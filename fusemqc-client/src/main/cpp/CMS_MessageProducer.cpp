@@ -29,7 +29,7 @@
 #include <memory>
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status createProducer(CMS_Session* session, CMS_Destination* destination, CMS_MessageProducer** producer) {
+cms_status cms_createProducer(CMS_Session* session, CMS_Destination* destination, CMS_MessageProducer** producer) {
 
     cms_status result = CMS_SUCCESS;
     std::auto_ptr<CMS_MessageProducer> wrapper( new CMS_MessageProducer );
@@ -56,8 +56,8 @@ cms_status createProducer(CMS_Session* session, CMS_Destination* destination, CM
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status producerSend(CMS_MessageProducer* producer, CMS_Message* message,
-                        int deliveryMode, int priority, int timeToLive) {
+cms_status cms_producerSend(CMS_MessageProducer* producer, CMS_Message* message,
+                            int deliveryMode, int priority, int timeToLive) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -79,8 +79,8 @@ cms_status producerSend(CMS_MessageProducer* producer, CMS_Message* message,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status producerSendToDestination(CMS_MessageProducer* producer, CMS_Message* message, CMS_Destination* destination,
-                                     int deliveryMode, int priority, int timeToLive) {
+cms_status cms_producerSendToDestination(CMS_MessageProducer* producer, CMS_Message* message, CMS_Destination* destination,
+                                          int deliveryMode, int priority, int timeToLive) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -103,7 +103,7 @@ cms_status producerSendToDestination(CMS_MessageProducer* producer, CMS_Message*
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status producerSendWithDefaults(CMS_MessageProducer* producer, CMS_Message* message) {
+cms_status cms_producerSendWithDefaults(CMS_MessageProducer* producer, CMS_Message* message) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -123,7 +123,7 @@ cms_status producerSendWithDefaults(CMS_MessageProducer* producer, CMS_Message* 
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status producerSendWithTimeOut(CMS_MessageProducer* producer, CMS_Message* message, long long timeOut) {
+cms_status cms_producerSendWithTimeOut(CMS_MessageProducer* producer, CMS_Message* message, long long timeOut) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -143,7 +143,7 @@ cms_status producerSendWithTimeOut(CMS_MessageProducer* producer, CMS_Message* m
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status closeProducer(CMS_MessageProducer* producer) {
+cms_status cms_closeProducer(CMS_MessageProducer* producer) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -160,7 +160,7 @@ cms_status closeProducer(CMS_MessageProducer* producer) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setProducerDeliveryMode(CMS_MessageProducer* producer, int mode) {
+cms_status cms_setProducerDeliveryMode(CMS_MessageProducer* producer, int mode) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -177,7 +177,7 @@ cms_status setProducerDeliveryMode(CMS_MessageProducer* producer, int mode) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getProducerDeliveryMode(CMS_MessageProducer* producer, int* mode) {
+cms_status cms_getProducerDeliveryMode(CMS_MessageProducer* producer, int* mode) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -194,7 +194,7 @@ cms_status getProducerDeliveryMode(CMS_MessageProducer* producer, int* mode) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setProducerDisableMessageID(CMS_MessageProducer* producer, int enabled) {
+cms_status cms_setProducerDisableMessageID(CMS_MessageProducer* producer, int enabled) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -211,7 +211,7 @@ cms_status setProducerDisableMessageID(CMS_MessageProducer* producer, int enable
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getProducerDisableMessageID(CMS_MessageProducer* producer, int* enabled) {
+cms_status cms_getProducerDisableMessageID(CMS_MessageProducer* producer, int* enabled) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -228,7 +228,7 @@ cms_status getProducerDisableMessageID(CMS_MessageProducer* producer, int* enabl
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setProducerDisableMessageTimeStamp(CMS_MessageProducer* producer, int enabled) {
+cms_status cms_setProducerDisableMessageTimeStamp(CMS_MessageProducer* producer, int enabled) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -245,7 +245,7 @@ cms_status setProducerDisableMessageTimeStamp(CMS_MessageProducer* producer, int
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getProducerDisableMessageTimeStamp(CMS_MessageProducer* producer, int* enabled) {
+cms_status cms_getProducerDisableMessageTimeStamp(CMS_MessageProducer* producer, int* enabled) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -262,7 +262,7 @@ cms_status getProducerDisableMessageTimeStamp(CMS_MessageProducer* producer, int
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setProducerPriority(CMS_MessageProducer* producer, int priority) {
+cms_status cms_setProducerPriority(CMS_MessageProducer* producer, int priority) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -279,7 +279,7 @@ cms_status setProducerPriority(CMS_MessageProducer* producer, int priority) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getProducerPriority(CMS_MessageProducer* producer, int* priority) {
+cms_status cms_getProducerPriority(CMS_MessageProducer* producer, int* priority) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -296,7 +296,7 @@ cms_status getProducerPriority(CMS_MessageProducer* producer, int* priority) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setProducerTimeToLive(CMS_MessageProducer* producer, int timeToLive) {
+cms_status cms_setProducerTimeToLive(CMS_MessageProducer* producer, int timeToLive) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -313,7 +313,7 @@ cms_status setProducerTimeToLive(CMS_MessageProducer* producer, int timeToLive) 
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getProducerTimeToLive(CMS_MessageProducer* producer, int* timeToLive) {
+cms_status cms_getProducerTimeToLive(CMS_MessageProducer* producer, int* timeToLive) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -330,7 +330,7 @@ cms_status getProducerTimeToLive(CMS_MessageProducer* producer, int* timeToLive)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status destroyProducer(CMS_MessageProducer* producer) {
+cms_status cms_destroyProducer(CMS_MessageProducer* producer) {
 
     cms_status result = CMS_SUCCESS;
 

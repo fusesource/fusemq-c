@@ -28,7 +28,7 @@ using namespace cms;
 
 ////////////////////////////////////////////////////////////////////////////////
 SingleConnectionTestCase::SingleConnectionTestCase() :
-	CMSTestCase(), factory(NULL), connection(NULL), session(NULL) {
+    CMSTestCase(), factory(NULL), connection(NULL), session(NULL) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -38,21 +38,19 @@ SingleConnectionTestCase::~SingleConnectionTestCase() {
 ////////////////////////////////////////////////////////////////////////////////
 void SingleConnectionTestCase::setUp() {
 
-	const std::string uri = std::string("tcp://") + CMSTestCase::DEFAULT_BROKER_HOST;
+    const std::string uri = std::string("tcp://") + CMSTestCase::DEFAULT_BROKER_HOST;
 
-    CPPUNIT_ASSERT(createConnectionFactory(&factory, uri.c_str(), NULL, NULL) == CMS_SUCCESS);
-    CPPUNIT_ASSERT(createDefaultConnection(factory, &connection) == CMS_SUCCESS);
-    CPPUNIT_ASSERT(createDefaultSession(connection, &session) == CMS_SUCCESS);
-
-    //CPPUNIT_ASSERT(startConnection(connection) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_createConnectionFactory(&factory, uri.c_str(), NULL, NULL) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_createDefaultConnection(factory, &connection) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_createDefaultSession(connection, &session) == CMS_SUCCESS);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 void SingleConnectionTestCase::tearDown() {
 
-	CPPUNIT_ASSERT(destroySession(session) == CMS_SUCCESS);
-    CPPUNIT_ASSERT(stopConnection(connection) == CMS_SUCCESS);
-    CPPUNIT_ASSERT(closeConnection(connection) == CMS_SUCCESS);
-    CPPUNIT_ASSERT(destroyConnection(connection) == CMS_SUCCESS);
-    CPPUNIT_ASSERT(destroyConnectionFactory(factory) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_destroySession(session) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_stopConnection(connection) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_closeConnection(connection) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_destroyConnection(connection) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_destroyConnectionFactory(factory) == CMS_SUCCESS);
 }

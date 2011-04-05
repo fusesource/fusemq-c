@@ -40,7 +40,7 @@ extern "C" {
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status createDestination(CMS_Session* session, CMS_DESTINATION_TYPE type, const char* name, CMS_Destination** destination);
+cms_status cms_createDestination(CMS_Session* session, CMS_DESTINATION_TYPE type, const char* name, CMS_Destination** destination);
 
 /**
  * Creates a Temporary Destination from the Given Session instance.  The type of
@@ -59,7 +59,7 @@ cms_status createDestination(CMS_Session* session, CMS_DESTINATION_TYPE type, co
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status createTemporaryDestination(CMS_Session* session, CMS_DESTINATION_TYPE type, CMS_Destination** destination);
+cms_status cms_createTemporaryDestination(CMS_Session* session, CMS_DESTINATION_TYPE type, CMS_Destination** destination);
 
 /**
  * Destroy the given Destination instance.
@@ -69,7 +69,7 @@ cms_status createTemporaryDestination(CMS_Session* session, CMS_DESTINATION_TYPE
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status destroyDestination(CMS_Destination* destination);
+cms_status cms_destroyDestination(CMS_Destination* destination);
 
 /**
  * Compares to CMS Destination instances for equality.
@@ -83,7 +83,7 @@ cms_status destroyDestination(CMS_Destination* destination);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status compareDestinations(CMS_Destination* lhs, CMS_Destination* rhs, int* areEqual);
+cms_status cms_compareDestinations(CMS_Destination* lhs, CMS_Destination* rhs, int* areEqual);
 
 /**
  * Checks if the supplied Destination is a Topic.
@@ -95,7 +95,7 @@ cms_status compareDestinations(CMS_Destination* lhs, CMS_Destination* rhs, int* 
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status isDestinationTopic(CMS_Destination* destination, int* isTopic);
+cms_status cms_isDestinationTopic(CMS_Destination* destination, int* isTopic);
 
 /**
  * Checks if the supplied Destination is a Queue.
@@ -107,7 +107,7 @@ cms_status isDestinationTopic(CMS_Destination* destination, int* isTopic);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status isDestinationQueue(CMS_Destination* destination, int* isQueue);
+cms_status cms_isDestinationQueue(CMS_Destination* destination, int* isQueue);
 
 /**
  * Checks if the supplied Destination is a Temporary type.
@@ -119,7 +119,7 @@ cms_status isDestinationQueue(CMS_Destination* destination, int* isQueue);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status isDestinationTemporary(CMS_Destination* destination, int* isTemporary);
+cms_status cms_isDestinationTemporary(CMS_Destination* destination, int* isTemporary);
 
 #ifdef __cplusplus
 }

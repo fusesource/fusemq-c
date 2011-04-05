@@ -29,7 +29,7 @@
 #include <memory>
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status createDefaultConnectionFactory(CMS_ConnectionFactory** factory) {
+cms_status cms_createDefaultConnectionFactory(CMS_ConnectionFactory** factory) {
 
     cms_status result = CMS_SUCCESS;
     std::auto_ptr<CMS_ConnectionFactory> wrapper( new CMS_ConnectionFactory );
@@ -48,10 +48,10 @@ cms_status createDefaultConnectionFactory(CMS_ConnectionFactory** factory) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status createConnectionFactory(CMS_ConnectionFactory** factory,
-                                   const char* brokerUri,
-                                   const char* username,
-                                   const char* password) {
+cms_status cms_createConnectionFactory(CMS_ConnectionFactory** factory,
+                                          const char* brokerUri,
+                                          const char* username,
+                                          const char* password) {
 
     cms_status result = CMS_SUCCESS;
     std::auto_ptr<CMS_ConnectionFactory> wrapper( new CMS_ConnectionFactory );
@@ -83,7 +83,7 @@ cms_status createConnectionFactory(CMS_ConnectionFactory** factory,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status destroyConnectionFactory(CMS_ConnectionFactory* factory) {
+cms_status cms_destroyConnectionFactory(CMS_ConnectionFactory* factory) {
 
     cms_status result = CMS_SUCCESS;
 

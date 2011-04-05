@@ -33,7 +33,7 @@
 #include <memory>
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status createMessage(CMS_Session* session, CMS_Message** message) {
+cms_status cms_createMessage(CMS_Session* session, CMS_Message** message) {
 
     if(session == NULL || message == NULL) {
         return CMS_ERROR;
@@ -56,7 +56,7 @@ cms_status createMessage(CMS_Session* session, CMS_Message** message) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status createTextMessage(CMS_Session* session, CMS_Message** message, const char* body) {
+cms_status cms_createTextMessage(CMS_Session* session, CMS_Message** message, const char* body) {
 
     cms_status result = CMS_SUCCESS;
     std::auto_ptr<CMS_Message> wrapper( new CMS_Message );
@@ -85,7 +85,7 @@ cms_status createTextMessage(CMS_Session* session, CMS_Message** message, const 
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status createBytesMessage(CMS_Session* session, CMS_Message** message, unsigned char* body, int length) {
+cms_status cms_createBytesMessage(CMS_Session* session, CMS_Message** message, unsigned char* body, int length) {
 
     cms_status result = CMS_SUCCESS;
     std::auto_ptr<CMS_Message> wrapper( new CMS_Message );
@@ -114,7 +114,7 @@ cms_status createBytesMessage(CMS_Session* session, CMS_Message** message, unsig
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status createMapMessage(CMS_Session* session, CMS_Message** message) {
+cms_status cms_createMapMessage(CMS_Session* session, CMS_Message** message) {
 
     cms_status result = CMS_SUCCESS;
     std::auto_ptr<CMS_Message> wrapper( new CMS_Message );
@@ -138,7 +138,7 @@ cms_status createMapMessage(CMS_Session* session, CMS_Message** message) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status createStreamMessage(CMS_Session* session, CMS_Message** message) {
+cms_status cms_createStreamMessage(CMS_Session* session, CMS_Message** message) {
 
     cms_status result = CMS_SUCCESS;
     std::auto_ptr<CMS_Message> wrapper( new CMS_Message );
@@ -162,7 +162,7 @@ cms_status createStreamMessage(CMS_Session* session, CMS_Message** message) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status destroyMessage(CMS_Message* message) {
+cms_status cms_destroyMessage(CMS_Message* message) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -180,7 +180,7 @@ cms_status destroyMessage(CMS_Message* message) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status cloneMessage(CMS_Message* original, CMS_Message** clone) {
+cms_status cms_cloneMessage(CMS_Message* original, CMS_Message** clone) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -201,7 +201,7 @@ cms_status cloneMessage(CMS_Message* original, CMS_Message** clone) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getMessageType(CMS_Message* message, int* type) {
+cms_status cms_getMessageType(CMS_Message* message, int* type) {
 
     cms_status result = CMS_ERROR;
 
@@ -219,7 +219,7 @@ cms_status getMessageType(CMS_Message* message, int* type) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status acknowledgeMessage(CMS_Message* message) {
+cms_status cms_acknowledgeMessage(CMS_Message* message) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -236,7 +236,7 @@ cms_status acknowledgeMessage(CMS_Message* message) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status clearMessageBody(CMS_Message* message) {
+cms_status cms_clearMessageBody(CMS_Message* message) {
 
     cms_status result = CMS_ERROR;
 
@@ -254,7 +254,7 @@ cms_status clearMessageBody(CMS_Message* message) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status clearMessageProperties(CMS_Message* message) {
+cms_status cms_clearMessageProperties(CMS_Message* message) {
 
     cms_status result = CMS_ERROR;
 
@@ -272,7 +272,7 @@ cms_status clearMessageProperties(CMS_Message* message) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getNumMessageProperties(CMS_Message* message, int* numProperties) {
+cms_status cms_getNumMessageProperties(CMS_Message* message, int* numProperties) {
 
     cms_status result = CMS_ERROR;
 
@@ -290,7 +290,7 @@ cms_status getNumMessageProperties(CMS_Message* message, int* numProperties) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getMessagePropertyNames(CMS_Message* message, char*** names, int* size) {
+cms_status cms_getMessagePropertyNames(CMS_Message* message, char*** names, int* size) {
 
     cms_status result = CMS_ERROR;
 
@@ -324,7 +324,7 @@ cms_status getMessagePropertyNames(CMS_Message* message, char*** names, int* siz
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status messagePropertyExists(CMS_Message* message, const char* key, int* exists ) {
+cms_status cms_messagePropertyExists(CMS_Message* message, const char* key, int* exists ) {
 
     cms_status result = CMS_ERROR;
 
@@ -350,7 +350,7 @@ cms_status messagePropertyExists(CMS_Message* message, const char* key, int* exi
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getMessageBooleanProperty(CMS_Message* message, const char* key, int* value) {
+cms_status cms_getMessageBooleanProperty(CMS_Message* message, const char* key, int* value) {
 
     cms_status result = CMS_ERROR;
 
@@ -378,7 +378,7 @@ cms_status getMessageBooleanProperty(CMS_Message* message, const char* key, int*
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getMessageByteProperty(CMS_Message* message, const char* key, unsigned char* value) {
+cms_status cms_getMessageByteProperty(CMS_Message* message, const char* key, unsigned char* value) {
 
     cms_status result = CMS_ERROR;
 
@@ -406,7 +406,7 @@ cms_status getMessageByteProperty(CMS_Message* message, const char* key, unsigne
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getMessageDoubleProperty(CMS_Message* message, const char* key, double* value) {
+cms_status cms_getMessageDoubleProperty(CMS_Message* message, const char* key, double* value) {
 
     cms_status result = CMS_ERROR;
 
@@ -434,7 +434,7 @@ cms_status getMessageDoubleProperty(CMS_Message* message, const char* key, doubl
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getMessageFloatProperty(CMS_Message* message, const char* key, float* value) {
+cms_status cms_getMessageFloatProperty(CMS_Message* message, const char* key, float* value) {
 
     cms_status result = CMS_ERROR;
 
@@ -462,7 +462,7 @@ cms_status getMessageFloatProperty(CMS_Message* message, const char* key, float*
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getMessageIntProperty(CMS_Message* message, const char* key, int* value) {
+cms_status cms_getMessageIntProperty(CMS_Message* message, const char* key, int* value) {
 
     cms_status result = CMS_ERROR;
 
@@ -490,7 +490,7 @@ cms_status getMessageIntProperty(CMS_Message* message, const char* key, int* val
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getMessageLongProperty(CMS_Message* message, const char* key, long long* value) {
+cms_status cms_getMessageLongProperty(CMS_Message* message, const char* key, long long* value) {
 
     cms_status result = CMS_ERROR;
 
@@ -518,7 +518,7 @@ cms_status getMessageLongProperty(CMS_Message* message, const char* key, long lo
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getMessageShortProperty(CMS_Message* message, const char* key, short* value) {
+cms_status cms_getMessageShortProperty(CMS_Message* message, const char* key, short* value) {
 
     cms_status result = CMS_ERROR;
 
@@ -546,7 +546,7 @@ cms_status getMessageShortProperty(CMS_Message* message, const char* key, short*
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getMessageStringProperty(CMS_Message* message, const char* key, char* value, int size) {
+cms_status cms_getMessageStringProperty(CMS_Message* message, const char* key, char* value, int size) {
 
     cms_status result = CMS_ERROR;
 
@@ -588,7 +588,7 @@ cms_status getMessageStringProperty(CMS_Message* message, const char* key, char*
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setMessageBooleanProperty(CMS_Message* message, const char* key, int value) {
+cms_status cms_setMessageBooleanProperty(CMS_Message* message, const char* key, int value) {
 
     cms_status result = CMS_ERROR;
 
@@ -612,7 +612,7 @@ cms_status setMessageBooleanProperty(CMS_Message* message, const char* key, int 
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setMessageByteProperty(CMS_Message* message, const char* key, unsigned char value) {
+cms_status cms_setMessageByteProperty(CMS_Message* message, const char* key, unsigned char value) {
 
     cms_status result = CMS_ERROR;
 
@@ -636,7 +636,7 @@ cms_status setMessageByteProperty(CMS_Message* message, const char* key, unsigne
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setMessageDoubleProperty(CMS_Message* message, const char* key, double value) {
+cms_status cms_setMessageDoubleProperty(CMS_Message* message, const char* key, double value) {
 
     cms_status result = CMS_ERROR;
 
@@ -660,7 +660,7 @@ cms_status setMessageDoubleProperty(CMS_Message* message, const char* key, doubl
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setMessageFloatProperty(CMS_Message* message, const char* key, float value) {
+cms_status cms_setMessageFloatProperty(CMS_Message* message, const char* key, float value) {
 
     cms_status result = CMS_ERROR;
 
@@ -684,7 +684,7 @@ cms_status setMessageFloatProperty(CMS_Message* message, const char* key, float 
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setMessageIntProperty(CMS_Message* message, const char* key, int value) {
+cms_status cms_setMessageIntProperty(CMS_Message* message, const char* key, int value) {
 
     cms_status result = CMS_ERROR;
 
@@ -708,7 +708,7 @@ cms_status setMessageIntProperty(CMS_Message* message, const char* key, int valu
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setMessageLongProperty(CMS_Message* message, const char* key, long long value) {
+cms_status cms_setMessageLongProperty(CMS_Message* message, const char* key, long long value) {
 
     cms_status result = CMS_ERROR;
 
@@ -732,7 +732,7 @@ cms_status setMessageLongProperty(CMS_Message* message, const char* key, long lo
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setMessageShortProperty(CMS_Message* message, const char* key, short value) {
+cms_status cms_setMessageShortProperty(CMS_Message* message, const char* key, short value) {
 
     cms_status result = CMS_ERROR;
 
@@ -756,7 +756,7 @@ cms_status setMessageShortProperty(CMS_Message* message, const char* key, short 
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setMessageStringProperty(CMS_Message* message, const char* key, const char* value) {
+cms_status cms_setMessageStringProperty(CMS_Message* message, const char* key, const char* value) {
 
     cms_status result = CMS_ERROR;
 
@@ -780,7 +780,7 @@ cms_status setMessageStringProperty(CMS_Message* message, const char* key, const
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getCMSMessageCorrelationID(CMS_Message* message, char* correlationId, int size) {
+cms_status cms_getCMSMessageCorrelationID(CMS_Message* message, char* correlationId, int size) {
 
     cms_status result = CMS_ERROR;
 
@@ -817,7 +817,7 @@ cms_status getCMSMessageCorrelationID(CMS_Message* message, char* correlationId,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setCMSMessageCorrelationID(CMS_Message* message, const char* correlationId) {
+cms_status cms_setCMSMessageCorrelationID(CMS_Message* message, const char* correlationId) {
 
     cms_status result = CMS_ERROR;
 
@@ -841,7 +841,7 @@ cms_status setCMSMessageCorrelationID(CMS_Message* message, const char* correlat
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getCMSMessageDeliveryMode(CMS_Message* message, int* mode) {
+cms_status cms_getCMSMessageDeliveryMode(CMS_Message* message, int* mode) {
 
     cms_status result = CMS_ERROR;
 
@@ -861,7 +861,7 @@ cms_status getCMSMessageDeliveryMode(CMS_Message* message, int* mode) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setCMSMessageDeliveryMode(CMS_Message* message, int mode) {
+cms_status cms_setCMSMessageDeliveryMode(CMS_Message* message, int mode) {
 
     cms_status result = CMS_ERROR;
 
@@ -881,7 +881,7 @@ cms_status setCMSMessageDeliveryMode(CMS_Message* message, int mode) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getCMSMessageDestination(CMS_Message* message, CMS_Destination** destination) {
+cms_status cms_getCMSMessageDestination(CMS_Message* message, CMS_Destination** destination) {
 
     cms_status result = CMS_ERROR;
 
@@ -911,7 +911,7 @@ cms_status getCMSMessageDestination(CMS_Message* message, CMS_Destination** dest
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setCMSMessageDestination(CMS_Message* message, CMS_Destination* destination) {
+cms_status cms_setCMSMessageDestination(CMS_Message* message, CMS_Destination* destination) {
 
     cms_status result = CMS_ERROR;
 
@@ -936,7 +936,7 @@ cms_status setCMSMessageDestination(CMS_Message* message, CMS_Destination* desti
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getCMSMessageExpiration(CMS_Message* message, long long* expiration) {
+cms_status cms_getCMSMessageExpiration(CMS_Message* message, long long* expiration) {
 
     cms_status result = CMS_ERROR;
 
@@ -956,7 +956,7 @@ cms_status getCMSMessageExpiration(CMS_Message* message, long long* expiration) 
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setCMSMessageExpiration(CMS_Message* message, long long expiration) {
+cms_status cms_setCMSMessageExpiration(CMS_Message* message, long long expiration) {
 
     cms_status result = CMS_ERROR;
 
@@ -976,7 +976,7 @@ cms_status setCMSMessageExpiration(CMS_Message* message, long long expiration) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getCMSMessageMessageID(CMS_Message* message, char* messageId, int size) {
+cms_status cms_getCMSMessageMessageID(CMS_Message* message, char* messageId, int size) {
 
     cms_status result = CMS_ERROR;
 
@@ -1013,7 +1013,7 @@ cms_status getCMSMessageMessageID(CMS_Message* message, char* messageId, int siz
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setCMSMessageMessageID(CMS_Message* message, const char* messageId) {
+cms_status cms_setCMSMessageMessageID(CMS_Message* message, const char* messageId) {
 
     cms_status result = CMS_ERROR;
 
@@ -1037,7 +1037,7 @@ cms_status setCMSMessageMessageID(CMS_Message* message, const char* messageId) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getCMSMessagePriority(CMS_Message* message, int* priority) {
+cms_status cms_getCMSMessagePriority(CMS_Message* message, int* priority) {
 
     cms_status result = CMS_ERROR;
 
@@ -1057,7 +1057,7 @@ cms_status getCMSMessagePriority(CMS_Message* message, int* priority) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setCMSMessagePriority(CMS_Message* message, int priority) {
+cms_status cms_setCMSMessagePriority(CMS_Message* message, int priority) {
 
     cms_status result = CMS_ERROR;
 
@@ -1077,7 +1077,7 @@ cms_status setCMSMessagePriority(CMS_Message* message, int priority) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getCMSMessageRedelivered(CMS_Message* message, int* redelivered) {
+cms_status cms_getCMSMessageRedelivered(CMS_Message* message, int* redelivered) {
 
     cms_status result = CMS_ERROR;
 
@@ -1097,7 +1097,7 @@ cms_status getCMSMessageRedelivered(CMS_Message* message, int* redelivered) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setCMSMessageRedelivered(CMS_Message* message, int redelivered) {
+cms_status cms_setCMSMessageRedelivered(CMS_Message* message, int redelivered) {
 
     cms_status result = CMS_ERROR;
 
@@ -1117,7 +1117,7 @@ cms_status setCMSMessageRedelivered(CMS_Message* message, int redelivered) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getCMSMessageReplyTo(CMS_Message* message, CMS_Destination** destination) {
+cms_status cms_getCMSMessageReplyTo(CMS_Message* message, CMS_Destination** destination) {
 
     cms_status result = CMS_ERROR;
 
@@ -1147,7 +1147,7 @@ cms_status getCMSMessageReplyTo(CMS_Message* message, CMS_Destination** destinat
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setCMSMessageReplyTo(CMS_Message* message, CMS_Destination* destination) {
+cms_status cms_setCMSMessageReplyTo(CMS_Message* message, CMS_Destination* destination) {
 
     cms_status result = CMS_ERROR;
 
@@ -1172,7 +1172,7 @@ cms_status setCMSMessageReplyTo(CMS_Message* message, CMS_Destination* destinati
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getCMSMessageTimestamp(CMS_Message* message, long long* timeStamp) {
+cms_status cms_getCMSMessageTimestamp(CMS_Message* message, long long* timeStamp) {
 
     cms_status result = CMS_ERROR;
 
@@ -1192,7 +1192,7 @@ cms_status getCMSMessageTimestamp(CMS_Message* message, long long* timeStamp) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setCMSMessageTimestamp(CMS_Message* message, long long timeStamp) {
+cms_status cms_setCMSMessageTimestamp(CMS_Message* message, long long timeStamp) {
 
     cms_status result = CMS_ERROR;
 
@@ -1212,7 +1212,7 @@ cms_status setCMSMessageTimestamp(CMS_Message* message, long long timeStamp) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getCMSMessageType(CMS_Message* message, char* type, int size) {
+cms_status cms_getCMSMessageType(CMS_Message* message, char* type, int size) {
 
     cms_status result = CMS_ERROR;
 
@@ -1249,7 +1249,7 @@ cms_status getCMSMessageType(CMS_Message* message, char* type, int size) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setCMSMessageType(CMS_Message* message, const char* type) {
+cms_status cms_setCMSMessageType(CMS_Message* message, const char* type) {
 
     cms_status result = CMS_ERROR;
 

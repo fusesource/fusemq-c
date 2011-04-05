@@ -34,7 +34,7 @@
 #include <memory>
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getBytesMessageBodyLength(CMS_Message* message, int* length) {
+cms_status cms_getBytesMessageBodyLength(CMS_Message* message, int* length) {
 
     cms_status result = CMS_ERROR;
 
@@ -60,7 +60,7 @@ cms_status getBytesMessageBodyLength(CMS_Message* message, int* length) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status resetBytesMessage(CMS_Message* message) {
+cms_status cms_resetBytesMessage(CMS_Message* message) {
 
     cms_status result = CMS_ERROR;
 
@@ -86,7 +86,7 @@ cms_status resetBytesMessage(CMS_Message* message) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status readBooleanFromBytesMessage(CMS_Message* message, int* value) {
+cms_status cms_readBooleanFromBytesMessage(CMS_Message* message, int* value) {
 
     cms_status result = CMS_ERROR;
 
@@ -114,7 +114,7 @@ cms_status readBooleanFromBytesMessage(CMS_Message* message, int* value) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status writeBooleanToBytesMessage(CMS_Message* message, int value) {
+cms_status cms_writeBooleanToBytesMessage(CMS_Message* message, int value) {
 
     cms_status result = CMS_ERROR;
 
@@ -142,7 +142,7 @@ cms_status writeBooleanToBytesMessage(CMS_Message* message, int value) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status readByteFromBytesMessage(CMS_Message* message, unsigned char* value) {
+cms_status cms_readByteFromBytesMessage(CMS_Message* message, unsigned char* value) {
 
     cms_status result = CMS_ERROR;
 
@@ -170,7 +170,7 @@ cms_status readByteFromBytesMessage(CMS_Message* message, unsigned char* value) 
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status writeByteToBytesMessage(CMS_Message* message, unsigned char value) {
+cms_status cms_writeByteToBytesMessage(CMS_Message* message, unsigned char value) {
 
     cms_status result = CMS_ERROR;
 
@@ -198,7 +198,7 @@ cms_status writeByteToBytesMessage(CMS_Message* message, unsigned char value) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status readCharFromBytesMessage(CMS_Message* message, char* value) {
+cms_status cms_readCharFromBytesMessage(CMS_Message* message, char* value) {
 
     cms_status result = CMS_ERROR;
 
@@ -226,7 +226,7 @@ cms_status readCharFromBytesMessage(CMS_Message* message, char* value) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status writeCharToBytesMessage(CMS_Message* message, char value) {
+cms_status cms_writeCharToBytesMessage(CMS_Message* message, char value) {
 
     cms_status result = CMS_ERROR;
 
@@ -254,7 +254,7 @@ cms_status writeCharToBytesMessage(CMS_Message* message, char value) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status readFloatFromBytesMessage(CMS_Message* message, float* value) {
+cms_status cms_readFloatFromBytesMessage(CMS_Message* message, float* value) {
 
     cms_status result = CMS_ERROR;
 
@@ -282,7 +282,7 @@ cms_status readFloatFromBytesMessage(CMS_Message* message, float* value) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status writeFloatToBytesMessage(CMS_Message* message, float value) {
+cms_status cms_writeFloatToBytesMessage(CMS_Message* message, float value) {
 
     cms_status result = CMS_ERROR;
 
@@ -310,7 +310,7 @@ cms_status writeFloatToBytesMessage(CMS_Message* message, float value) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status readDoubleFromBytesMessage(CMS_Message* message, double* value) {
+cms_status cms_readDoubleFromBytesMessage(CMS_Message* message, double* value) {
 
     cms_status result = CMS_ERROR;
 
@@ -338,7 +338,7 @@ cms_status readDoubleFromBytesMessage(CMS_Message* message, double* value) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status writeDoubleToBytesMessage(CMS_Message* message, double value) {
+cms_status cms_writeDoubleToBytesMessage(CMS_Message* message, double value) {
 
     cms_status result = CMS_ERROR;
 
@@ -366,7 +366,7 @@ cms_status writeDoubleToBytesMessage(CMS_Message* message, double value) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status readShortFromBytesMessage(CMS_Message* message, short* value) {
+cms_status cms_readShortFromBytesMessage(CMS_Message* message, short* value) {
 
     cms_status result = CMS_ERROR;
 
@@ -394,7 +394,7 @@ cms_status readShortFromBytesMessage(CMS_Message* message, short* value) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status writeShortToBytesMessage(CMS_Message* message, short value) {
+cms_status cms_writeShortToBytesMessage(CMS_Message* message, short value) {
 
     cms_status result = CMS_ERROR;
 
@@ -422,7 +422,7 @@ cms_status writeShortToBytesMessage(CMS_Message* message, short value) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status readIntFromBytesMessage(CMS_Message* message, int* value) {
+cms_status cms_readIntFromBytesMessage(CMS_Message* message, int* value) {
 
     cms_status result = CMS_ERROR;
 
@@ -450,7 +450,7 @@ cms_status readIntFromBytesMessage(CMS_Message* message, int* value) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status writeIntToBytesMessage(CMS_Message* message, int value) {
+cms_status cms_writeIntToBytesMessage(CMS_Message* message, int value) {
 
     cms_status result = CMS_ERROR;
 
@@ -478,7 +478,7 @@ cms_status writeIntToBytesMessage(CMS_Message* message, int value) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status readLongFromBytesMessage(CMS_Message* message, long long* value) {
+cms_status cms_readLongFromBytesMessage(CMS_Message* message, long long* value) {
 
     cms_status result = CMS_ERROR;
 
@@ -506,7 +506,7 @@ cms_status readLongFromBytesMessage(CMS_Message* message, long long* value) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status writeLongToBytesMessage(CMS_Message* message, long long value) {
+cms_status cms_writeLongToBytesMessage(CMS_Message* message, long long value) {
 
     cms_status result = CMS_ERROR;
 
@@ -534,7 +534,7 @@ cms_status writeLongToBytesMessage(CMS_Message* message, long long value) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status readBytesFromBytesMessage(CMS_Message* message, unsigned char* value, int size) {
+cms_status cms_readBytesFromBytesMessage(CMS_Message* message, unsigned char* value, int size) {
 
     cms_status result = CMS_ERROR;
 
@@ -569,7 +569,7 @@ cms_status readBytesFromBytesMessage(CMS_Message* message, unsigned char* value,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status writeBytesToBytesMessage(CMS_Message* message, const unsigned char* value, int offset, int length) {
+cms_status cms_writeBytesToBytesMessage(CMS_Message* message, const unsigned char* value, int offset, int length) {
 
     cms_status result = CMS_ERROR;
 
@@ -599,7 +599,7 @@ cms_status writeBytesToBytesMessage(CMS_Message* message, const unsigned char* v
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status readStringFromBytesMessage(CMS_Message* message, char* value, int size) {
+cms_status cms_readStringFromBytesMessage(CMS_Message* message, char* value, int size) {
 
     cms_status result = CMS_ERROR;
 
@@ -645,7 +645,7 @@ cms_status readStringFromBytesMessage(CMS_Message* message, char* value, int siz
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status writeStringToBytesMessage(CMS_Message* message, const char* value) {
+cms_status cms_writeStringToBytesMessage(CMS_Message* message, const char* value) {
 
     cms_status result = CMS_ERROR;
 
@@ -678,7 +678,7 @@ cms_status writeStringToBytesMessage(CMS_Message* message, const char* value) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status readUTFFromBytesMessage(CMS_Message* message, char* value, int size) {
+cms_status cms_readUTFFromBytesMessage(CMS_Message* message, char* value, int size) {
 
     cms_status result = CMS_ERROR;
 
@@ -724,7 +724,7 @@ cms_status readUTFFromBytesMessage(CMS_Message* message, char* value, int size) 
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status writeUTFToBytesMessage(CMS_Message* message, const char* value) {
+cms_status cms_writeUTFToBytesMessage(CMS_Message* message, const char* value) {
 
     cms_status result = CMS_ERROR;
 

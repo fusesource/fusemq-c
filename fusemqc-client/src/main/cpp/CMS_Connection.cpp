@@ -34,7 +34,7 @@
 using namespace cms;
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status createDefaultConnection(CMS_ConnectionFactory* factory, CMS_Connection** connection) {
+cms_status cms_createDefaultConnection(CMS_ConnectionFactory* factory, CMS_Connection** connection) {
 
     cms_status result = CMS_SUCCESS;
     std::auto_ptr<CMS_Connection> wrapper( new CMS_Connection );
@@ -56,11 +56,11 @@ cms_status createDefaultConnection(CMS_ConnectionFactory* factory, CMS_Connectio
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status createConnection(CMS_ConnectionFactory* factory,
-                            CMS_Connection** connection,
-                            const char* username,
-                            const char* password,
-                            const char* clientId) {
+cms_status cms_createConnection(CMS_ConnectionFactory* factory,
+                                CMS_Connection** connection,
+                                const char* username,
+                                const char* password,
+                                const char* clientId) {
 
     cms_status result = CMS_SUCCESS;
     std::auto_ptr<CMS_Connection> wrapper( new CMS_Connection );
@@ -87,7 +87,7 @@ cms_status createConnection(CMS_ConnectionFactory* factory,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status destroyConnection(CMS_Connection* connection) {
+cms_status cms_destroyConnection(CMS_Connection* connection) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -105,7 +105,7 @@ cms_status destroyConnection(CMS_Connection* connection) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status startConnection(CMS_Connection* connection) {
+cms_status cms_startConnection(CMS_Connection* connection) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -122,7 +122,7 @@ cms_status startConnection(CMS_Connection* connection) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status stopConnection(CMS_Connection* connection) {
+cms_status cms_stopConnection(CMS_Connection* connection) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -139,7 +139,7 @@ cms_status stopConnection(CMS_Connection* connection) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status closeConnection(CMS_Connection* connection) {
+cms_status cms_closeConnection(CMS_Connection* connection) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -156,7 +156,7 @@ cms_status closeConnection(CMS_Connection* connection) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status setConnectionClientId(CMS_Connection* connection, const char* clientId) {
+cms_status cms_setConnectionClientId(CMS_Connection* connection, const char* clientId) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -177,7 +177,7 @@ cms_status setConnectionClientId(CMS_Connection* connection, const char* clientI
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getConnectionClientId(CMS_Connection* connection, char* clientId, int size) {
+cms_status cms_getConnectionClientId(CMS_Connection* connection, char* clientId, int size) {
 
     cms_status result = CMS_SUCCESS;
 

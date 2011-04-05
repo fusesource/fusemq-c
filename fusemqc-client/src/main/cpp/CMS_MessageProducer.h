@@ -36,7 +36,7 @@ extern "C" {
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status createProducer(CMS_Session* session, CMS_Destination* destination, CMS_MessageProducer** producer);
+cms_status cms_createProducer(CMS_Session* session, CMS_Destination* destination, CMS_MessageProducer** producer);
 
 /**
  * Given a Message Producer, send the given Message using that Producer applying the
@@ -55,8 +55,8 @@ cms_status createProducer(CMS_Session* session, CMS_Destination* destination, CM
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status producerSend(CMS_MessageProducer* producer, CMS_Message* message,
-                        int deliveryMode, int priority, int timeToLive);
+cms_status cms_producerSend(CMS_MessageProducer* producer, CMS_Message* message,
+                            int deliveryMode, int priority, int timeToLive);
 
 /**
  * Given a Message Producer, send the given Message using that Producer applying the
@@ -81,8 +81,8 @@ cms_status producerSend(CMS_MessageProducer* producer, CMS_Message* message,
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status producerSendToDestination(CMS_MessageProducer* producer, CMS_Message* message, CMS_Destination* destination,
-                                     int deliveryMode, int priority, int timeToLive);
+cms_status cms_producerSendToDestination(CMS_MessageProducer* producer, CMS_Message* message, CMS_Destination* destination,
+                                          int deliveryMode, int priority, int timeToLive);
 
 /**
  * Given a Message Producer, send the given Message using that Producer.  This method
@@ -95,7 +95,7 @@ cms_status producerSendToDestination(CMS_MessageProducer* producer, CMS_Message*
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status producerSendWithDefaults(CMS_MessageProducer* producer, CMS_Message* message);
+cms_status cms_producerSendWithDefaults(CMS_MessageProducer* producer, CMS_Message* message);
 
 /**
  * Given a Message Producer, send the given Message using that Producer.  Assign the sent
@@ -111,7 +111,7 @@ cms_status producerSendWithDefaults(CMS_MessageProducer* producer, CMS_Message* 
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status producerSendWithTimeOut(CMS_MessageProducer* producer, CMS_Message* message, long long timeToLive);
+cms_status cms_producerSendWithTimeOut(CMS_MessageProducer* producer, CMS_Message* message, long long timeToLive);
 
 /**
  * Sets the delivery mode used by the given producer.
@@ -123,7 +123,7 @@ cms_status producerSendWithTimeOut(CMS_MessageProducer* producer, CMS_Message* m
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setProducerDeliveryMode(CMS_MessageProducer* producer, int mode);
+cms_status cms_setProducerDeliveryMode(CMS_MessageProducer* producer, int mode);
 
 /**
  * Gets the delivery mode used by the given producer.
@@ -135,7 +135,7 @@ cms_status setProducerDeliveryMode(CMS_MessageProducer* producer, int mode);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getProducerDeliveryMode(CMS_MessageProducer* producer, int* mode);
+cms_status cms_getProducerDeliveryMode(CMS_MessageProducer* producer, int* mode);
 
 /**
  * Sets the value of the Producer's disable Message Id setting.  A value of zero indicates
@@ -148,7 +148,7 @@ cms_status getProducerDeliveryMode(CMS_MessageProducer* producer, int* mode);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setProducerDisableMessageID(CMS_MessageProducer* producer, int enabled);
+cms_status cms_setProducerDisableMessageID(CMS_MessageProducer* producer, int enabled);
 
 /**
  * Gets the value of the Producer's disable Message Id setting.  A value of zero indicates
@@ -161,7 +161,7 @@ cms_status setProducerDisableMessageID(CMS_MessageProducer* producer, int enable
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getProducerDisableMessageID(CMS_MessageProducer* producer, int* enabled);
+cms_status cms_getProducerDisableMessageID(CMS_MessageProducer* producer, int* enabled);
 
 /**
  * Sets the value of the Producer's disable time stamp setting.  A value of zero indicates
@@ -174,7 +174,7 @@ cms_status getProducerDisableMessageID(CMS_MessageProducer* producer, int* enabl
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setProducerDisableMessageTimeStamp(CMS_MessageProducer* producer, int enabled);
+cms_status cms_setProducerDisableMessageTimeStamp(CMS_MessageProducer* producer, int enabled);
 
 /**
  * Gets the value of the Producer's disable time stamps setting.  A value of zero indicates
@@ -187,7 +187,7 @@ cms_status setProducerDisableMessageTimeStamp(CMS_MessageProducer* producer, int
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getProducerDisableMessageTimeStamp(CMS_MessageProducer* producer, int* enabled);
+cms_status cms_getProducerDisableMessageTimeStamp(CMS_MessageProducer* producer, int* enabled);
 
 /**
  * Sets the value of the Producer's Message Priority setting.
@@ -199,7 +199,7 @@ cms_status getProducerDisableMessageTimeStamp(CMS_MessageProducer* producer, int
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setProducerPriority(CMS_MessageProducer* producer, int priority);
+cms_status cms_setProducerPriority(CMS_MessageProducer* producer, int priority);
 
 /**
  * Gets the value of the Producer's Message Priority setting.
@@ -211,7 +211,7 @@ cms_status setProducerPriority(CMS_MessageProducer* producer, int priority);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getProducerPriority(CMS_MessageProducer* producer, int* priority);
+cms_status cms_getProducerPriority(CMS_MessageProducer* producer, int* priority);
 
 /**
  * Sets the value of the Producer's Message Time to Live setting.
@@ -223,7 +223,7 @@ cms_status getProducerPriority(CMS_MessageProducer* producer, int* priority);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setProducerTimeToLive(CMS_MessageProducer* producer, int timeToLive);
+cms_status cms_setProducerTimeToLive(CMS_MessageProducer* producer, int timeToLive);
 
 /**
  * Gets the value of the Producer's Message Time to Live setting.
@@ -235,7 +235,7 @@ cms_status setProducerTimeToLive(CMS_MessageProducer* producer, int timeToLive);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getProducerTimeToLive(CMS_MessageProducer* producer, int* timeToLive);
+cms_status cms_getProducerTimeToLive(CMS_MessageProducer* producer, int* timeToLive);
 
 /**
  * Closes the MessageProducer.
@@ -245,7 +245,7 @@ cms_status getProducerTimeToLive(CMS_MessageProducer* producer, int* timeToLive)
  *
   * @return result code indicating the success or failure of the operation.
  */
-cms_status closeProducer(CMS_MessageProducer* producer);
+cms_status cms_closeProducer(CMS_MessageProducer* producer);
 
 /**
  * Destroys the given Producer instance.
@@ -255,7 +255,7 @@ cms_status closeProducer(CMS_MessageProducer* producer);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status destroyProducer(CMS_MessageProducer* producer);
+cms_status cms_destroyProducer(CMS_MessageProducer* producer);
 
 #ifdef __cplusplus
 }

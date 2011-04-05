@@ -27,7 +27,7 @@
 #include <memory>
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status createDefaultSession(CMS_Connection* connection, CMS_Session** session) {
+cms_status cms_createDefaultSession(CMS_Connection* connection, CMS_Session** session) {
 
     cms_status result = CMS_SUCCESS;
     std::auto_ptr<CMS_Session> wrapper( new CMS_Session );
@@ -49,7 +49,7 @@ cms_status createDefaultSession(CMS_Connection* connection, CMS_Session** sessio
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status createSession(CMS_Connection* connection, CMS_Session** session, CMS_ACKNOWLEDGMENT_MODE ackMode) {
+cms_status cms_createSession(CMS_Connection* connection, CMS_Session** session, CMS_ACKNOWLEDGMENT_MODE ackMode) {
 
     cms_status result = CMS_SUCCESS;
     std::auto_ptr<CMS_Session> wrapper( new CMS_Session );
@@ -92,7 +92,7 @@ cms_status createSession(CMS_Connection* connection, CMS_Session** session, CMS_
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status destroySession(CMS_Session* session) {
+cms_status cms_destroySession(CMS_Session* session) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -110,7 +110,7 @@ cms_status destroySession(CMS_Session* session) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status closeSession(CMS_Session* session) {
+cms_status cms_closeSession(CMS_Session* session) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -127,7 +127,7 @@ cms_status closeSession(CMS_Session* session) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status commitSession(CMS_Session* session) {
+cms_status cms_commitSession(CMS_Session* session) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -144,7 +144,7 @@ cms_status commitSession(CMS_Session* session) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status rollbackSession(CMS_Session* session) {
+cms_status cms_rollbackSession(CMS_Session* session) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -161,7 +161,7 @@ cms_status rollbackSession(CMS_Session* session) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status recoverSession(CMS_Session* session) {
+cms_status cms_recoverSession(CMS_Session* session) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -178,7 +178,7 @@ cms_status recoverSession(CMS_Session* session) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status getSessionAcknowledgeMode(CMS_Session* session, int* mode) {
+cms_status cms_getSessionAcknowledgeMode(CMS_Session* session, int* mode) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -195,7 +195,7 @@ cms_status getSessionAcknowledgeMode(CMS_Session* session, int* mode) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status isSessionTransacted(CMS_Session* session, int* transacted) {
+cms_status cms_isSessionTransacted(CMS_Session* session, int* transacted) {
 
     cms_status result = CMS_SUCCESS;
 
@@ -212,7 +212,7 @@ cms_status isSessionTransacted(CMS_Session* session, int* transacted) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-cms_status unsubscribeSessionDurableConsumer(CMS_Session* session, const char* subscription) {
+cms_status cms_unsubscribeSessionDurableConsumer(CMS_Session* session, const char* subscription) {
 
     cms_status result = CMS_SUCCESS;
 

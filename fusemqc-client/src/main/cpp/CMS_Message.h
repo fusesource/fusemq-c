@@ -35,7 +35,7 @@ extern "C" {
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status createMessage(CMS_Session* session, CMS_Message** message);
+cms_status cms_createMessage(CMS_Session* session, CMS_Message** message);
 
 /**
  * Creates a New Text Message from the given Session instance, if set the value of the
@@ -51,7 +51,7 @@ cms_status createMessage(CMS_Session* session, CMS_Message** message);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status createTextMessage(CMS_Session* session, CMS_Message** message, const char* body);
+cms_status cms_createTextMessage(CMS_Session* session, CMS_Message** message, const char* body);
 
 /**
  * Creates a New Bytes Message from the given Session instance.  If set the value of the
@@ -70,7 +70,7 @@ cms_status createTextMessage(CMS_Session* session, CMS_Message** message, const 
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status createBytesMessage(CMS_Session* session, CMS_Message** message, unsigned char* body, int length);
+cms_status cms_createBytesMessage(CMS_Session* session, CMS_Message** message, unsigned char* body, int length);
 
 /**
  * Creates a New Map Message from the given Session instance.
@@ -82,7 +82,7 @@ cms_status createBytesMessage(CMS_Session* session, CMS_Message** message, unsig
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status createMapMessage(CMS_Session* session, CMS_Message** message);
+cms_status cms_createMapMessage(CMS_Session* session, CMS_Message** message);
 
 /**
  * Creates a New Stream Message from the given Session instance.
@@ -94,7 +94,7 @@ cms_status createMapMessage(CMS_Session* session, CMS_Message** message);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status createStreamMessage(CMS_Session* session, CMS_Message** message);
+cms_status cms_createStreamMessage(CMS_Session* session, CMS_Message** message);
 
 /**
  * Destroy the given Message instance.
@@ -104,7 +104,7 @@ cms_status createStreamMessage(CMS_Session* session, CMS_Message** message);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status destroyMessage(CMS_Message* message);
+cms_status cms_destroyMessage(CMS_Message* message);
 
 /**
  * Creates a Copy of the given Message instance.
@@ -116,7 +116,7 @@ cms_status destroyMessage(CMS_Message* message);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status cloneMessage(CMS_Message* original, CMS_Message** clone);
+cms_status cms_cloneMessage(CMS_Message* original, CMS_Message** clone);
 
 /**
  * Gets the Message Type of the Wrapped CMS Message object.  If the CMS_Message
@@ -129,7 +129,7 @@ cms_status cloneMessage(CMS_Message* original, CMS_Message** clone);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getMessageType(CMS_Message* message, int* type);
+cms_status cms_getMessageType(CMS_Message* message, int* type);
 
 /**
  * Acknowledge the given Message.
@@ -139,7 +139,7 @@ cms_status getMessageType(CMS_Message* message, int* type);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status acknowledgeMessage(CMS_Message* message);
+cms_status cms_acknowledgeMessage(CMS_Message* message);
 
 /**
  * Clears out the body of the message.  This does not clear the
@@ -150,7 +150,7 @@ cms_status acknowledgeMessage(CMS_Message* message);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status clearMessageBody(CMS_Message* message);
+cms_status cms_clearMessageBody(CMS_Message* message);
 
 /**
  * Clears out the message body. Clearing a message's body does not clear
@@ -165,7 +165,7 @@ cms_status clearMessageBody(CMS_Message* message);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status clearMessageProperties(CMS_Message* message);
+cms_status cms_clearMessageProperties(CMS_Message* message);
 
 /**
  * Gets a count of the number of properties that are contained in the given Message.
@@ -177,7 +177,7 @@ cms_status clearMessageProperties(CMS_Message* message);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getNumMessageProperties(CMS_Message* message, int* numProperties);
+cms_status cms_getNumMessageProperties(CMS_Message* message, int* numProperties);
 
 /**
  * Given a Message object this method allocates and returns an array of strings that
@@ -195,7 +195,7 @@ cms_status getNumMessageProperties(CMS_Message* message, int* numProperties);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getMessagePropertyNames(CMS_Message* message, char*** names, int* size);
+cms_status cms_getMessagePropertyNames(CMS_Message* message, char*** names, int* size);
 
 /**
  * Indicates whether or not a given property exists in the supplied Message instance.
@@ -211,7 +211,7 @@ cms_status getMessagePropertyNames(CMS_Message* message, char*** names, int* siz
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status messagePropertyExists(CMS_Message* message, const char* key, int* exists);
+cms_status cms_messagePropertyExists(CMS_Message* message, const char* key, int* exists);
 
 /**
  * Gets a boolean property.
@@ -225,7 +225,7 @@ cms_status messagePropertyExists(CMS_Message* message, const char* key, int* exi
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getMessageBooleanProperty(CMS_Message* message, const char* key, int* value);
+cms_status cms_getMessageBooleanProperty(CMS_Message* message, const char* key, int* value);
 
 /**
  * Gets a byte property.
@@ -239,7 +239,7 @@ cms_status getMessageBooleanProperty(CMS_Message* message, const char* key, int*
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getMessageByteProperty(CMS_Message* message, const char* key, unsigned char* value);
+cms_status cms_getMessageByteProperty(CMS_Message* message, const char* key, unsigned char* value);
 
 /**
  * Gets a double property.
@@ -253,7 +253,7 @@ cms_status getMessageByteProperty(CMS_Message* message, const char* key, unsigne
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getMessageDoubleProperty(CMS_Message* message, const char* key, double* value);
+cms_status cms_getMessageDoubleProperty(CMS_Message* message, const char* key, double* value);
 
 /**
  * Gets a float property.
@@ -267,7 +267,7 @@ cms_status getMessageDoubleProperty(CMS_Message* message, const char* key, doubl
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getMessageFloatProperty(CMS_Message* message, const char* key, float* value);
+cms_status cms_getMessageFloatProperty(CMS_Message* message, const char* key, float* value);
 
 /**
  * Gets a int property.
@@ -281,7 +281,7 @@ cms_status getMessageFloatProperty(CMS_Message* message, const char* key, float*
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getMessageIntProperty(CMS_Message* message, const char* key, int* value);
+cms_status cms_getMessageIntProperty(CMS_Message* message, const char* key, int* value);
 
 /**
  * Gets a long property.
@@ -295,7 +295,7 @@ cms_status getMessageIntProperty(CMS_Message* message, const char* key, int* val
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getMessageLongProperty(CMS_Message* message, const char* key, long long* value);
+cms_status cms_getMessageLongProperty(CMS_Message* message, const char* key, long long* value);
 
 /**
  * Gets a short property.
@@ -309,7 +309,7 @@ cms_status getMessageLongProperty(CMS_Message* message, const char* key, long lo
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getMessageShortProperty(CMS_Message* message, const char* key, short* value);
+cms_status cms_getMessageShortProperty(CMS_Message* message, const char* key, short* value);
 
 /**
  * Gets a string property.
@@ -325,7 +325,7 @@ cms_status getMessageShortProperty(CMS_Message* message, const char* key, short*
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getMessageStringProperty(CMS_Message* message, const char* key, char* value, int size);
+cms_status cms_getMessageStringProperty(CMS_Message* message, const char* key, char* value, int size);
 
 /**
  * Sets a boolean property.
@@ -339,7 +339,7 @@ cms_status getMessageStringProperty(CMS_Message* message, const char* key, char*
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setMessageBooleanProperty(CMS_Message* message, const char* key, int value);
+cms_status cms_setMessageBooleanProperty(CMS_Message* message, const char* key, int value);
 
 /**
  * Sets a byte property.
@@ -353,7 +353,7 @@ cms_status setMessageBooleanProperty(CMS_Message* message, const char* key, int 
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setMessageByteProperty(CMS_Message* message, const char* key, unsigned char value);
+cms_status cms_setMessageByteProperty(CMS_Message* message, const char* key, unsigned char value);
 
 /**
  * Sets a double property.
@@ -367,7 +367,7 @@ cms_status setMessageByteProperty(CMS_Message* message, const char* key, unsigne
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setMessageDoubleProperty(CMS_Message* message, const char* key, double value);
+cms_status cms_setMessageDoubleProperty(CMS_Message* message, const char* key, double value);
 
 /**
  * Sets a float property.
@@ -381,7 +381,7 @@ cms_status setMessageDoubleProperty(CMS_Message* message, const char* key, doubl
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setMessageFloatProperty(CMS_Message* message, const char* key, float value);
+cms_status cms_setMessageFloatProperty(CMS_Message* message, const char* key, float value);
 
 /**
  * Sets a int property.
@@ -395,7 +395,7 @@ cms_status setMessageFloatProperty(CMS_Message* message, const char* key, float 
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setMessageIntProperty(CMS_Message* message, const char* key, int value);
+cms_status cms_setMessageIntProperty(CMS_Message* message, const char* key, int value);
 
 /**
  * Sets a long property.
@@ -409,7 +409,7 @@ cms_status setMessageIntProperty(CMS_Message* message, const char* key, int valu
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setMessageLongProperty(CMS_Message* message, const char* key, long long value);
+cms_status cms_setMessageLongProperty(CMS_Message* message, const char* key, long long value);
 
 /**
  * Sets a short property.
@@ -423,7 +423,7 @@ cms_status setMessageLongProperty(CMS_Message* message, const char* key, long lo
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setMessageShortProperty(CMS_Message* message, const char* key, short value);
+cms_status cms_setMessageShortProperty(CMS_Message* message, const char* key, short value);
 
 /**
  * Sets a string property.
@@ -437,7 +437,7 @@ cms_status setMessageShortProperty(CMS_Message* message, const char* key, short 
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setMessageStringProperty(CMS_Message* message, const char* key, const char* value);
+cms_status cms_setMessageStringProperty(CMS_Message* message, const char* key, const char* value);
 
 /**
  * Gets the Correlation Id that is assigned to this Message.
@@ -451,7 +451,7 @@ cms_status setMessageStringProperty(CMS_Message* message, const char* key, const
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getCMSMessageCorrelationID(CMS_Message* message, char* correlationId, int size);
+cms_status cms_getCMSMessageCorrelationID(CMS_Message* message, char* correlationId, int size);
 
 /**
  * Sets the Correlation Id assigned to this Message.
@@ -463,7 +463,7 @@ cms_status getCMSMessageCorrelationID(CMS_Message* message, char* correlationId,
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setCMSMessageCorrelationID(CMS_Message* message, const char* correlationId);
+cms_status cms_setCMSMessageCorrelationID(CMS_Message* message, const char* correlationId);
 
 /**
  * Gets the Delivery Mode that is assigned to this Message.
@@ -475,7 +475,7 @@ cms_status setCMSMessageCorrelationID(CMS_Message* message, const char* correlat
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getCMSMessageDeliveryMode(CMS_Message* message, int* mode);
+cms_status cms_getCMSMessageDeliveryMode(CMS_Message* message, int* mode);
 
 /**
  * Sets the Delivery Mode that is assigned to this Message.
@@ -487,7 +487,7 @@ cms_status getCMSMessageDeliveryMode(CMS_Message* message, int* mode);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setCMSMessageDeliveryMode(CMS_Message* message, int mode);
+cms_status cms_setCMSMessageDeliveryMode(CMS_Message* message, int mode);
 
 /**
  * Gets the Destination that is assigned to this Message.
@@ -499,7 +499,7 @@ cms_status setCMSMessageDeliveryMode(CMS_Message* message, int mode);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getCMSMessageDestination(CMS_Message* message, CMS_Destination** destination);
+cms_status cms_getCMSMessageDestination(CMS_Message* message, CMS_Destination** destination);
 
 /**
  * Sets the Destination that is assigned to this Message.
@@ -512,7 +512,7 @@ cms_status getCMSMessageDestination(CMS_Message* message, CMS_Destination** dest
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setCMSMessageDestination(CMS_Message* message, CMS_Destination* destination);
+cms_status cms_setCMSMessageDestination(CMS_Message* message, CMS_Destination* destination);
 
 /**
  * Gets the Message expiration time that is assigned to this Message.
@@ -524,7 +524,7 @@ cms_status setCMSMessageDestination(CMS_Message* message, CMS_Destination* desti
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getCMSMessageExpiration(CMS_Message* message, long long* expiration);
+cms_status cms_getCMSMessageExpiration(CMS_Message* message, long long* expiration);
 
 /**
  * Sets the Expiration time that is assigned to this Message.
@@ -536,7 +536,7 @@ cms_status getCMSMessageExpiration(CMS_Message* message, long long* expiration);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setCMSMessageExpiration(CMS_Message* message, long long expiration);
+cms_status cms_setCMSMessageExpiration(CMS_Message* message, long long expiration);
 
 /**
  * Gets the Message Id that is assigned to this Message.
@@ -550,7 +550,7 @@ cms_status setCMSMessageExpiration(CMS_Message* message, long long expiration);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getCMSMessageMessageID(CMS_Message* message, char* messageId, int size);
+cms_status cms_getCMSMessageMessageID(CMS_Message* message, char* messageId, int size);
 
 /**
  * Sets the Message Id assigned to this Message.
@@ -562,7 +562,7 @@ cms_status getCMSMessageMessageID(CMS_Message* message, char* messageId, int siz
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setCMSMessageMessageID(CMS_Message* message, const char* messageId);
+cms_status cms_setCMSMessageMessageID(CMS_Message* message, const char* messageId);
 
 /**
  * Gets the Message Priority that is assigned to this Message.
@@ -574,7 +574,7 @@ cms_status setCMSMessageMessageID(CMS_Message* message, const char* messageId);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getCMSMessagePriority(CMS_Message* message, int* priority);
+cms_status cms_getCMSMessagePriority(CMS_Message* message, int* priority);
 
 /**
  * Sets the Message priority that is assigned to this Message.
@@ -586,7 +586,7 @@ cms_status getCMSMessagePriority(CMS_Message* message, int* priority);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setCMSMessagePriority(CMS_Message* message, int priority);
+cms_status cms_setCMSMessagePriority(CMS_Message* message, int priority);
 
 /**
  * Gets the Message Redelivered flag that is assigned to this Message.
@@ -598,7 +598,7 @@ cms_status setCMSMessagePriority(CMS_Message* message, int priority);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getCMSMessageRedelivered(CMS_Message* message, int* redelivered);
+cms_status cms_getCMSMessageRedelivered(CMS_Message* message, int* redelivered);
 
 /**
  * Sets the Redelivered flag that is assigned to this Message.
@@ -610,7 +610,7 @@ cms_status getCMSMessageRedelivered(CMS_Message* message, int* redelivered);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setCMSMessageRedelivered(CMS_Message* message, int redelivered);
+cms_status cms_setCMSMessageRedelivered(CMS_Message* message, int redelivered);
 
 /**
  * Gets the Reply To Destination that is assigned to this Message.
@@ -622,7 +622,7 @@ cms_status setCMSMessageRedelivered(CMS_Message* message, int redelivered);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getCMSMessageReplyTo(CMS_Message* message, CMS_Destination** destination);
+cms_status cms_getCMSMessageReplyTo(CMS_Message* message, CMS_Destination** destination);
 
 /**
  * Sets the Reply To Destination that is assigned to this Message.
@@ -635,7 +635,7 @@ cms_status getCMSMessageReplyTo(CMS_Message* message, CMS_Destination** destinat
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setCMSMessageReplyTo(CMS_Message* message, CMS_Destination* destination);
+cms_status cms_setCMSMessageReplyTo(CMS_Message* message, CMS_Destination* destination);
 
 /**
  * Gets the Message time-stamp that is assigned to this Message.
@@ -647,7 +647,7 @@ cms_status setCMSMessageReplyTo(CMS_Message* message, CMS_Destination* destinati
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getCMSMessageTimestamp(CMS_Message* message, long long* timeStamp);
+cms_status cms_getCMSMessageTimestamp(CMS_Message* message, long long* timeStamp);
 
 /**
  * Sets the time stamp that is assigned to this Message.
@@ -659,7 +659,7 @@ cms_status getCMSMessageTimestamp(CMS_Message* message, long long* timeStamp);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setCMSMessageTimestamp(CMS_Message* message, long long timeStamp);
+cms_status cms_setCMSMessageTimestamp(CMS_Message* message, long long timeStamp);
 
 /**
  * Gets the Message Type that is assigned to this Message.
@@ -673,7 +673,7 @@ cms_status setCMSMessageTimestamp(CMS_Message* message, long long timeStamp);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getCMSMessageType(CMS_Message* message, char* type, int size);
+cms_status cms_getCMSMessageType(CMS_Message* message, char* type, int size);
 
 /**
  * Sets the Message Type assigned to this Message.
@@ -685,7 +685,7 @@ cms_status getCMSMessageType(CMS_Message* message, char* type, int size);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setCMSMessageType(CMS_Message* message, const char* type);
+cms_status cms_setCMSMessageType(CMS_Message* message, const char* type);
 
 #ifdef __cplusplus
 }

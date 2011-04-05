@@ -45,17 +45,17 @@ void MessageConsumerTest::testCreateConsumer() {
     CMS_Destination* destination = NULL;
     CMS_MessageConsumer* consumer = NULL;
 
-    CPPUNIT_ASSERT(createTemporaryDestination(session, CMS_TEMPORARY_TOPIC, &destination) == CMS_SUCCESS);
-    CPPUNIT_ASSERT(createDefaultConsumer(session, destination, &consumer) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_createTemporaryDestination(session, CMS_TEMPORARY_TOPIC, &destination) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_createDefaultConsumer(session, destination, &consumer) == CMS_SUCCESS);
 
     char* selector = new char[256];
-    CPPUNIT_ASSERT(getConsumerMessageSelector(consumer, selector, 256) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_getConsumerMessageSelector(consumer, selector, 256) == CMS_SUCCESS);
     CPPUNIT_ASSERT(std::string("") == std::string(selector));
     delete [] selector;
 
-    CPPUNIT_ASSERT(destroyConsumer(consumer) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_destroyConsumer(consumer) == CMS_SUCCESS);
 
-    destroyDestination(destination);
+    cms_destroyDestination(destination);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -66,30 +66,30 @@ void MessageConsumerTest::testAutoAckConsumerReceive() {
     CMS_MessageConsumer* consumer = NULL;
     CMS_MessageProducer* producer = NULL;
 
-    createTemporaryDestination(session, CMS_TEMPORARY_TOPIC, &destination);
-    createDefaultConsumer(session, destination, &consumer);
-    createProducer(session, destination, &producer);
-    setProducerDeliveryMode(producer, CMS_MSG_NON_PERSISTENT);
+    cms_createTemporaryDestination(session, CMS_TEMPORARY_TOPIC, &destination);
+    cms_createDefaultConsumer(session, destination, &consumer);
+    cms_createProducer(session, destination, &producer);
+    cms_setProducerDeliveryMode(producer, CMS_MSG_NON_PERSISTENT);
 
-    startConnection(connection);
+    cms_startConnection(connection);
 
-    createTextMessage(session, &message, NULL);
+    cms_createTextMessage(session, &message, NULL);
 
     for( unsigned int i = 0; i < 256; ++i ) {
-        producerSendWithDefaults(producer, message);
+        cms_producerSendWithDefaults(producer, message);
     }
 
-    destroyMessage(message);
+    cms_destroyMessage(message);
 
     for( unsigned int i = 0; i < 256; ++i ) {
         CMS_Message* received = NULL;
-        CPPUNIT_ASSERT(consumerReceiveWithTimeout(consumer, &received, 2000) == CMS_SUCCESS);
-        destroyMessage(received);
+        CPPUNIT_ASSERT(cms_consumerReceiveWithTimeout(consumer, &received, 2000) == CMS_SUCCESS);
+        cms_destroyMessage(received);
     }
 
-    destroyConsumer(consumer);
-    destroyProducer(producer);
-    destroyDestination(destination);
+    cms_destroyConsumer(consumer);
+    cms_destroyProducer(producer);
+    cms_destroyDestination(destination);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -101,34 +101,34 @@ void MessageConsumerTest::testClientAckConsumerReceive() {
     CMS_MessageProducer* producer = NULL;
     CMS_Session* session = NULL;
 
-    createSession(connection, &session, CMS_CLIENT_ACKNOWLEDGE);
+    cms_createSession(connection, &session, CMS_CLIENT_ACKNOWLEDGE);
 
-    createTemporaryDestination(session, CMS_TEMPORARY_TOPIC, &destination);
-    createDefaultConsumer(session, destination, &consumer);
-    createProducer(session, destination, &producer);
-    setProducerDeliveryMode(producer, CMS_MSG_NON_PERSISTENT);
+    cms_createTemporaryDestination(session, CMS_TEMPORARY_TOPIC, &destination);
+    cms_createDefaultConsumer(session, destination, &consumer);
+    cms_createProducer(session, destination, &producer);
+    cms_setProducerDeliveryMode(producer, CMS_MSG_NON_PERSISTENT);
 
-    startConnection(connection);
+    cms_startConnection(connection);
 
-    createTextMessage(session, &message, NULL);
+    cms_createTextMessage(session, &message, NULL);
 
     for( unsigned int i = 0; i < 256; ++i ) {
-        producerSendWithDefaults(producer, message);
+        cms_producerSendWithDefaults(producer, message);
     }
 
-    destroyMessage(message);
+    cms_destroyMessage(message);
 
     for( unsigned int i = 0; i < 256; ++i ) {
         CMS_Message* received = NULL;
-        CPPUNIT_ASSERT(consumerReceiveWithTimeout(consumer, &received, 2000) == CMS_SUCCESS);
-        CPPUNIT_ASSERT(acknowledgeMessage(received) == CMS_SUCCESS);
-        destroyMessage(received);
+        CPPUNIT_ASSERT(cms_consumerReceiveWithTimeout(consumer, &received, 2000) == CMS_SUCCESS);
+        CPPUNIT_ASSERT(cms_acknowledgeMessage(received) == CMS_SUCCESS);
+        cms_destroyMessage(received);
     }
 
-    destroyConsumer(consumer);
-    destroyProducer(producer);
-    destroyDestination(destination);
-    destroySession(session);
+    cms_destroyConsumer(consumer);
+    cms_destroyProducer(producer);
+    cms_destroyDestination(destination);
+    cms_destroySession(session);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -140,34 +140,34 @@ void MessageConsumerTest::testIndividualAckConsumerReceive() {
     CMS_MessageProducer* producer = NULL;
     CMS_Session* session = NULL;
 
-    createSession(connection, &session, CMS_INDIVIDUAL_ACKNOWLEDGE);
+    cms_createSession(connection, &session, CMS_INDIVIDUAL_ACKNOWLEDGE);
 
-    createTemporaryDestination(session, CMS_TEMPORARY_TOPIC, &destination);
-    createDefaultConsumer(session, destination, &consumer);
-    createProducer(session, destination, &producer);
-    setProducerDeliveryMode(producer, CMS_MSG_NON_PERSISTENT);
+    cms_createTemporaryDestination(session, CMS_TEMPORARY_TOPIC, &destination);
+    cms_createDefaultConsumer(session, destination, &consumer);
+    cms_createProducer(session, destination, &producer);
+    cms_setProducerDeliveryMode(producer, CMS_MSG_NON_PERSISTENT);
 
-    startConnection(connection);
+    cms_startConnection(connection);
 
-    createTextMessage(session, &message, NULL);
+    cms_createTextMessage(session, &message, NULL);
 
     for( unsigned int i = 0; i < 256; ++i ) {
-        producerSendWithDefaults(producer, message);
+        cms_producerSendWithDefaults(producer, message);
     }
 
-    destroyMessage(message);
+    cms_destroyMessage(message);
 
     for( unsigned int i = 0; i < 256; ++i ) {
         CMS_Message* received = NULL;
-        CPPUNIT_ASSERT(consumerReceiveWithTimeout(consumer, &received, 2000) == CMS_SUCCESS);
-        CPPUNIT_ASSERT(acknowledgeMessage(received) == CMS_SUCCESS);
-        destroyMessage(received);
+        CPPUNIT_ASSERT(cms_consumerReceiveWithTimeout(consumer, &received, 2000) == CMS_SUCCESS);
+        CPPUNIT_ASSERT(cms_acknowledgeMessage(received) == CMS_SUCCESS);
+        cms_destroyMessage(received);
     }
 
-    destroyConsumer(consumer);
-    destroyProducer(producer);
-    destroyDestination(destination);
-    destroySession(session);
+    cms_destroyConsumer(consumer);
+    cms_destroyProducer(producer);
+    cms_destroyDestination(destination);
+    cms_destroySession(session);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -179,65 +179,65 @@ void MessageConsumerTest::testTransactionRollback() {
     CMS_MessageProducer* producer = NULL;
     CMS_Session* session = NULL;
 
-    createSession(connection, &session, CMS_SESSION_TRANSACTED);
+    cms_createSession(connection, &session, CMS_SESSION_TRANSACTED);
 
-    createTemporaryDestination(session, CMS_TEMPORARY_TOPIC, &destination);
-    createDefaultConsumer(session, destination, &consumer);
-    createProducer(session, destination, &producer);
-    setProducerDeliveryMode(producer, CMS_MSG_NON_PERSISTENT);
+    cms_createTemporaryDestination(session, CMS_TEMPORARY_TOPIC, &destination);
+    cms_createDefaultConsumer(session, destination, &consumer);
+    cms_createProducer(session, destination, &producer);
+    cms_setProducerDeliveryMode(producer, CMS_MSG_NON_PERSISTENT);
 
-    startConnection(connection);
+    cms_startConnection(connection);
 
-    createTextMessage(session, &message, NULL);
+    cms_createTextMessage(session, &message, NULL);
 
     for( unsigned int i = 0; i < 50; ++i ) {
-        producerSendWithDefaults(producer, message);
+        cms_producerSendWithDefaults(producer, message);
     }
 
-    destroyMessage(message);
+    cms_destroyMessage(message);
 
-    CPPUNIT_ASSERT(commitSession(session) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_commitSession(session) == CMS_SUCCESS);
     Thread::sleep( 50 );
 
     for( unsigned int i = 0; i < 50; ++i ) {
         CMS_Message* received = NULL;
-        CPPUNIT_ASSERT(consumerReceiveWithTimeout(consumer, &received, 2000) == CMS_SUCCESS);
-        destroyMessage(received);
+        CPPUNIT_ASSERT(cms_consumerReceiveWithTimeout(consumer, &received, 2000) == CMS_SUCCESS);
+        cms_destroyMessage(received);
     }
 
-    CPPUNIT_ASSERT(commitSession(session) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_commitSession(session) == CMS_SUCCESS);
     Thread::sleep( 50 );
 
-    createTextMessage(session, &message, NULL);
+    cms_createTextMessage(session, &message, NULL);
 
     for( unsigned int i = 0; i < 50; ++i ) {
-        producerSendWithDefaults(producer, message);
+        cms_producerSendWithDefaults(producer, message);
     }
 
-    destroyMessage(message);
+    cms_destroyMessage(message);
 
-    CPPUNIT_ASSERT(rollbackSession(session) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_rollbackSession(session) == CMS_SUCCESS);
     Thread::sleep( 50 );
 
-    createTextMessage(session, &message, NULL);
-    producerSendWithDefaults(producer, message);
-    destroyMessage(message);
+    cms_createTextMessage(session, &message, NULL);
+    cms_producerSendWithDefaults(producer, message);
+    cms_destroyMessage(message);
 
-    CPPUNIT_ASSERT(commitSession(session) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_commitSession(session) == CMS_SUCCESS);
 
     // Wait for the messages to get here
     CMS_Message* received = NULL;
-    CPPUNIT_ASSERT(consumerReceiveWithTimeout(consumer, &received, 2000) == CMS_SUCCESS);
-    destroyMessage(received);
+    CPPUNIT_ASSERT(cms_consumerReceiveWithTimeout(consumer, &received, 2000) == CMS_SUCCESS);
+    cms_destroyMessage(received);
 
-    createTextMessage(session, &message, NULL);
-    producerSendWithDefaults(producer, message);
-    destroyMessage(message);
+    cms_createTextMessage(session, &message, NULL);
+    cms_producerSendWithDefaults(producer, message);
+    cms_destroyMessage(message);
 
-    CPPUNIT_ASSERT(commitSession(session) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_commitSession(session) == CMS_SUCCESS);
 
     // Wait for the messages to get here
-    CPPUNIT_ASSERT(consumerReceiveWithTimeout(consumer, &received, 2000) == CMS_SUCCESS);
-    destroyMessage(received);
-    CPPUNIT_ASSERT(commitSession(session) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_consumerReceiveWithTimeout(consumer, &received, 2000) == CMS_SUCCESS);
+    cms_destroyMessage(received);
+    CPPUNIT_ASSERT(cms_commitSession(session) == CMS_SUCCESS);
 }

@@ -35,7 +35,7 @@ extern "C" {
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status createDefaultConnection(CMS_ConnectionFactory* factory, CMS_Connection** connection);
+cms_status cms_createDefaultConnection(CMS_ConnectionFactory* factory, CMS_Connection** connection);
 
 /**
  * Creates a new Connection from the given ConnectionFactory instance.  The caller can specify
@@ -54,11 +54,11 @@ cms_status createDefaultConnection(CMS_ConnectionFactory* factory, CMS_Connectio
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status createConnection(CMS_ConnectionFactory* factory,
-                            CMS_Connection** connection,
-                            const char* username,
-                            const char* password,
-                            const char* clientId);
+cms_status cms_createConnection(CMS_ConnectionFactory* factory,
+                                CMS_Connection** connection,
+                                const char* username,
+                                const char* password,
+                                const char* clientId);
 
 /**
  * Destroys the given Connection instance, all Connection Resources should have been
@@ -69,7 +69,7 @@ cms_status createConnection(CMS_ConnectionFactory* factory,
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status destroyConnection(CMS_Connection* connection);
+cms_status cms_destroyConnection(CMS_Connection* connection);
 
 /**
  * Starts the Connection instance.  Until a Connection is started any Message Consumers
@@ -80,7 +80,7 @@ cms_status destroyConnection(CMS_Connection* connection);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status startConnection(CMS_Connection* connection);
+cms_status cms_startConnection(CMS_Connection* connection);
 
 /**
  * Stops the Connection instance.  Until a Connection is started any Message Consumers
@@ -92,7 +92,7 @@ cms_status startConnection(CMS_Connection* connection);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status stopConnection(CMS_Connection* connection);
+cms_status cms_stopConnection(CMS_Connection* connection);
 
 /**
  * Closes the Connection instance.  Once closed a Connection cannot be restarted.  All the
@@ -104,7 +104,7 @@ cms_status stopConnection(CMS_Connection* connection);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status closeConnection(CMS_Connection* connection);
+cms_status cms_closeConnection(CMS_Connection* connection);
 
 /**
  * Sets the Client Id for the given Connection instance.  The client Id must be
@@ -118,7 +118,7 @@ cms_status closeConnection(CMS_Connection* connection);
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status setConnectionClientId(CMS_Connection* connection, const char* clientId);
+cms_status cms_setConnectionClientId(CMS_Connection* connection, const char* clientId);
 
 /**
  * Gets the Client Id for the given Connection instance.  The caller passes an array that
@@ -134,7 +134,7 @@ cms_status setConnectionClientId(CMS_Connection* connection, const char* clientI
  *
  * @return result code indicating the success or failure of the operation.
  */
-cms_status getConnectionClientId(CMS_Connection* connection, char* clientId, int size);
+cms_status cms_getConnectionClientId(CMS_Connection* connection, char* clientId, int size);
 
 #ifdef __cplusplus
 }
