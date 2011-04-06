@@ -31,7 +31,7 @@ target
 
 #Autoconf
 /config.h.in
-/Makefile.in
+Makefile.in
 /configure
 *.log
 build/*
