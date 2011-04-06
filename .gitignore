@@ -30,13 +30,4 @@ target
 *.swp
 .DS_Store
 
-#Autoconf
-*.in
-configure
-*.log
-build/*
-config/*
-autom4te.cache/*
-aclocal.m4
-config.h
 

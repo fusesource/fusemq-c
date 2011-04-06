@@ -30,7 +30,9 @@ target
 .DS_Store
 
 #Autoconf
-configure
+/config.h.in
+/Makefile.in
+/configure
 *.log
 build/*
 config/*
