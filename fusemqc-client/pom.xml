@@ -28,10 +28,10 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>fusemqc-client</artifactId>
+  <artifactId>fuse-activemqc-client</artifactId>
   <packaging>pom</packaging>
-  <name>FuseMQ C Wrapper Library for ActiveMQ-CPP</name>
-  <description>The FuseMQ-C Library Wrapper for ActiveMQ-CPP</description>
+  <name>Fuse ActiveMQ-C Wrapper Library for ActiveMQ-CPP</name>
+  <description>The Fuse ActiveMQ-C Library Wrapper for ActiveMQ-CPP</description>
 
   <build>
     <plugins>
@@ -109,4 +109,79 @@
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>Unix Make</id>
+      <activation>
+        <os>
+          <family>Unix</family>
+        </os>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.2</version>
+            <executions>
+              <execution>
+                <id>Configure</id>
+                <phase>generate-resources</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <arguments>
+                    <argument>configure</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+              <execution>
+                <id>Compile</id>
+                <phase>compile</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <arguments>
+                    <argument>compile</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+              <execution>
+                <id>Test</id>
+                <phase>test</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <arguments>
+                    <argument>test</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+              <execution>
+                <id>Clean</id>
+                <phase>test</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <configuration>
+                  <arguments>
+                    <argument>clean</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+            </executions>
+            <configuration>
+              <executable>${basedir}/build.sh</executable>
+              <workingDirectory>${basedir}</workingDirectory>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
 </project>
