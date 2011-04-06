@@ -102,7 +102,7 @@ cms_status cms_isDestinationTopic(CMS_Destination* destination, int* isTopic);
  *
  * @param destination
  *      The Destination to check for its type.
- * @param isTopic
+ * @param isQueue
  *      The address to write the boolean result of the operation.
  *
  * @return result code indicating the success or failure of the operation.
@@ -114,7 +114,7 @@ cms_status cms_isDestinationQueue(CMS_Destination* destination, int* isQueue);
  *
  * @param destination
  *      The Destination to check for its type.
- * @param isTopic
+ * @param isTemporary
  *      The address to write the boolean result of the operation.
  *
  * @return result code indicating the success or failure of the operation.

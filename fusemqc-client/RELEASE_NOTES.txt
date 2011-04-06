@@ -1,6 +1,6 @@
 =========================================================================
-==  Release Notes for ActiveMQ C 1.0                                 ==
+==  Release Notes for Fuse ActiveMQ C 1.0                              ==
 =========================================================================
 
-This is the first release of the ActiveMQ-C Wrapper library.
+This is the first release of the Fuse ActiveMQ-C Wrapper library.
 

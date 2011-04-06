@@ -111,6 +111,8 @@ cms_status cms_recoverSession(CMS_Session* session);
  *
  * @param session
  *      The session that is the target for this operation.
+ * @param mode
+ * 		The pointer to an int where the current Acknowledge mode value is to be written.
  *
  * @return result code indicating the success or failure of the operation.
  */
@@ -131,9 +133,13 @@ cms_status cms_getSessionAcknowledgeMode(CMS_Session* session, int* mode);
 cms_status cms_isSessionTransacted(CMS_Session* session, int* transacted);
 
 /**
+ * Remove the given durable subscription from the Broker's registered durable
+ * subscribers.
  *
  * @param session
- *    The session that is the target for this operation.
+ *    	The session that is the target for this operation.
+ * @param subscription
+ * 		The name of the subscription to remove from the broker.
  *
  * @return result code indicating the success or failure of the operation.
  */

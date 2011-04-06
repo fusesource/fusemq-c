@@ -218,7 +218,7 @@ cms_status cms_getProducerPriority(CMS_MessageProducer* producer, int* priority)
  *
  * @param producer
  *      The Message Producer to use for this operation.
- * @param priority
+ * @param timeToLive
  *      The new message time to live for the given MessageProducer.
  *
  * @return result code indicating the success or failure of the operation.
@@ -230,7 +230,7 @@ cms_status cms_setProducerTimeToLive(CMS_MessageProducer* producer, int timeToLi
  *
  * @param producer
  *      The Message Producer to use for this operation.
- * @param priority
+ * @param timeToLive
  *      The address where the message time to live setting is to be written.
  *
  * @return result code indicating the success or failure of the operation.

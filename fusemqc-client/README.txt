@@ -1,5 +1,5 @@
 --------------------------------------------------------------------------
-ActiveMQ C Library
+Fuse ActiveMQ C Library
 --------------------------------------------------------------------------
 
 ActiveMQ C is a messaging library that can use multiple protocols to
@@ -157,42 +157,24 @@ To generate the Doxygen documentation for the project, just run:
 
 4 Running Tests
 --------------------------------------------------------------------------
-
-4.1 Unit Tests
---------------------------------------------------------------------------
 In order to build and run the suite of unit tests, run:
 
   make check
 
 This will verify that the library is functioning correctly on the target
 platform. In addition, it will generate the integration tests binary.
-
-4.2 Integration Tests
---------------------------------------------------------------------------
-The library also contains a set of tests that are run against a real AMQ
-broker.  These allow you to validate this distribution of ActiveMQ C
-against your broker.  Running these without a broker will result in failed
-tests.  The tests currently hard-code the broker url to be
-tcp://localhost:61613 for Stomp and tcp://localhost:61616 for Openwire.
-
-The integration tests are built via "make check".  To run them, first
-start a broker and then
-
-  cd src/test-integration
-  ./activemqc-test-integration
-
-This will take quite some time to complete, so be patient.  It is recommended
-that you restart the broker between successive runs of the integration tests.
+The tests can also be run from the command line by executing the
+activemqc-test executable that is produced from a successful make check.
 
 5 Example
 --------------------------------------------------------------------------
 There are example applications that ship with the distribution in
-src/examples.   The examples are compiled by default with the "make"
-command on Unix systems.  Only one sample is included in the Visual Studio
-projects supplied, the others can be easily added by examining the settings
-of the one supplied.
+src/examples/c.   The examples are compiled by default with the "make"
+command on Unix systems.
 
 6 Notes for Windows users trying to build this library.
 --------------------------------------------------------------------------
 
-Don't
+Don't, you can just use the ActiveMQ-CPP library since visual studio is quite
+capable of mixing C and C++ code without issue.
+
