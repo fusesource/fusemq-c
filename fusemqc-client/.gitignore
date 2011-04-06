@@ -30,7 +30,6 @@ target
 .DS_Store
 
 #Autoconf
-*.in
 configure
 *.log
 build/*
