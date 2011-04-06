@@ -20,6 +20,7 @@
 #include <CMS_Connection.h>
 #include <CMS_Session.h>
 #include <CMS_Message.h>
+#include <CMS_TextMessage.h>
 #include <CMS_MessageConsumer.h>
 #include <CMS_MessageProducer.h>
 #include <CMS_Destination.h>
@@ -43,7 +44,6 @@ int main(int argc, char* argv[]) {
     CMS_Session* session = NULL;
     CMS_Destination* destination = NULL;
     CMS_MessageConsumer* consumer = NULL;
-    CMS_Message* txtMessage = NULL;
 
     if (cms_createConnectionFactory(&factory, brokerUri, NULL, NULL) != CMS_SUCCESS) {
         printf("Failed to create a Connection Factory\n");
@@ -77,15 +77,42 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
-    int i;
-    for(i = 0; i < 10; ++i) {
+    for(;;) {
         CMS_Message* message = NULL;
-        if (cms_consumerReceiveWithTimeout(consumer, &message, 5000) != CMS_SUCCESS) {
-            printf("Timed Receive call terminated abnormally\n");
+        if (cms_consumerReceive(consumer, &message) != CMS_SUCCESS) {
+            printf("Error while waiting for next message to arrive.");
             exit(1);
         }
 
-        printf("Received Message #%d\n", i);
+        int result = 0;
+        cms_messagePropertyExists(message, "terminate", &result);
+
+        if(result > 0) {
+            cms_destroyMessage(message);
+            break;
+        }
+
+        int type = -1;
+
+        cms_getMessageType(message, &type);
+
+        if(type == CMS_TEXT_MESSAGE) {
+            char text[256];
+            text[255] = 0;
+            int numProperties = 0;
+
+            if(cms_getMessageText(message, text, 256) == CMS_ERROR) {
+                printf("Error while retrieving text from Message.\n");
+                exit(1);
+            }
+
+            cms_getNumMessageProperties(message, &numProperties);
+
+            printf("Text Message body contained the string: %s, and %d properties.\n", text, numProperties);
+        } else {
+            printf("Received some other type of message.\n");
+        }
+
         cms_destroyMessage(message);
     }
 

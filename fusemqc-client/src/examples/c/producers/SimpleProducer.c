@@ -74,7 +74,14 @@ int main(int argc, char* argv[]) {
     int i = 0;
     for(; i < 10; ++i) {
         CMS_Message* message = NULL;
-        cms_createTextMessage(session, &message, "Test Message");
+        cms_createTextMessage(session, &message, "Test Message Body");
+
+        // Give the receiver a hint that we didn't encode the message body as UTF-8 etc.
+        cms_setCMSMessageType(message, "text/plain");
+
+        // Set some sample properties
+        cms_setMessageIntProperty(message, "SequenceId", i);
+        cms_setMessageStringProperty(message, "MyStringKey", "Something Important");
 
         if (cms_producerSendWithDefaults(producer, message) != CMS_SUCCESS) {
             printf("Failed to send the Message\n");
@@ -82,8 +89,21 @@ int main(int argc, char* argv[]) {
             exit(1);
         }
 
+        printf("Sent Message number: %d\n", i+1);
+
         cms_destroyMessage(message);
     }
+
+    CMS_Message* terminus = NULL;
+    cms_createMessage(session, &terminus);
+    cms_setMessageBooleanProperty(terminus, "terminate", 1);
+
+    if(cms_producerSendWithDefaults(producer, terminus) == CMS_ERROR) {
+        printf("Error while attempting to send the terminus message\n");
+        exit(1);
+    }
+
+    cms_destroyMessage(terminus);
 
     if (cms_startConnection(connection) != CMS_SUCCESS) {
         printf("Failed to start the Connection\n");
