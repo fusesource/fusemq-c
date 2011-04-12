@@ -45,6 +45,7 @@ cms_status cms_createDefaultConnection(CMS_ConnectionFactory* factory, CMS_Conne
             result = CMS_ERROR;
         } else {
             wrapper->connection = factory->factory->createConnection();
+            wrapper->lastException = NULL;
             *connection = wrapper.release();
         }
 
@@ -76,6 +77,7 @@ cms_status cms_createConnection(CMS_ConnectionFactory* factory,
             std::string id = clientId == NULL ? "" : std::string(clientId);
 
             wrapper->connection = factory->factory->createConnection(user, pass, id);
+            wrapper->lastException = NULL;
             *connection = wrapper.release();
         }
 
@@ -201,6 +203,34 @@ cms_status cms_getConnectionClientId(CMS_Connection* connection, char* clientId,
         } catch(...) {
             result = CMS_ERROR;
         }
+    }
+
+    return result;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+char* cms_getErrorString(CMS_Connection* connection, char* buffer, int length) {
+
+    char* result = NULL;
+
+    if (buffer != NULL && length > 0 && connection->lastException != NULL) {
+
+        cms::CMSException* ex = connection->lastException;
+
+        std::string message = ex->getMessage();
+
+        if(!message.empty()) {
+
+            std::size_t pos = 0;
+            for(; pos < message.size() && pos < (std::size_t)length - 1; ++pos) {
+                buffer[pos] = message.at(pos);
+            }
+
+            buffer[pos] = '\0';
+        } else {
+            buffer[0] = '\0';
+        }
+
     }
 
     return result;

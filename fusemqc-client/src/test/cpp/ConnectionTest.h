@@ -22,28 +22,30 @@
 
 namespace cms {
 
-	class ConnectionTest : public CMSTestCase {
+    class ConnectionTest : public CMSTestCase {
 
         CPPUNIT_TEST_SUITE( ConnectionTest );
         CPPUNIT_TEST( testConnectToNullHost );
         CPPUNIT_TEST( testConnectToValidHost );
         CPPUNIT_TEST( testConnectToInvalidHost );
         CPPUNIT_TEST( testCreateSessionFromConnection );
+        CPPUNIT_TEST( testGetErrorString );
         CPPUNIT_TEST_SUITE_END();
 
-	public:
+    public:
 
-		ConnectionTest();
-		virtual ~ConnectionTest();
+        ConnectionTest();
+        virtual ~ConnectionTest();
 
-	public:
+    public:
 
-		void testConnectToNullHost();
-		void testConnectToValidHost();
-		void testConnectToInvalidHost();
-		void testCreateSessionFromConnection();
+        void testConnectToNullHost();
+        void testConnectToValidHost();
+        void testConnectToInvalidHost();
+        void testCreateSessionFromConnection();
+        void testGetErrorString();
 
-	};
+    };
 
 }
 

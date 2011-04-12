@@ -136,6 +136,23 @@ cms_status cms_setConnectionClientId(CMS_Connection* connection, const char* cli
  */
 cms_status cms_getConnectionClientId(CMS_Connection* connection, char* clientId, int size);
 
+/**
+ * Returns a human readable error message that describes the last error that was encounted.
+ * The caller provides a buffer for the error string and the client will fill the buffer up
+ * to length bytes.  If there is no current error for this connection then method returns
+ * NULL otherwise the filled buffer is returned.
+ *
+ * @param connection
+ * 		The connection whose error being probed.
+ * @param buffer
+ * 		Pointer to a string buffer to write the error string.
+ * @param length
+ * 		the length in bytes of the provided buffer.
+ *
+ * @returns the error string or NULL if the connection has no associated error currently.
+ */
+char* cms_getErrorString(CMS_Connection* connection, char* buffer, int length);
+
 #ifdef __cplusplus
 }
 #endif

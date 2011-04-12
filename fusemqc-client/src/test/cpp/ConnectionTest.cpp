@@ -36,7 +36,6 @@ ConnectionTest::~ConnectionTest() {
 void ConnectionTest::testConnectToNullHost() {
 
     CMS_ConnectionFactory* factory = NULL;
-    CMS_Connection* connection = NULL;
 
     // This will create a factory with the default Factory Broker Uri.
     CPPUNIT_ASSERT(cms_createConnectionFactory(&factory, NULL, NULL, NULL) == CMS_SUCCESS);
@@ -106,4 +105,24 @@ void ConnectionTest::testCreateSessionFromConnection() {
 
     CPPUNIT_ASSERT(cms_destroyConnection(connection) == CMS_SUCCESS);
     CPPUNIT_ASSERT(cms_destroyConnectionFactory(factory) == CMS_SUCCESS);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void ConnectionTest::testGetErrorString() {
+
+    const int length = 256;
+    char buffer[256] = {};
+
+    const std::string uri = std::string("tcp://") + CMSTestCase::DEFAULT_BROKER_HOST;
+
+    CMS_ConnectionFactory* factory = NULL;
+    CMS_Connection* connection = NULL;
+
+    CPPUNIT_ASSERT(cms_createConnectionFactory(&factory, uri.c_str(), NULL, NULL) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_createDefaultConnection(factory, &connection) == CMS_SUCCESS);
+
+    CPPUNIT_ASSERT_EQUAL((char*)NULL, cms_getErrorString(connection, buffer, length));
+
+    CPPUNIT_ASSERT(cms_destroyConnectionFactory(factory) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_destroyConnection(connection) == CMS_SUCCESS);
 }
