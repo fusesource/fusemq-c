@@ -40,7 +40,8 @@ h_sources = \
     CMS_TextMessage.h \
     Config.h \
     cms.h \
-    types/CMS_Types.h
+    private/CMS_Types.h \
+    private/CMS_Utils.h
 
 
 ##

@@ -18,7 +18,8 @@
 #include <CMS_Session.h>
 
 #include <Config.h>
-#include <types/CMS_Types.h>
+#include <private/CMS_Types.h>
+#include <private/CMS_Utils.h>
 
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
@@ -41,9 +42,8 @@ cms_status cms_createDefaultSession(CMS_Connection* connection, CMS_Session** se
             *session = wrapper.release();
         }
 
-    } catch(...) {
-        result = CMS_ERROR;
     }
+    CMS_CATCH_EXCEPTION( result )
 
     return result;
 }
@@ -84,9 +84,8 @@ cms_status cms_createSession(CMS_Connection* connection, CMS_Session** session, 
             *session = wrapper.release();
         }
 
-    } catch(...) {
-        result = CMS_ERROR;
     }
+    CMS_CATCH_EXCEPTION( result )
 
     return result;
 }
@@ -101,9 +100,8 @@ cms_status cms_destroySession(CMS_Session* session) {
         try{
             delete session->session;
             delete session;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -118,9 +116,8 @@ cms_status cms_closeSession(CMS_Session* session) {
 
         try{
             session->session->close();
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -135,9 +132,8 @@ cms_status cms_commitSession(CMS_Session* session) {
 
         try{
             session->session->commit();
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -169,9 +165,8 @@ cms_status cms_recoverSession(CMS_Session* session) {
 
         try{
             session->session->recover();
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -186,9 +181,8 @@ cms_status cms_getSessionAcknowledgeMode(CMS_Session* session, int* mode) {
 
         try{
             *mode = (int) session->session->getAcknowledgeMode();
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -203,9 +197,8 @@ cms_status cms_isSessionTransacted(CMS_Session* session, int* transacted) {
 
         try{
             *transacted = (int) session->session->isTransacted();
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -220,9 +213,8 @@ cms_status cms_unsubscribeSessionDurableConsumer(CMS_Session* session, const cha
 
         try{
             session->session->unsubscribe(subscription);
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;

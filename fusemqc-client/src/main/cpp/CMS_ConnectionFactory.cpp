@@ -18,7 +18,8 @@
 #include <CMS_ConnectionFactory.h>
 
 #include <Config.h>
-#include <types/CMS_Types.h>
+#include <private/CMS_Types.h>
+#include <private/CMS_Utils.h>
 
 #include <activemq/core/ActiveMQConnectionFactory.h>
 
@@ -37,12 +38,8 @@ cms_status cms_createDefaultConnectionFactory(CMS_ConnectionFactory** factory) {
     try{
         wrapper->factory = new activemq::core::ActiveMQConnectionFactory();
         *factory = wrapper.release();
-    } catch(cms::CMSException& ex) {
-        ex.printStackTrace();
-        result = CMS_ERROR;
-    } catch(...) {
-        result = CMS_ERROR;
     }
+    CMS_CATCH_EXCEPTION( result )
 
     return result;
 }
@@ -69,15 +66,8 @@ cms_status cms_createConnectionFactory(CMS_ConnectionFactory** factory,
         }
 
         *factory = wrapper.release();
-    } catch(cms::CMSException& ex) {
-        ex.printStackTrace();
-        result = CMS_ERROR;
-    } catch(std::exception& ex) {
-        std::cout << ex.what() << std::endl;
-    } catch(...) {
-        std::cout << "Caught an unknown exception." << std::endl;
-        result = CMS_ERROR;
     }
+    CMS_CATCH_EXCEPTION( result )
 
     return result;
 }
@@ -92,9 +82,8 @@ cms_status cms_destroyConnectionFactory(CMS_ConnectionFactory* factory) {
         try{
             delete factory->factory;
             delete factory;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;

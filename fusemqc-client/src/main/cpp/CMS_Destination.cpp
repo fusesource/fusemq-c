@@ -18,7 +18,8 @@
 #include <CMS_Destination.h>
 
 #include <Config.h>
-#include <types/CMS_Types.h>
+#include <private/CMS_Types.h>
+#include <private/CMS_Utils.h>
 
 #include <activemq/core/ActiveMQConnection.h>
 
@@ -65,9 +66,8 @@ cms_status cms_createDestination(CMS_Session* session, CMS_DESTINATION_TYPE type
             }
         }
 
-    } catch(...) {
-        result = CMS_ERROR;
     }
+    CMS_CATCH_EXCEPTION( result )
 
     return result;
 }
@@ -93,9 +93,8 @@ cms_status cms_destroyDestination(CMS_Destination* destination) {
         try{
             delete destination->destination;
             delete destination;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -116,9 +115,9 @@ cms_status cms_compareDestinations(CMS_Destination* lhs, CMS_Destination* rhs, i
                 *areEqual = 0;
             }
 
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
+
     } else {
         *areEqual = 0;
     }
@@ -142,9 +141,8 @@ cms_status cms_isDestinationTopic(CMS_Destination* destination, int* isTopic) {
                 *isTopic = 0;
             }
 
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -166,9 +164,8 @@ cms_status cms_isDestinationQueue(CMS_Destination* destination, int* isQueue) {
                 *isQueue = 0;
             }
 
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -191,9 +188,8 @@ cms_status cms_isDestinationTemporary(CMS_Destination* destination, int* isTempo
                 *isTemporary = 0;
             }
 
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;

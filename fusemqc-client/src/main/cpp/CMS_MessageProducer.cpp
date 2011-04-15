@@ -18,7 +18,8 @@
 #include <CMS_MessageProducer.h>
 
 #include <Config.h>
-#include <types/CMS_Types.h>
+#include <private/CMS_Types.h>
+#include <private/CMS_Utils.h>
 
 #include <cms/Destination.h>
 
@@ -48,9 +49,8 @@ cms_status cms_createProducer(CMS_Session* session, CMS_Destination* destination
             *producer = wrapper.release();
         }
 
-    } catch(...) {
-        result = CMS_ERROR;
     }
+    CMS_CATCH_EXCEPTION( result )
 
     return result;
 }
@@ -69,11 +69,8 @@ cms_status cms_producerSend(CMS_MessageProducer* producer, CMS_Message* message,
             producer->producer->send(message->message, deliveryMode, priority, timeToLive);
         }
 
-    } catch(cms::CMSException& es) {
-        result = CMS_ERROR;
-    } catch(...) {
-        result = CMS_ERROR;
     }
+    CMS_CATCH_EXCEPTION( result )
 
     return result;
 }
@@ -93,11 +90,8 @@ cms_status cms_producerSendToDestination(CMS_MessageProducer* producer, CMS_Mess
             producer->producer->send(dest, message->message, deliveryMode, priority, timeToLive);
         }
 
-    } catch(cms::CMSException& es) {
-        result = CMS_ERROR;
-    } catch(...) {
-        result = CMS_ERROR;
     }
+    CMS_CATCH_EXCEPTION( result )
 
     return result;
 }
@@ -115,9 +109,8 @@ cms_status cms_producerSendWithDefaults(CMS_MessageProducer* producer, CMS_Messa
             producer->producer->send(message->message);
         }
 
-    } catch(...) {
-        result = CMS_ERROR;
     }
+    CMS_CATCH_EXCEPTION( result )
 
     return result;
 }
@@ -135,9 +128,8 @@ cms_status cms_producerSendWithTimeOut(CMS_MessageProducer* producer, CMS_Messag
             producer->producer->send(message->message, producer->producer->getDeliveryMode(), producer->producer->getPriority(), timeOut);
         }
 
-    } catch(...) {
-        result = CMS_ERROR;
     }
+    CMS_CATCH_EXCEPTION( result )
 
     return result;
 }
@@ -151,9 +143,8 @@ cms_status cms_closeProducer(CMS_MessageProducer* producer) {
 
         try{
             producer->producer->close();
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -168,9 +159,8 @@ cms_status cms_setProducerDeliveryMode(CMS_MessageProducer* producer, int mode) 
 
         try{
             producer->producer->setDeliveryMode(mode);
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -185,9 +175,8 @@ cms_status cms_getProducerDeliveryMode(CMS_MessageProducer* producer, int* mode)
 
         try{
             *mode = producer->producer->getDeliveryMode();
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -202,9 +191,8 @@ cms_status cms_setProducerDisableMessageID(CMS_MessageProducer* producer, int en
 
         try{
             producer->producer->setDisableMessageID(enabled > 0);
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -219,9 +207,8 @@ cms_status cms_getProducerDisableMessageID(CMS_MessageProducer* producer, int* e
 
         try{
             *enabled = producer->producer->getDisableMessageID();
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -236,9 +223,8 @@ cms_status cms_setProducerDisableMessageTimeStamp(CMS_MessageProducer* producer,
 
         try{
             producer->producer->setDisableMessageTimeStamp(enabled > 0);
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -253,9 +239,8 @@ cms_status cms_getProducerDisableMessageTimeStamp(CMS_MessageProducer* producer,
 
         try{
             *enabled = producer->producer->getDisableMessageTimeStamp();
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -270,9 +255,8 @@ cms_status cms_setProducerPriority(CMS_MessageProducer* producer, int priority) 
 
         try{
             producer->producer->setPriority(priority);
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -287,9 +271,8 @@ cms_status cms_getProducerPriority(CMS_MessageProducer* producer, int* priority)
 
         try{
             *priority = producer->producer->getPriority();
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -304,9 +287,8 @@ cms_status cms_setProducerTimeToLive(CMS_MessageProducer* producer, int timeToLi
 
         try{
             producer->producer->setTimeToLive(timeToLive);
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -321,9 +303,8 @@ cms_status cms_getProducerTimeToLive(CMS_MessageProducer* producer, int* timeToL
 
         try{
             *timeToLive = producer->producer->getTimeToLive();
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -339,9 +320,8 @@ cms_status cms_destroyProducer(CMS_MessageProducer* producer) {
         try{
             delete producer->producer;
             delete producer;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;

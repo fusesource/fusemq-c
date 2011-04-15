@@ -19,7 +19,8 @@
 #include <CMS_TextMessage.h>
 
 #include <Config.h>
-#include <types/CMS_Types.h>
+#include <private/CMS_Types.h>
+#include <private/CMS_Utils.h>
 
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
@@ -64,13 +65,8 @@ cms_status cms_getMessageText(CMS_Message* message, char* dest, int size) {
 
             result = CMS_SUCCESS;
 
-        } catch(cms::MessageFormatException& ex) {
-            dest[0] = '\0';
-            result = CMS_MESSAGE_FORMAT_ERROR;
-        } catch(...) {
-            dest[0] = '\0';
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -99,11 +95,8 @@ cms_status cms_setMessageText(CMS_Message* message, const char* value) {
 
             result = CMS_SUCCESS;
 
-        } catch(cms::MessageNotWriteableException& ex) {
-            result = CMS_MESSAGE_NOT_WRITABLE;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;

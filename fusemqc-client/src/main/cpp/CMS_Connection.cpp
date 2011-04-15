@@ -18,7 +18,8 @@
 #include <CMS_Connection.h>
 
 #include <Config.h>
-#include <types/CMS_Types.h>
+#include <private/CMS_Types.h>
+#include <private/CMS_Utils.h>
 
 #include <activemq/core/ActiveMQConnection.h>
 
@@ -36,22 +37,19 @@ using namespace cms;
 ////////////////////////////////////////////////////////////////////////////////
 cms_status cms_createDefaultConnection(CMS_ConnectionFactory* factory, CMS_Connection** connection) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
     std::auto_ptr<CMS_Connection> wrapper( new CMS_Connection );
 
     try{
 
-        if (factory == NULL) {
-            result = CMS_ERROR;
-        } else {
+        if (factory != NULL && connection != NULL) {
             wrapper->connection = factory->factory->createConnection();
             wrapper->lastException = NULL;
             *connection = wrapper.release();
+            result = CMS_SUCCESS;
         }
-
-    } catch(...) {
-        result = CMS_ERROR;
     }
+    CMS_CATCH_EXCEPTION( result )
 
     return result;
 }
@@ -63,14 +61,12 @@ cms_status cms_createConnection(CMS_ConnectionFactory* factory,
                                 const char* password,
                                 const char* clientId) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
     std::auto_ptr<CMS_Connection> wrapper( new CMS_Connection );
 
     try{
 
-        if (factory == NULL) {
-            result = CMS_ERROR;
-        } else {
+        if (factory != NULL && connection != NULL) {
 
             std::string user = username == NULL ? "" : std::string(username);
             std::string pass = password == NULL ? "" : std::string(password);
@@ -79,11 +75,10 @@ cms_status cms_createConnection(CMS_ConnectionFactory* factory,
             wrapper->connection = factory->factory->createConnection(user, pass, id);
             wrapper->lastException = NULL;
             *connection = wrapper.release();
+            result = CMS_SUCCESS;
         }
-
-    } catch(...) {
-        result = CMS_ERROR;
     }
+    CMS_CATCH_EXCEPTION( result )
 
     return result;
 }
@@ -91,16 +86,19 @@ cms_status cms_createConnection(CMS_ConnectionFactory* factory,
 ////////////////////////////////////////////////////////////////////////////////
 cms_status cms_destroyConnection(CMS_Connection* connection) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(connection != NULL) {
+    if (connection != NULL) {
 
         try{
             delete connection->connection;
             delete connection;
-        } catch(...) {
-            result = CMS_ERROR;
+            result = CMS_SUCCESS;
         }
+        CMS_CATCH_EXCEPTION( result )
+
+    } else {
+        result = CMS_SUCCESS;
     }
 
     return result;
@@ -109,15 +107,15 @@ cms_status cms_destroyConnection(CMS_Connection* connection) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status cms_startConnection(CMS_Connection* connection) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(connection != NULL) {
+    if (connection != NULL && connection->connection != NULL) {
 
         try{
             connection->connection->start();
-        } catch(...) {
-            result = CMS_ERROR;
+            result = CMS_SUCCESS;
         }
+        CMS_CATCH_CONNECTION_EXCEPTION( connection, result )
     }
 
     return result;
@@ -126,15 +124,15 @@ cms_status cms_startConnection(CMS_Connection* connection) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status cms_stopConnection(CMS_Connection* connection) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(connection != NULL) {
+    if (connection != NULL && connection->connection != NULL) {
 
         try{
             connection->connection->stop();
-        } catch(...) {
-            result = CMS_ERROR;
+            result = CMS_SUCCESS;
         }
+        CMS_CATCH_CONNECTION_EXCEPTION( connection, result )
     }
 
     return result;
@@ -143,15 +141,15 @@ cms_status cms_stopConnection(CMS_Connection* connection) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status cms_closeConnection(CMS_Connection* connection) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(connection != NULL) {
+    if (connection != NULL && connection->connection != NULL) {
 
         try{
             connection->connection->close();
-        } catch(...) {
-            result = CMS_ERROR;
+            result = CMS_SUCCESS;
         }
+        CMS_CATCH_CONNECTION_EXCEPTION( connection, result )
     }
 
     return result;
@@ -160,19 +158,15 @@ cms_status cms_closeConnection(CMS_Connection* connection) {
 ////////////////////////////////////////////////////////////////////////////////
 cms_status cms_setConnectionClientId(CMS_Connection* connection, const char* clientId) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(connection != NULL && clientId != NULL) {
+    if (connection != NULL && clientId != NULL) {
 
         try{
             connection->connection->setClientID(clientId);
-        } catch(IllegalStateException& ex) {
-            result = CMS_ILLEGAL_STATE;
-        } catch(InvalidClientIdException& ex) {
-            result = CMS_INVALID_CLIENTID;
-        } catch(...) {
-            result = CMS_ERROR;
+            result = CMS_SUCCESS;
         }
+        CMS_CATCH_CONNECTION_EXCEPTION( connection, result )
     }
 
     return result;
@@ -181,9 +175,9 @@ cms_status cms_setConnectionClientId(CMS_Connection* connection, const char* cli
 ////////////////////////////////////////////////////////////////////////////////
 cms_status cms_getConnectionClientId(CMS_Connection* connection, char* clientId, int size) {
 
-    cms_status result = CMS_SUCCESS;
+    cms_status result = CMS_ERROR;
 
-    if(connection != NULL && clientId != NULL && size > 0) {
+    if (connection != NULL && connection->connection && clientId != NULL && size > 0) {
 
         try{
             std::string theClientId = connection->connection->getClientID();
@@ -196,13 +190,10 @@ cms_status cms_getConnectionClientId(CMS_Connection* connection, char* clientId,
 
                 clientId[theClientId.size()] = '\0';
 
-            } else {
-                result = CMS_ERROR;
+                result = CMS_SUCCESS;
             }
-
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_CONNECTION_EXCEPTION( connection, result )
     }
 
     return result;

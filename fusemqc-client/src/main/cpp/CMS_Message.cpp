@@ -18,7 +18,8 @@
 #include <CMS_Message.h>
 
 #include <Config.h>
-#include <types/CMS_Types.h>
+#include <private/CMS_Types.h>
+#include <private/CMS_Utils.h>
 
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
@@ -48,9 +49,8 @@ cms_status cms_createMessage(CMS_Session* session, CMS_Message** message) {
         wrapper->type = CMS_MESSAGE;
         *message = wrapper.release();
 
-    } catch(...) {
-        result = CMS_ERROR;
     }
+    CMS_CATCH_EXCEPTION( result )
 
     return result;
 }
@@ -77,9 +77,8 @@ cms_status cms_createTextMessage(CMS_Session* session, CMS_Message** message, co
             *message = wrapper.release();
         }
 
-    } catch(...) {
-        result = CMS_ERROR;
     }
+    CMS_CATCH_EXCEPTION( result )
 
     return result;
 }
@@ -106,9 +105,8 @@ cms_status cms_createBytesMessage(CMS_Session* session, CMS_Message** message, u
             *message = wrapper.release();
         }
 
-    } catch(...) {
-        result = CMS_ERROR;
     }
+    CMS_CATCH_EXCEPTION( result )
 
     return result;
 }
@@ -130,9 +128,8 @@ cms_status cms_createMapMessage(CMS_Session* session, CMS_Message** message) {
             *message = wrapper.release();
         }
 
-    } catch(...) {
-        result = CMS_ERROR;
     }
+    CMS_CATCH_EXCEPTION( result )
 
     return result;
 }
@@ -154,9 +151,8 @@ cms_status cms_createStreamMessage(CMS_Session* session, CMS_Message** message) 
             *message = wrapper.release();
         }
 
-    } catch(...) {
-        result = CMS_ERROR;
     }
+    CMS_CATCH_EXCEPTION( result )
 
     return result;
 }
@@ -171,9 +167,8 @@ cms_status cms_destroyMessage(CMS_Message* message) {
         try{
             delete message->message;
             delete message;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -192,9 +187,8 @@ cms_status cms_cloneMessage(CMS_Message* original, CMS_Message** clone) {
             wrapper->message = original->message->clone();
             wrapper->type = original->type;
             *clone = wrapper.release();
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -210,9 +204,8 @@ cms_status cms_getMessageType(CMS_Message* message, int* type) {
         try{
             *type = message->type;
             result = CMS_SUCCESS;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -227,9 +220,8 @@ cms_status cms_acknowledgeMessage(CMS_Message* message) {
 
         try{
             message->message->acknowledge();
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -245,9 +237,8 @@ cms_status cms_clearMessageBody(CMS_Message* message) {
         try{
             message->message->clearBody();
             result = CMS_SUCCESS;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -263,9 +254,8 @@ cms_status cms_clearMessageProperties(CMS_Message* message) {
         try{
             message->message->clearProperties();
             result = CMS_SUCCESS;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -281,9 +271,8 @@ cms_status cms_getNumMessageProperties(CMS_Message* message, int* numProperties)
         try{
             *numProperties = (int) message->message->getPropertyNames().size();
             result = CMS_SUCCESS;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -314,10 +303,8 @@ cms_status cms_getMessagePropertyNames(CMS_Message* message, char*** names, int*
             *size = (int)keys.size();
             result = CMS_SUCCESS;
 
-        } catch(...) {
-            *size = 0;
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -340,10 +327,8 @@ cms_status cms_messagePropertyExists(CMS_Message* message, const char* key, int*
 
             result = CMS_SUCCESS;
 
-        } catch(...) {
-            *exists = 0;
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -365,13 +350,8 @@ cms_status cms_getMessageBooleanProperty(CMS_Message* message, const char* key, 
                 *value = 0;
             }
 
-        } catch(cms::MessageFormatException& ex) {
-            *value = 0;
-            result = CMS_MESSAGE_FORMAT_ERROR;
-        } catch(...) {
-            *value = 0;
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -393,13 +373,8 @@ cms_status cms_getMessageByteProperty(CMS_Message* message, const char* key, uns
                 *value = 0;
             }
 
-        } catch(cms::MessageFormatException& ex) {
-            *value = 0;
-            result = CMS_MESSAGE_FORMAT_ERROR;
-        } catch(...) {
-            *value = 0;
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -421,13 +396,8 @@ cms_status cms_getMessageDoubleProperty(CMS_Message* message, const char* key, d
                 *value = 0;
             }
 
-        } catch(cms::MessageFormatException& ex) {
-            *value = 0;
-            result = CMS_MESSAGE_FORMAT_ERROR;
-        } catch(...) {
-            *value = 0;
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -449,13 +419,8 @@ cms_status cms_getMessageFloatProperty(CMS_Message* message, const char* key, fl
                 *value = 0;
             }
 
-        } catch(cms::MessageFormatException& ex) {
-            *value = 0;
-            result = CMS_MESSAGE_FORMAT_ERROR;
-        } catch(...) {
-            *value = 0;
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -477,13 +442,8 @@ cms_status cms_getMessageIntProperty(CMS_Message* message, const char* key, int*
                 *value = 0;
             }
 
-        } catch(cms::MessageFormatException& ex) {
-            *value = 0;
-            result = CMS_MESSAGE_FORMAT_ERROR;
-        } catch(...) {
-            *value = 0;
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -505,13 +465,8 @@ cms_status cms_getMessageLongProperty(CMS_Message* message, const char* key, lon
                 *value = 0;
             }
 
-        } catch(cms::MessageFormatException& ex) {
-            *value = 0;
-            result = CMS_MESSAGE_FORMAT_ERROR;
-        } catch(...) {
-            *value = 0;
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -533,13 +488,8 @@ cms_status cms_getMessageShortProperty(CMS_Message* message, const char* key, sh
                 *value = 0;
             }
 
-        } catch(cms::MessageFormatException& ex) {
-            *value = 0;
-            result = CMS_MESSAGE_FORMAT_ERROR;
-        } catch(...) {
-            *value = 0;
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -575,13 +525,8 @@ cms_status cms_getMessageStringProperty(CMS_Message* message, const char* key, c
                 *value = 0;
             }
 
-        } catch(cms::MessageFormatException& ex) {
-            value[0] = '\0';
-            result = CMS_MESSAGE_FORMAT_ERROR;
-        } catch(...) {
-            value[0] = '\0';
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -601,11 +546,8 @@ cms_status cms_setMessageBooleanProperty(CMS_Message* message, const char* key, 
                 result = CMS_SUCCESS;
             }
 
-        } catch(cms::MessageNotWriteableException& ex) {
-            result = CMS_MESSAGE_NOT_WRITABLE;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -625,11 +567,8 @@ cms_status cms_setMessageByteProperty(CMS_Message* message, const char* key, uns
                 result = CMS_SUCCESS;
             }
 
-        } catch(cms::MessageNotWriteableException& ex) {
-            result = CMS_MESSAGE_NOT_WRITABLE;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -649,11 +588,8 @@ cms_status cms_setMessageDoubleProperty(CMS_Message* message, const char* key, d
                 result = CMS_SUCCESS;
             }
 
-        } catch(cms::MessageNotWriteableException& ex) {
-            result = CMS_MESSAGE_NOT_WRITABLE;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -673,11 +609,8 @@ cms_status cms_setMessageFloatProperty(CMS_Message* message, const char* key, fl
                 result = CMS_SUCCESS;
             }
 
-        } catch(cms::MessageNotWriteableException& ex) {
-            result = CMS_MESSAGE_NOT_WRITABLE;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -697,11 +630,8 @@ cms_status cms_setMessageIntProperty(CMS_Message* message, const char* key, int 
                 result = CMS_SUCCESS;
             }
 
-        } catch(cms::MessageNotWriteableException& ex) {
-            result = CMS_MESSAGE_NOT_WRITABLE;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -721,11 +651,8 @@ cms_status cms_setMessageLongProperty(CMS_Message* message, const char* key, lon
                 result = CMS_SUCCESS;
             }
 
-        } catch(cms::MessageNotWriteableException& ex) {
-            result = CMS_MESSAGE_NOT_WRITABLE;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -745,11 +672,8 @@ cms_status cms_setMessageShortProperty(CMS_Message* message, const char* key, sh
                 result = CMS_SUCCESS;
             }
 
-        } catch(cms::MessageNotWriteableException& ex) {
-            result = CMS_MESSAGE_NOT_WRITABLE;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -769,11 +693,8 @@ cms_status cms_setMessageStringProperty(CMS_Message* message, const char* key, c
                 result = CMS_SUCCESS;
             }
 
-        } catch(cms::MessageNotWriteableException& ex) {
-            result = CMS_MESSAGE_NOT_WRITABLE;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -804,13 +725,8 @@ cms_status cms_getCMSMessageCorrelationID(CMS_Message* message, char* correlatio
 
             result = CMS_SUCCESS;
 
-        } catch(cms::MessageFormatException& ex) {
-            correlationId[0] = '\0';
-            result = CMS_MESSAGE_FORMAT_ERROR;
-        } catch(...) {
-            correlationId[0] = '\0';
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -830,11 +746,8 @@ cms_status cms_setCMSMessageCorrelationID(CMS_Message* message, const char* corr
                 result = CMS_SUCCESS;
             }
 
-        } catch(cms::MessageNotWriteableException& ex) {
-            result = CMS_MESSAGE_NOT_WRITABLE;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -850,11 +763,8 @@ cms_status cms_getCMSMessageDeliveryMode(CMS_Message* message, int* mode) {
         try{
             *mode = message->message->getCMSDeliveryMode();
             result = CMS_SUCCESS;
-        } catch(cms::MessageNotWriteableException& ex) {
-            result = CMS_MESSAGE_NOT_WRITABLE;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -870,11 +780,8 @@ cms_status cms_setCMSMessageDeliveryMode(CMS_Message* message, int mode) {
         try{
             message->message->setCMSDeliveryMode(mode);
             result = CMS_SUCCESS;
-        } catch(cms::MessageNotWriteableException& ex) {
-            result = CMS_MESSAGE_NOT_WRITABLE;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -902,9 +809,8 @@ cms_status cms_getCMSMessageDestination(CMS_Message* message, CMS_Destination** 
 
             result = CMS_SUCCESS;
 
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -927,9 +833,8 @@ cms_status cms_setCMSMessageDestination(CMS_Message* message, CMS_Destination* d
 
             result = CMS_SUCCESS;
 
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -945,11 +850,8 @@ cms_status cms_getCMSMessageExpiration(CMS_Message* message, long long* expirati
         try{
             *expiration = message->message->getCMSExpiration();
             result = CMS_SUCCESS;
-        } catch(cms::MessageNotWriteableException& ex) {
-            result = CMS_MESSAGE_NOT_WRITABLE;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -965,11 +867,8 @@ cms_status cms_setCMSMessageExpiration(CMS_Message* message, long long expiratio
         try{
             message->message->setCMSExpiration(expiration);
             result = CMS_SUCCESS;
-        } catch(cms::MessageNotWriteableException& ex) {
-            result = CMS_MESSAGE_NOT_WRITABLE;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -1000,13 +899,8 @@ cms_status cms_getCMSMessageMessageID(CMS_Message* message, char* messageId, int
 
             result = CMS_SUCCESS;
 
-        } catch(cms::MessageFormatException& ex) {
-            messageId[0] = '\0';
-            result = CMS_MESSAGE_FORMAT_ERROR;
-        } catch(...) {
-            messageId[0] = '\0';
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -1026,11 +920,8 @@ cms_status cms_setCMSMessageMessageID(CMS_Message* message, const char* messageI
                 result = CMS_SUCCESS;
             }
 
-        } catch(cms::MessageNotWriteableException& ex) {
-            result = CMS_MESSAGE_NOT_WRITABLE;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -1046,11 +937,8 @@ cms_status cms_getCMSMessagePriority(CMS_Message* message, int* priority) {
         try{
             *priority = message->message->getCMSPriority();
             result = CMS_SUCCESS;
-        } catch(cms::MessageNotWriteableException& ex) {
-            result = CMS_MESSAGE_NOT_WRITABLE;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -1066,11 +954,8 @@ cms_status cms_setCMSMessagePriority(CMS_Message* message, int priority) {
         try{
             message->message->setCMSPriority(priority);
             result = CMS_SUCCESS;
-        } catch(cms::MessageNotWriteableException& ex) {
-            result = CMS_MESSAGE_NOT_WRITABLE;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -1086,11 +971,8 @@ cms_status cms_getCMSMessageRedelivered(CMS_Message* message, int* redelivered) 
         try{
             *redelivered = (int) message->message->getCMSRedelivered();
             result = CMS_SUCCESS;
-        } catch(cms::MessageNotWriteableException& ex) {
-            result = CMS_MESSAGE_NOT_WRITABLE;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -1106,11 +988,8 @@ cms_status cms_setCMSMessageRedelivered(CMS_Message* message, int redelivered) {
         try{
             message->message->setCMSRedelivered(redelivered == 0 ? false : true);
             result = CMS_SUCCESS;
-        } catch(cms::MessageNotWriteableException& ex) {
-            result = CMS_MESSAGE_NOT_WRITABLE;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -1138,9 +1017,8 @@ cms_status cms_getCMSMessageReplyTo(CMS_Message* message, CMS_Destination** dest
 
             result = CMS_SUCCESS;
 
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -1163,9 +1041,8 @@ cms_status cms_setCMSMessageReplyTo(CMS_Message* message, CMS_Destination* desti
 
             result = CMS_SUCCESS;
 
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -1181,11 +1058,8 @@ cms_status cms_getCMSMessageTimestamp(CMS_Message* message, long long* timeStamp
         try{
             *timeStamp = message->message->getCMSTimestamp();
             result = CMS_SUCCESS;
-        } catch(cms::MessageNotWriteableException& ex) {
-            result = CMS_MESSAGE_NOT_WRITABLE;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -1201,11 +1075,8 @@ cms_status cms_setCMSMessageTimestamp(CMS_Message* message, long long timeStamp)
         try{
             message->message->setCMSTimestamp(timeStamp);
             result = CMS_SUCCESS;
-        } catch(cms::MessageNotWriteableException& ex) {
-            result = CMS_MESSAGE_NOT_WRITABLE;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -1236,13 +1107,8 @@ cms_status cms_getCMSMessageType(CMS_Message* message, char* type, int size) {
 
             result = CMS_SUCCESS;
 
-        } catch(cms::MessageFormatException& ex) {
-            type[0] = '\0';
-            result = CMS_MESSAGE_FORMAT_ERROR;
-        } catch(...) {
-            type[0] = '\0';
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -1262,11 +1128,8 @@ cms_status cms_setCMSMessageType(CMS_Message* message, const char* type) {
                 result = CMS_SUCCESS;
             }
 
-        } catch(cms::MessageNotWriteableException& ex) {
-            result = CMS_MESSAGE_NOT_WRITABLE;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;

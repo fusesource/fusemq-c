@@ -18,7 +18,8 @@
 #include <CMS_MessageConsumer.h>
 
 #include <Config.h>
-#include <types/CMS_Types.h>
+#include <private/CMS_Types.h>
+#include <private/CMS_Utils.h>
 
 #include <cms/Message.h>
 #include <cms/TextMessage.h>
@@ -48,9 +49,8 @@ cms_status cms_createDefaultConsumer(CMS_Session* session, CMS_Destination* dest
             *consumer = wrapper.release();
         }
 
-    } catch(...) {
-        result = CMS_ERROR;
     }
+    CMS_CATCH_EXCEPTION( result )
 
     return result;
 }
@@ -75,9 +75,8 @@ cms_status cms_createConsumer(CMS_Session* session, CMS_Destination* destination
             *consumer = wrapper.release();
         }
 
-    } catch(...) {
-        result = CMS_ERROR;
     }
+    CMS_CATCH_EXCEPTION( result )
 
     return result;
 }
@@ -115,9 +114,8 @@ cms_status cms_createDurableConsumer(CMS_Session* session,
             }
         }
 
-    } catch(...) {
-        result = CMS_ERROR;
     }
+    CMS_CATCH_EXCEPTION( result )
 
     return result;
 }
@@ -158,9 +156,8 @@ cms_status cms_consumerReceive(CMS_MessageConsumer* consumer, CMS_Message** mess
                 *message = NULL;
             }
 
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -203,9 +200,8 @@ cms_status cms_consumerReceiveWithTimeout(CMS_MessageConsumer* consumer, CMS_Mes
                 result = CMS_RECEIVE_TIMEDOUT;
             }
 
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -246,9 +242,8 @@ cms_status cms_consumerReceiveNoWait(CMS_MessageConsumer* consumer, CMS_Message*
 
             result = CMS_SUCCESS;
 
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -264,9 +259,8 @@ cms_status cms_closeConsumer(CMS_MessageConsumer* consumer) {
         try{
             consumer->consumer->close();
             result = CMS_SUCCESS;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -297,9 +291,8 @@ cms_status cms_getConsumerMessageSelector(CMS_MessageConsumer* consumer, char* d
 
             result = CMS_SUCCESS;
 
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
@@ -315,9 +308,8 @@ cms_status cms_destroyConsumer(CMS_MessageConsumer* consumer) {
         try{
             delete consumer->consumer;
             delete consumer;
-        } catch(...) {
-            result = CMS_ERROR;
         }
+        CMS_CATCH_EXCEPTION( result )
     }
 
     return result;
