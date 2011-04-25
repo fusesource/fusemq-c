@@ -35,6 +35,31 @@
 using namespace cms;
 
 ////////////////////////////////////////////////////////////////////////////////
+namespace {
+
+    class CMSExceptionListener : public cms::ExceptionListener {
+    private:
+
+        CMS_Connection* parent;
+
+    public:
+
+        CMSExceptionListener(CMS_Connection* parent) : cms::ExceptionListener(), parent(parent) {}
+        virtual ~CMSExceptionListener() {}
+
+        virtual void onException( const cms::CMSException& ex ) {
+
+            if(this->parent->lastException != NULL) {
+                delete this->parent->lastException;
+            }
+
+            this->parent->lastException = new CMSException(ex);
+        }
+
+    };
+}
+
+////////////////////////////////////////////////////////////////////////////////
 cms_status cms_createDefaultConnection(CMS_ConnectionFactory* factory, CMS_Connection** connection) {
 
     cms_status result = CMS_ERROR;
@@ -45,6 +70,8 @@ cms_status cms_createDefaultConnection(CMS_ConnectionFactory* factory, CMS_Conne
         if (factory != NULL && connection != NULL) {
             wrapper->connection = factory->factory->createConnection();
             wrapper->lastException = NULL;
+            wrapper->asyncExListener = new CMSExceptionListener(wrapper.get());
+            wrapper->connection->setExceptionListener(wrapper->asyncExListener);
             *connection = wrapper.release();
             result = CMS_SUCCESS;
         }
@@ -74,6 +101,8 @@ cms_status cms_createConnection(CMS_ConnectionFactory* factory,
 
             wrapper->connection = factory->factory->createConnection(user, pass, id);
             wrapper->lastException = NULL;
+            wrapper->asyncExListener = new CMSExceptionListener(wrapper.get());
+            wrapper->connection->setExceptionListener(wrapper->asyncExListener);
             *connection = wrapper.release();
             result = CMS_SUCCESS;
         }
@@ -91,7 +120,11 @@ cms_status cms_destroyConnection(CMS_Connection* connection) {
     if (connection != NULL) {
 
         try{
+
+            connection->connection->setExceptionListener(NULL);
             delete connection->connection;
+            delete connection->asyncExListener;
+            delete connection->lastException;
             delete connection;
             result = CMS_SUCCESS;
         }
