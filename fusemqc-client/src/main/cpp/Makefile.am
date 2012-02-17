@@ -23,6 +23,7 @@ cc_sources = \
     CMS_Message.cpp \
     CMS_MessageConsumer.cpp \
     CMS_MessageProducer.cpp \
+    CMS_QueueBrowser.cpp \
     CMS_Session.cpp \
     CMS_TextMessage.cpp \
     cms.cpp
@@ -36,6 +37,7 @@ h_sources = \
     CMS_Message.h \
     CMS_MessageConsumer.h \
     CMS_MessageProducer.h \
+    CMS_QueueBrowser.h \
     CMS_Session.h \
     CMS_TextMessage.h \
     Config.h \

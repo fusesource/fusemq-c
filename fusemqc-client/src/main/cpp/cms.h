@@ -42,6 +42,9 @@ typedef struct CMS_MessageProducer CMS_MessageProducer;
 /** The Opaque Message Consumer Structure */
 typedef struct CMS_MessageConsumer CMS_MessageConsumer;
 
+/** The Opaque Queue Browser Structure */
+typedef struct CMS_QueueBrowser CMS_QueueBrowser;
+
 /** The Opaque Message Structure */
 typedef struct CMS_Message CMS_Message;
 

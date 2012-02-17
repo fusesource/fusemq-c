@@ -28,6 +28,7 @@
 #include <cms/Message.h>
 #include <cms/Destination.h>
 #include <cms/CMSException.h>
+#include <cms/QueueBrowser.h>
 #include <cms/ExceptionListener.h>
 
 /**
@@ -58,6 +59,13 @@ struct CMS_Session {
  */
 struct CMS_MessageConsumer {
     cms::MessageConsumer* consumer;
+};
+
+/**
+ * Structure used to Wrap the CMS QueueBrowser type.
+ */
+struct CMS_QueueBrowser {
+    cms::QueueBrowser* browser;
 };
 
 /**
