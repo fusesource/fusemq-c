@@ -125,7 +125,7 @@ cms_status cms_consumerReceive(CMS_MessageConsumer* consumer, CMS_Message** mess
 
     cms_status result = CMS_ERROR;
 
-    if(consumer != NULL && consumer->consumer != NULL && message != NULL) {
+    if (consumer != NULL && consumer->consumer != NULL && message != NULL) {
 
         try{
 
@@ -168,7 +168,7 @@ cms_status cms_consumerReceiveWithTimeout(CMS_MessageConsumer* consumer, CMS_Mes
 
     cms_status result = CMS_ERROR;
 
-    if(consumer != NULL && consumer->consumer != NULL && message != NULL) {
+    if (consumer != NULL && consumer->consumer != NULL && message != NULL) {
 
         try{
 
@@ -212,7 +212,7 @@ cms_status cms_consumerReceiveNoWait(CMS_MessageConsumer* consumer, CMS_Message*
 
     cms_status result = CMS_ERROR;
 
-    if(consumer != NULL && consumer->consumer != NULL && message != NULL) {
+    if (consumer != NULL && consumer->consumer != NULL && message != NULL) {
 
         try{
 
@@ -254,7 +254,7 @@ cms_status cms_closeConsumer(CMS_MessageConsumer* consumer) {
 
     cms_status result = CMS_ERROR;
 
-    if(consumer != NULL && consumer->consumer != NULL) {
+    if (consumer != NULL && consumer->consumer != NULL) {
 
         try{
             consumer->consumer->close();
@@ -271,16 +271,16 @@ cms_status cms_getConsumerMessageSelector(CMS_MessageConsumer* consumer, char* d
 
     cms_status result = CMS_ERROR;
 
-    if(consumer != NULL && consumer->consumer != NULL && dest != NULL && size > 0) {
+    if (consumer != NULL && consumer->consumer != NULL && dest != NULL && size > 0) {
 
         try{
 
             std::string selector = consumer->consumer->getMessageSelector();
 
-            if(!selector.empty()) {
+            if (!selector.empty()) {
 
                 std::size_t pos = 0;
-                for(; pos < selector.size() && pos < size - 1; ++pos) {
+                for(; pos < selector.size() && pos < size - (std::size_t) 1; ++pos) {
                     dest[pos] = selector.at(pos);
                 }
 
@@ -303,7 +303,7 @@ cms_status cms_destroyConsumer(CMS_MessageConsumer* consumer) {
 
     cms_status result = CMS_SUCCESS;
 
-    if(consumer != NULL) {
+    if (consumer != NULL) {
 
         try{
             delete consumer->consumer;
