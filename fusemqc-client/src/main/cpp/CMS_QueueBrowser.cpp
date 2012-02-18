@@ -41,17 +41,14 @@ cms_status cms_createQueueBrowser(CMS_Session* session, CMS_Destination* destina
             result = CMS_ERROR;
         } else {
 
-        	if (destination->type != CMS_QUEUE) {
+        	if (destination->type != CMS_QUEUE || destination->type != CMS_TEMPORARY_QUEUE) {
         		return CMS_INVALID_DESTINATION;
         	}
 
-        	if (selector == NULL) {
-				wrapper->browser = session->session->createBrowser(
-						dynamic_cast<cms::Queue*>(destination->destination));
-        	} else {
-				wrapper->browser = session->session->createBrowser(
-						dynamic_cast<cms::Queue*>(destination->destination), selector);
-        	}
+            std::string sel = selector == NULL ? "" : std::string(selector);
+
+			wrapper->browser = session->session->createBrowser(
+					dynamic_cast<cms::Queue*>(destination->destination), sel);
 
         	*browser = wrapper.release();
         }

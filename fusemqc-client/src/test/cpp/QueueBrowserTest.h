@@ -15,22 +15,28 @@
  * limitations under the License.
  */
 
-#include "ConnectionTest.h"
-CPPUNIT_TEST_SUITE_REGISTRATION( cms::ConnectionTest );
-#include "SessionTest.h"
-CPPUNIT_TEST_SUITE_REGISTRATION( cms::SessionTest );
-#include "DestinationTest.h"
-CPPUNIT_TEST_SUITE_REGISTRATION( cms::DestinationTest );
-#include "MessageConsumerTest.h"
-CPPUNIT_TEST_SUITE_REGISTRATION( cms::MessageConsumerTest );
-#include "MessageProducerTest.h"
-CPPUNIT_TEST_SUITE_REGISTRATION( cms::MessageProducerTest );
-#include "QueueBrowserTest.h"
-CPPUNIT_TEST_SUITE_REGISTRATION( cms::QueueBrowserTest );
+#ifndef _CMS_QUEUEBROWSERTEST_H_
+#define _CMS_QUEUEBROWSERTEST_H_
 
-#include "MessageTest.h"
-CPPUNIT_TEST_SUITE_REGISTRATION( cms::MessageTest );
-#include "TextMessageTest.h"
-CPPUNIT_TEST_SUITE_REGISTRATION( cms::TextMessageTest );
-#include "BytesMessageTest.h"
-CPPUNIT_TEST_SUITE_REGISTRATION( cms::BytesMessageTest );
+#include "SingleConnectionTestCase.h"
+
+namespace cms {
+
+    class QueueBrowserTest : public SingleConnectionTestCase {
+
+        CPPUNIT_TEST_SUITE( QueueBrowserTest );
+        CPPUNIT_TEST( testCreateBrowser );
+        CPPUNIT_TEST_SUITE_END();
+
+    public:
+
+        QueueBrowserTest();
+        virtual ~QueueBrowserTest();
+
+        void testCreateBrowser();
+
+    };
+
+}
+
+#endif /* _CMS_QUEUEBROWSERTEST_H_ */

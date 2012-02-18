@@ -23,6 +23,7 @@ cc_sources = \
     MessageConsumerTest.cpp \
     MessageProducerTest.cpp \
     MessageTest.cpp \
+    QueueBrowserTest.cpp \
     SessionTest.cpp \
     SingleConnectionTestCase.cpp \
     TestRegistry.cpp \
@@ -38,6 +39,7 @@ h_sources = \
     MessageConsumerTest.h \
     MessageProducerTest.h \
     MessageTest.h \
+    QueueBrowserTest.h \
     SessionTest.h \
     SingleConnectionTestCase.h \
     TextMessageTest.h
