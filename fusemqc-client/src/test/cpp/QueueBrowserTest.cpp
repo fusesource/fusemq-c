@@ -46,13 +46,13 @@ void QueueBrowserTest::testCreateBrowser() {
     CMS_Destination* destination = NULL;
     CMS_QueueBrowser* browser = NULL;
 
-    CPPUNIT_ASSERT(cms_createTemporaryDestination(session, CMS_TEMPORARY_QUEUE, &destination) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_createDestination(session, CMS_QUEUE, "QueueBrowserTest.QUEUE", &destination) == CMS_SUCCESS);
     CPPUNIT_ASSERT(cms_createQueueBrowser(session, destination, &browser, NULL) == CMS_SUCCESS);
 
-//    char* selector = new char[256];
-//    CPPUNIT_ASSERT(cms_getConsumerMessageSelector(consumer, selector, 256) == CMS_SUCCESS);
-//    CPPUNIT_ASSERT(std::string("") == std::string(selector));
-//    delete [] selector;
+    char* selector = new char[256];
+    CPPUNIT_ASSERT(cms_getBrowserMessageSelector(browser, selector, 256) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(std::string("") == std::string(selector));
+    delete [] selector;
 
     CPPUNIT_ASSERT(cms_destroyQueueBrowser(browser) == CMS_SUCCESS);
 

@@ -41,7 +41,7 @@ cms_status cms_createQueueBrowser(CMS_Session* session, CMS_Destination* destina
             result = CMS_ERROR;
         } else {
 
-        	if (destination->type != CMS_QUEUE || destination->type != CMS_TEMPORARY_QUEUE) {
+        	if (destination->type != CMS_QUEUE) {
         		return CMS_INVALID_DESTINATION;
         	}
 
@@ -109,6 +109,38 @@ cms_status cms_browserGetNextMessages(CMS_QueueBrowser* browser, CMS_Message** m
             } else {
                 *message = NULL;
             }
+
+        }
+        CMS_CATCH_EXCEPTION( result )
+    }
+
+    return result;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+cms_status cms_getBrowserMessageSelector(CMS_QueueBrowser* browser, char* dest, int size) {
+
+    cms_status result = CMS_ERROR;
+
+    if (browser != NULL && browser->browser != NULL && dest != NULL && size > 0) {
+
+        try{
+
+            std::string selector = browser->browser->getMessageSelector();
+
+            if (!selector.empty()) {
+
+                std::size_t pos = 0;
+                for(; pos < selector.size() && pos < size - (std::size_t) 1; ++pos) {
+                    dest[pos] = selector.at(pos);
+                }
+
+                dest[pos] = '\0';
+            } else {
+                dest[0] = '\0';
+            }
+
+            result = CMS_SUCCESS;
 
         }
         CMS_CATCH_EXCEPTION( result )
