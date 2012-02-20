@@ -39,6 +39,10 @@ namespace cms {
 		virtual void setUp();
 		virtual void tearDown();
 
+	protected:
+
+		void drainDestination(CMS_Destination* destination);
+
 	};
 
 }

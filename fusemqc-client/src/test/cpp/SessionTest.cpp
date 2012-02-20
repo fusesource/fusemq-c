@@ -18,6 +18,7 @@
 #include "SessionTest.h"
 
 #include <cms.h>
+#include <CMS_QueueBrowser.h>
 #include <CMS_MessageConsumer.h>
 #include <CMS_MessageProducer.h>
 #include <CMS_Destination.h>
@@ -97,6 +98,31 @@ void SessionTest::testCreateConsumer() {
 
     CPPUNIT_ASSERT(cms_createConsumer(session, destination, &consumer, NULL, false) == CMS_SUCCESS);
     CPPUNIT_ASSERT(cms_destroyConsumer(consumer) == CMS_SUCCESS);
+
+    CPPUNIT_ASSERT(cms_destroyDestination(destination) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_destroySession(session) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_destroyConnection(connection) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_destroyConnectionFactory(factory) == CMS_SUCCESS);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void SessionTest::testCreateQueueBrowser() {
+
+    const std::string uri = std::string("tcp://") + CMSTestCase::DEFAULT_BROKER_HOST;
+
+    CMS_ConnectionFactory* factory = NULL;
+    CMS_Connection* connection = NULL;
+    CMS_Session* session = NULL;
+    CMS_Destination* destination = NULL;
+    CMS_QueueBrowser* browser = NULL;
+
+    CPPUNIT_ASSERT(cms_createConnectionFactory(&factory, uri.c_str(), NULL, NULL) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_createDefaultConnection(factory, &connection) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_createDefaultSession(connection, &session) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_createDestination(session, CMS_QUEUE, "cms.test.Destination.Queue", &destination) == CMS_SUCCESS);
+
+    CPPUNIT_ASSERT(cms_createQueueBrowser(session, destination, &browser, NULL) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(cms_destroyQueueBrowser(browser) == CMS_SUCCESS);
 
     CPPUNIT_ASSERT(cms_destroyDestination(destination) == CMS_SUCCESS);
     CPPUNIT_ASSERT(cms_destroySession(session) == CMS_SUCCESS);

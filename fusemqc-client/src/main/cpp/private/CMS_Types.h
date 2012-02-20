@@ -66,6 +66,7 @@ struct CMS_MessageConsumer {
  */
 struct CMS_QueueBrowser {
     cms::QueueBrowser* browser;
+    cms::MessageEnumeration* enumeration;
 };
 
 /**

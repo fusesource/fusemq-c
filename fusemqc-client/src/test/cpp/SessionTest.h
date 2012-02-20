@@ -28,6 +28,7 @@ namespace cms {
         CPPUNIT_TEST( testCreateDestination );
         CPPUNIT_TEST( testCreateProducer );
         CPPUNIT_TEST( testCreateConsumer );
+        CPPUNIT_TEST( testCreateQueueBrowser );
         CPPUNIT_TEST_SUITE_END();
 
 	public:
@@ -40,6 +41,7 @@ namespace cms {
 		void testCreateDestination();
 		void testCreateProducer();
 		void testCreateConsumer();
+		void testCreateQueueBrowser();
 
 	};
 

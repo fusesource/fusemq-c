@@ -17,6 +17,7 @@
 
 #include "SingleConnectionTestCase.h"
 
+#include <CMS_Message.h>
 #include <CMS_MessageConsumer.h>
 #include <CMS_MessageProducer.h>
 #include <CMS_Destination.h>
@@ -53,4 +54,25 @@ void SingleConnectionTestCase::tearDown() {
     CPPUNIT_ASSERT(cms_closeConnection(connection) == CMS_SUCCESS);
     CPPUNIT_ASSERT(cms_destroyConnection(connection) == CMS_SUCCESS);
     CPPUNIT_ASSERT(cms_destroyConnectionFactory(factory) == CMS_SUCCESS);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void SingleConnectionTestCase::drainDestination(CMS_Destination* destination) {
+
+    CMS_Message* message = NULL;
+    CMS_MessageConsumer* consumer = NULL;
+
+    cms_createDefaultConsumer(session, destination, &consumer);
+
+    cms_startConnection(connection);
+
+    CMS_Message* received = NULL;
+    cms_consumerReceiveWithTimeout(consumer, &received, 2000);
+    while (received != NULL) {
+        cms_destroyMessage(received);
+        received = NULL;
+        cms_consumerReceiveWithTimeout(consumer, &received, 2000);
+    }
+
+    cms_destroyConsumer(consumer);
 }

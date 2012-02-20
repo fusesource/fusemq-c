@@ -26,6 +26,7 @@ namespace cms {
 
         CPPUNIT_TEST_SUITE( QueueBrowserTest );
         CPPUNIT_TEST( testCreateBrowser );
+        CPPUNIT_TEST( testQueueBrowse );
         CPPUNIT_TEST_SUITE_END();
 
     public:
@@ -34,6 +35,7 @@ namespace cms {
         virtual ~QueueBrowserTest();
 
         void testCreateBrowser();
+        void testQueueBrowse();
 
     };
 

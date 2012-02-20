@@ -40,7 +40,6 @@ cms_status cms_createQueueBrowser(CMS_Session* session, CMS_Destination* destina
         if (session == NULL || session->session == NULL || destination == NULL || browser == NULL) {
             result = CMS_ERROR;
         } else {
-
         	if (destination->type != CMS_QUEUE) {
         		return CMS_INVALID_DESTINATION;
         	}
@@ -49,10 +48,10 @@ cms_status cms_createQueueBrowser(CMS_Session* session, CMS_Destination* destina
 
 			wrapper->browser = session->session->createBrowser(
 					dynamic_cast<cms::Queue*>(destination->destination), sel);
+			wrapper->enumeration = NULL;
 
         	*browser = wrapper.release();
         }
-
     }
     CMS_CATCH_EXCEPTION( result )
 
@@ -66,7 +65,19 @@ cms_status cms_browserHasMoreMessages(CMS_QueueBrowser* browser, int* hasMore) {
 
     if (browser != NULL && browser->browser != NULL && hasMore != NULL) {
         try {
-        	*hasMore = (int) browser->browser->getEnumeration()->hasMoreMessages();
+        	if (browser->enumeration == NULL) {
+        		browser->enumeration = browser->browser->getEnumeration();
+        	}
+
+        	*hasMore = (int) browser->enumeration->hasMoreMessages();
+
+        	// When there are no more messages, QueueBrowser closes its enumeration
+        	// we null our pointer out so we know to ask for a new one next time.
+        	if (*hasMore == 0) {
+        		browser->enumeration = NULL;
+        	}
+
+        	result = CMS_SUCCESS;
         }
         CMS_CATCH_EXCEPTION( result )
     }
@@ -79,14 +90,19 @@ cms_status cms_browserGetNextMessages(CMS_QueueBrowser* browser, CMS_Message** m
 
     cms_status result = CMS_ERROR;
 
-    if (browser != NULL && browser->browser != NULL && message != NULL) {
+    // Its an error to call cms_browserGetNextMessages if the has next method wasn't called first,
+    //or if it returned false.  We can tell this if the browser's enumeration is null.
+    if (browser != NULL && browser->browser != NULL && browser->enumeration != NULL && message != NULL) {
 
-        try{
+    	try{
 
             std::auto_ptr<CMS_Message> wrapper( new CMS_Message );
 
-            cms::Message* msg = browser->browser->getEnumeration()->nextMessage();
+            cms::Message* msg = browser->enumeration->nextMessage();
 
+            // When a null message is returned the browse is done and we need to
+            // null our enumeration pointer so we know to create one again the
+            // next time that cms_browserHasMoreMessages is called.
             if(msg != NULL) {
                 wrapper->message = msg;
 
@@ -105,11 +121,10 @@ cms_status cms_browserGetNextMessages(CMS_QueueBrowser* browser, CMS_Message** m
                 *message = wrapper.release();
 
                 result = CMS_SUCCESS;
-
             } else {
+            	browser->enumeration = NULL;
                 *message = NULL;
             }
-
         }
         CMS_CATCH_EXCEPTION( result )
     }
