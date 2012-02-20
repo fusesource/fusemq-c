@@ -102,3 +102,74 @@ void QueueBrowserTest::testQueueBrowse() {
 
     CPPUNIT_ASSERT_EQUAL(128, count);
 }
+
+////////////////////////////////////////////////////////////////////////////////
+void QueueBrowserTest::testQueueBrowseEmpty() {
+
+    CMS_Destination* destination = NULL;
+    CMS_QueueBrowser* browser = NULL;
+
+    cms_createDestination(session, CMS_QUEUE, "QueueBrowserTest.testQueueBrowse.QUEUE", &destination);
+
+    drainDestination(destination);
+    cms_startConnection(connection);
+
+    CPPUNIT_ASSERT(cms_createQueueBrowser(session, destination, &browser, NULL) == CMS_SUCCESS);
+
+    int hasMore = 0;
+
+    // Should always succeed and indicate no messages.
+    CPPUNIT_ASSERT(cms_browserHasMoreMessages(browser, &hasMore) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(hasMore = 0);
+    CPPUNIT_ASSERT(cms_browserHasMoreMessages(browser, &hasMore) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(hasMore = 0);
+
+    cms_destroyQueueBrowser(browser);
+    cms_destroyDestination(destination);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void QueueBrowserTest::testQueueBrowseEmptyThenProduce() {
+
+    CMS_Destination* destination = NULL;
+    CMS_Message* message = NULL;
+    CMS_QueueBrowser* browser = NULL;
+    CMS_MessageProducer* producer = NULL;
+
+    cms_createDestination(session, CMS_QUEUE, "QueueBrowserTest.testQueueBrowse.QUEUE", &destination);
+    cms_createProducer(session, destination, &producer);
+    cms_setProducerDeliveryMode(producer, CMS_MSG_NON_PERSISTENT);
+
+    drainDestination(destination);
+    cms_startConnection(connection);
+
+    CPPUNIT_ASSERT(cms_createQueueBrowser(session, destination, &browser, NULL) == CMS_SUCCESS);
+
+    int hasMore = 0;
+
+    CPPUNIT_ASSERT(cms_browserHasMoreMessages(browser, &hasMore) == CMS_SUCCESS);
+    CPPUNIT_ASSERT(hasMore = 0);
+
+    cms_createTextMessage(session, &message, NULL);
+
+    for( unsigned int i = 0; i < 128; ++i ) {
+        cms_producerSendWithDefaults(producer, message);
+    }
+
+    cms_destroyMessage(message);
+
+    int count = 0;
+
+    while (cms_browserHasMoreMessages(browser, &hasMore) == CMS_SUCCESS && hasMore > 0) {
+        CMS_Message* received = NULL;
+        CPPUNIT_ASSERT(cms_browserGetNextMessages(browser, &received) == CMS_SUCCESS);
+        cms_destroyMessage(received);
+        count++;
+    }
+
+    cms_destroyQueueBrowser(browser);
+    cms_destroyProducer(producer);
+    cms_destroyDestination(destination);
+
+    CPPUNIT_ASSERT_EQUAL(128, count);
+}

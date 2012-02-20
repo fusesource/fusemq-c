@@ -36,6 +36,8 @@ namespace cms {
 
         void testCreateBrowser();
         void testQueueBrowse();
+        void testQueueBrowseEmpty();
+        void testQueueBrowseEmptyThenProduce();
 
     };
 
