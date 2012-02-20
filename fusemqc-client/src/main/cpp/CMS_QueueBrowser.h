@@ -55,9 +55,9 @@ cms_status cms_browserHasMoreMessages(CMS_QueueBrowser* browser, int* hasMore);
 
 /**
  * Checks for a Message that's available and stores it in the Location passed to this
- * method.  If a message is not immediately available then this method returns and the
- * message store location is set to null.  Once a browser returns a null message it
- * indicates that there are no more message available the result will be null.
+ * method.  The method can block while waiting for the next message to be dispatched from
+ * the broker.  This method should only be called after a call to cms_browserHasMoreMessages
+ * has returned true.
  *
  * @param browser
  *      The Queue Browser that is to be used to try and retrieve the next browsable message.
