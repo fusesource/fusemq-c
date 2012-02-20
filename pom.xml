@@ -6,9 +6,9 @@
   The ASF licenses this file to You under the Apache License, Version 2.0
   (the "License"); you may not use this file except in compliance with
   the License.  You may obtain a copy of the License at
-  
+
   http://www.apache.org/licenses/LICENSE-2.0
-  
+
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,12 +22,12 @@
     <artifactId>fusesource-pom</artifactId>
     <version>1.2</version>
   </parent>
-    
+
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.fusesource.fusemq</groupId>
   <artifactId>fusemqc-project</artifactId>
-  <version>1.0</version>
+  <version>1.1</version>
   <packaging>pom</packaging>
 
   <name>${project.artifactId}</name>
@@ -41,7 +41,7 @@
     <!-- build settings -->
     <forge-project-id>fusemb-c</forge-project-id>
     <forge-project-id-uc>FUSEMB-C</forge-project-id-uc>
-    
+
     <release-altGitURL>scm:git:ssh://git@forge.fusesource.com/fusemqc.git</release-altGitURL>
     <activemq-version>5.4.1</activemq-version>
     <maven-surefire-plugin-version>2.4.3</maven-surefire-plugin-version>
@@ -59,22 +59,22 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-  
+
   <scm>
     <connection>scm:git:git://github.com/fusesource/fusemqc.git</connection>
-    <!-- 
-    TODO - hack this in your ~/.m2/settings.xml to point to your local checkout for releases 
+    <!--
+    TODO - hack this in your ~/.m2/settings.xml to point to your local checkout for releases
     see comments here: http://jira.codehaus.org/browse/MRELEASE-605
     -->
     <developerConnection>${release-altGitURL}</developerConnection>
     <url>http://github.com/fusesource/fusemqc/tree/master</url>
   </scm>
-  
+
   <issueManagement>
     <system>jira</system>
     <url>http://fusesource.com/issues/browse/FUSEMQC</url>
   </issueManagement>
-  
+
   <mailingLists>
     <mailingList>
       <name>Discussion Group</name>
@@ -91,7 +91,7 @@
       <unsubscribe>fusemqc-commits+unsubscribe@googlegroups.com</unsubscribe>
     </mailingList>
   </mailingLists>
-  
+
   <distributionManagement>
     <site>
       <id>website.fusesource.org</id>
@@ -116,7 +116,7 @@
   </modules>
 
   <build>
-    
+
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

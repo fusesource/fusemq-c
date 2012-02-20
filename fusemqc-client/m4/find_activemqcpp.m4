@@ -118,7 +118,7 @@ AC_DEFUN([AC_FIND_ACTIVEMQCPP], [
           break
         else
           dnl look in some standard places
-          for lookdir in /usr /usr/local /usr/local/activemq-cpp /opt/activemq-cpp; do
+          for lookdir in /usr /usr/local /usr/local/activemq-cpp /opt/activemq-cpp /opt/local; do
             if $TEST_X "$lookdir/bin/$ac_temp_acceptable_amqcpp_config_file"; then
               amqcpp_found="yes"
               activemqcpp_config="$lookdir/bin/$ac_temp_acceptable_amqcpp_config_file"
